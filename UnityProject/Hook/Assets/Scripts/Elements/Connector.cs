@@ -35,15 +35,15 @@ public class Connector : GameElement {
 
     public override void Hide() {
         LeanTween.value(this.gameObject, f => {
-            Color color = this.spriteRenderer.color;
-            color.a = 1 - f;
-            this.spriteRenderer.color = color;
+            Color a = ColorUtils.LineColor;
+            Color b = a;
+            b.a = 0;
+            Color c = ColorUtils.Lerp(a, b, f);
+            this.spriteRenderer.color = c;
             foreach (SpriteRenderer spriteRenderer in lines) {
-                color = spriteRenderer.color;
-                color.a = 1 - f;
-                spriteRenderer.color = color;
+                spriteRenderer.color = c;
             }
-        }, 0, 1, 0.2f).setEase(LeanTweenType.easeOutSine);
+        }, 0, 1, 0.33f).setEase(LeanTweenType.easeOutSine);
     }
 
 }

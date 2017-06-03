@@ -38,12 +38,14 @@ public class GameElement : MonoBehaviour {
     public virtual void Hide() {
         SpriteRenderer[] renderers = this.GetComponentsInChildren<SpriteRenderer>(true);
         LeanTween.value(this.gameObject, f => {
+            Color a = ColorUtils.LineColor;
+            Color b = a;
+            b.a = 0;
+            Color c = ColorUtils.Lerp(a, b, f);
             foreach (SpriteRenderer spriteRenderer in renderers) {
-                Color color = spriteRenderer.color;
-                color.a = 1 - f;
-                spriteRenderer.color = color;
+                spriteRenderer.color = c;
             }
-        }, 0, 1, 0.2f).setEase(LeanTweenType.easeOutSine);
+        }, 0, 1, 0.33f).setEase(LeanTweenType.easeOutSine);
     }
 
 }

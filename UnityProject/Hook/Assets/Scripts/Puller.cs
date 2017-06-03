@@ -50,8 +50,6 @@ public class Puller : GameElement {
         }, 0, 1, 0.25f).setEase(LeanTweenType.easeOutSine).setDelay(time);
     }
 
-
-
     public void BreakPull() {
         LeanTween.cancel(this.gameObject);
         this.stage.FailStage();
