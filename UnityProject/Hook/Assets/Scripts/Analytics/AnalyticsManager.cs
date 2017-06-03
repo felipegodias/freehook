@@ -1,49 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 using MGS.EventManager;
-#if UNITY_EDITOR
-using UnityEditor.Analytics;
-#endif
 using UnityEngine;
-using UnityEngine.Analytics;
+#if UNITY_EDITOR
+#endif
 
 public class AnalyticsManager : MonoBehaviour {
 
-    private const string ON_STAGE_COMPLETE_EVENT_NAME = "stage.complete";
-
-    private const string ON_STAGE_FAIL_EVENT_NAME = "stage.fail";
-
-    private const string STAGE_ARGS_NAME = "stage";
+    private IAnalytics[] analytics;
 
     private void Awake() {
-#if UNITY_EDITOR
-        AnalyticsSettings.enabled = true;
-        AnalyticsSettings.testMode = true;
-#endif
+        this.analytics = new IAnalytics[] {new UnityAnalytics()};
         EventManager.AddListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
-        Analytics.enabled = true;
-        Analytics.SetUserId(SystemInfo.deviceUniqueIdentifier);
+    }
+
+    private void Start() {
+        this.StartCoroutine(this.FlushEvents());
+    }
+
+    private IEnumerator FlushEvents() {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.FlushEvents();
+        }
+        yield return new WaitForSeconds(1);
     }
 
     private void OnApplicationStart(object sender, OnApplicationStart eventArgs) {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnApplicationStart();
+        }
     }
 
-    private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
-        Debug.Log("OnStageCompleted");
-        IDictionary<string, object> eventArgs = new Dictionary<string, object>();
-        eventArgs.Add(STAGE_ARGS_NAME, onStageCompleted.Stage);
-        Analytics.CustomEvent(ON_STAGE_COMPLETE_EVENT_NAME, eventArgs);
+    private void OnStageCompleted(object sender, OnStageCompleted eventArgs) {
+        int stage = eventArgs.Stage;
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnStageCompleted(stage);
+        }
     }
 
-    private void OnStageFail(object sender, OnStageFail onStageFail) {
-        Debug.Log("OnStageFail");
-        IDictionary<string, object> eventArgs = new Dictionary<string, object>();
-        eventArgs.Add(STAGE_ARGS_NAME, onStageFail.Stage);
-        Analytics.CustomEvent(ON_STAGE_FAIL_EVENT_NAME, eventArgs);
+    private void OnStageFail(object sender, OnStageFail eventArgs) {
+        int stage = eventArgs.Stage;
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnStageFail(stage);
+        }
     }
 
     private void OnDestroy() {
+        EventManager.RemoveListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
     }
