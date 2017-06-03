@@ -1,0 +1,428 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGS.EventManager</name>
+    </assembly>
+    <members>
+        <member name="T:MGS.EventManager.EventManager">
+            <summary>
+                This class is the entry point of the the EventManager library.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.EventManager._listeners">
+            <summary>
+                This field keeps all the listerner used at the moment.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.EventManager._uids">
+            <summary>
+                This field stores a shortcut of the listener uid to its event type.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.EventManager.Listeners">
+            <summary>
+                Gets the listeners field, if it's null, create a new instance and cache it.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.EventManager.UIDs">
+            <summary>
+                Gets the uids field, if it's null, create a new instance and cache it.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Register``1(MGS.EventManager.EventHandler{``0})">
+            <summary>
+                Register a new listener.
+            </summary>
+            <typeparam name="T">The event to be listening.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <returns>The uid of the listener.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Register``1(MGS.EventManager.EventHandler{``0},System.UInt32)">
+            <summary>
+                Register a new listener.
+            </summary>
+            <typeparam name="T">The event to be listening.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <param name="priority">
+                The priority of the listener, higher means that this listener will be called first. Default is
+                0.
+            </param>
+            <returns>The uid of the listener.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.AddListener``1(MGS.EventManager.EventHandler{``0})">
+            <summary>
+                Adds a new listener.
+            </summary>
+            <typeparam name="T">The event to be listening.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <returns>The uid of the listener.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.AddListener``1(MGS.EventManager.EventHandler{``0},System.UInt32)">
+            <summary>
+                Adds a new listener.
+            </summary>
+            <typeparam name="T">The event to be listening.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <param name="priority">
+                The priority of the listener, higher means that this listener will be called first. Default is
+                0.
+            </param>
+            <returns>The uid of the listener.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Unregister``1(MGS.EventManager.EventHandler{``0})">
+            <summary>
+                Unregister a listener.
+            </summary>
+            <typeparam name="T">The wanted event type to be unregistered.</typeparam>
+            <param name="eventHandler">The listener implementation to be removed.</param>
+            <returns>
+                True if the listener is successfully unregistered; otherwise, false. This method also returns false if
+                listener was not found in the listeners list.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Unregister(System.UInt32)">
+            <summary>
+                Unregister a listener.
+            </summary>
+            <param name="uid">The expected uid of the listener to be unregistered.</param>
+            <returns>
+                True if the listener is successfully unregistered; otherwise, false. This method also returns false if
+                listener was not found in the listeners list.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.RemoveListener``1(MGS.EventManager.EventHandler{``0})">
+            <summary>
+                Removes a already added listener.
+            </summary>
+            <typeparam name="T">The wanted event type to be removed.</typeparam>
+            <param name="eventHandler">The listener implementation to be removed.</param>
+            <returns>
+                True if the listener is successfully removed; otherwise, false. This method also returns false if listener was
+                not found in the listeners list.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.RemoveListener(System.UInt32)">
+            <summary>
+                Removes a already added listener.
+            </summary>
+            <param name="uid">The expected uid of the listener to be removed.</param>
+            <returns>
+                True if the listener is successfully removed; otherwise, false. This method also returns false if listener was
+                not found in the listeners list.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Clear">
+            <summary>
+                Removes all added listeners.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Clear``1">
+            <summary>
+                Removes all added listeners of the current event type.
+            </summary>
+            <typeparam name="T">The event type to be cleared.</typeparam>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.IsRegistered``1(MGS.EventManager.EventHandler{``0})">
+            <summary>
+                Determines whether the listener is added to the listeners list.
+            </summary>
+            <typeparam name="T">The event type of the listener.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <returns>True if listener is found in the listeners list; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.IsRegister(System.UInt32)">
+            <summary>
+                Determines whether the listener is added to the listeners list.
+            </summary>
+            <param name="uid">The expected uid of the listener.</param>
+            <returns>True if listener is found in the listeners list; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.ContainsListener``1(MGS.EventManager.EventHandler{``0})">
+            <summary>
+                Determines whether the listener is added to the listeners list.
+            </summary>
+            <typeparam name="T">The event type of the listener.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <returns>True if listener is found in the listeners list; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.ContainsListener(System.UInt32)">
+            <summary>
+                Determines whether the listener is added to the listeners list.
+            </summary>
+            <param name="uid">The expected uid of the listener.</param>
+            <returns>True if listener is found in the listeners list; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.GetListenersCount">
+            <summary>
+                Gets the number of added listeners.
+            </summary>
+            <returns>The number of listeners currently added.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.GetListenersCount``1">
+            <summary>
+                Gets the number of added listeners of the current event type.
+            </summary>
+            <typeparam name="T">The wanted event type to get the listeners count.</typeparam>
+            <returns>The number of listeners currently added with the current event type.</returns>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Dispatch``1(``0)">
+            <summary>
+                Dispatch a new message to the listeners attached to the current event type.
+            </summary>
+            <typeparam name="T">The event type to be dispatched.</typeparam>
+            <param name="eventArgs">The argument class to pass to the listeners.</param>
+        </member>
+        <member name="M:MGS.EventManager.EventManager.Dispatch``1(System.Object,``0)">
+            <summary>
+                Dispatch a new message to the listeners attached to the current event type.
+            </summary>
+            <typeparam name="T">The event type to be dispatched.</typeparam>
+            <param name="sender">
+                The sender of this message, can be null if the listener don't need to know where the messages come
+                from.
+            </param>
+            <param name="eventArgs">The argument class to pass to the listeners.</param>
+        </member>
+        <member name="T:MGS.EventManager.Internal.EventList`1">
+            <summary>
+                Represents a event list to store listeners attached to this current event. This class cannot be inherited.
+            </summary>
+            <typeparam name="T">The expected event type of be listening.</typeparam>
+        </member>
+        <member name="F:MGS.EventManager.Internal.EventList`1._listeners">
+            <summary>
+                The instance of the linked list of listeners.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Internal.EventList`1.Listeners">
+            <summary>
+                Gets a cache of the listeners linked list instance. Creates a new instance if the instance doesn't exists.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Internal.EventList`1.Count">
+            <summary>
+                Gets the number of elements contained in the IEventList.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Add(MGS.EventManager.EventHandler{`0},System.UInt32)">
+            <summary>
+                Adds a new listener.
+            </summary>
+            <typeparam name="T">The event to be listening.</typeparam>
+            <param name="eventHandler">The listener implementation.</param>
+            <param name="priority">
+                The priority of the listener, higher means that this listener will be called first. Default is
+                0.
+            </param>
+            <returns>The uid of the listener.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Remove(MGS.EventManager.EventHandler{`0})">
+            <summary>
+                Removes the first occurrence of a specific listener from the EventList.
+            </summary>
+            <param name="eventHandler">The listener implementation method.</param>
+            <returns>
+                True if listener is successfully removed; otherwise, false. This method also returns false if the listener was
+                not found in the EventList.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Remove(System.UInt32)">
+            <summary>
+                Removes the first occurrence of a specific listener uid from the IEventList.
+            </summary>
+            <param name="uid"></param>
+            <returns>
+                True if listener is successfully removed; otherwise, false. This method also returns false if the listener was
+                not found in the EventList.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Clear">
+            <summary>
+                Removes all listeners from the EventList.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Contains(MGS.EventManager.EventHandler{`0})">
+            <summary>
+                Determines whether the EventList contains a specific listener.
+            </summary>
+            <param name="eventHandler">The listener implementation method.</param>
+            <returns>True if item is found in the EventList; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Contains(System.UInt32)">
+            <summary>
+                Determines whether the EventList contains a specific listener.
+            </summary>
+            <param name="uid">The expected listener uid.</param>
+            <returns>True if item is found in the EventList; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.Invoke(System.Object,`0)">
+            <summary>
+                Invokes the all the listeners implementation method.
+            </summary>
+            <param name="sender">The sender of the message.</param>
+            <param name="eventArgs">The arguments to be passed to the listeners.</param>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventList`1.ToString">
+            <summary>
+                Returns a string that represents the current object.
+            </summary>
+            <returns>A string that represents the current object.</returns>
+        </member>
+        <member name="T:MGS.EventManager.Internal.EventListNode`1">
+            <summary>
+                Represents a listener in a EventList. This class cannot be inherited.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:MGS.EventManager.Internal.EventListNode`1._uid">
+            <summary>
+                The listener uid.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.Internal.EventListNode`1._eventHandler">
+            <summary>
+                The listener implementation.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.Internal.EventListNode`1._priority">
+            <summary>
+                The priority of call of this listener.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventListNode`1.#ctor(MGS.EventManager.EventHandler{`0},System.UInt32)">
+            <summary>
+                Creates a new instance of the EventListNode to represent a listener.
+            </summary>
+            <param name="eventHandler">The listener implementation.</param>
+            <param name="priority">The priority to be called.</param>
+        </member>
+        <member name="P:MGS.EventManager.Internal.EventListNode`1.UID">
+            <summary>
+                The listener uid.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Internal.EventListNode`1.Priority">
+            <summary>
+                The priority of call of this listener.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventListNode`1.Invoke(System.Object,`0)">
+            <summary>
+                Invokes the listener implementation method.
+            </summary>
+            <param name="sender">The sender of the message.</param>
+            <param name="eventArgs">The arguments to be passed to the listener.</param>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventListNode`1.Equals(MGS.EventManager.EventHandler{`0})">
+            <summary>
+                Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="other">The object to compare with the current object.</param>
+            <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventListNode`1.Equals(System.UInt32)">
+            <summary>
+                Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="other">The object to compare with the current object.</param>
+            <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventListNode`1.GetHashCode">
+            <summary>
+                Gets the hash code.
+            </summary>
+            <returns>A unique hash code based in the object uid.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.EventListNode`1.ToString">
+            <summary>
+                Returns a string that represents the current object.
+            </summary>
+            <returns>A string that represents the current object.</returns>
+        </member>
+        <member name="T:MGS.EventManager.Internal.IEventList">
+            <summary>
+                Represents a event list to store listeners attached to this current event.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Internal.IEventList.Count">
+            <summary>
+                Gets the number of elements contained in the IEventList.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.Internal.IEventList.Remove(System.UInt32)">
+            <summary>
+                Removes the first occurrence of a specific listener uid from the IEventList.
+            </summary>
+            <param name="uid"></param>
+            <returns>
+                True if listener is successfully removed; otherwise, false. This method also returns false if the listener was
+                not found in the IEventList.
+            </returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.IEventList.Contains(System.UInt32)">
+            <summary>
+                Determines whether the IEventList contains a specific listener.
+            </summary>
+            <param name="uid">The expected listener uid.</param>
+            <returns>True if item is found in the IEventList; otherwise, false.</returns>
+        </member>
+        <member name="M:MGS.EventManager.Internal.IEventList.Clear">
+            <summary>
+                Removes all listeners from the IEventList.
+            </summary>
+        </member>
+        <member name="T:MGS.EventManager.Internal.UIDGenerator">
+            <summary>
+                Managers a uid serial generation.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.Internal.UIDGenerator._current">
+            <summary>
+                The current generated serial uid.
+            </summary>
+        </member>
+        <member name="M:MGS.EventManager.Internal.UIDGenerator.GetNext">
+            <summary>
+                Generates a new serial uid.
+            </summary>
+            <returns>The new uid.</returns>
+        </member>
+        <member name="T:MGS.EventManager.Settings.EventManagerSettings">
+            <summary>
+                This class controls the EventManager library settings. Can be modified through the MGS/EventManager/Settings menu.
+                This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.Settings.EventManagerSettings._safeDispatch">
+            <summary>
+                Flags if the EventManager need to dispatch the messages in a safe mode. This can make the dispatched be slower but
+                exceptions will be handled.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.Settings.EventManagerSettings._logService">
+            <summary>
+                Which type of log service the EventManager will use.
+            </summary>
+        </member>
+        <member name="F:MGS.EventManager.Settings.EventManagerSettings._instance">
+            <summary>
+                Stores a current cache of the EventManagerSettings.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Settings.EventManagerSettings.Instance">
+            <summary>
+                Gets a instance of the EventManagerSettings, if no settings found; return a empty settings.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Settings.EventManagerSettings.SafeDispatch">
+            <summary>
+                Checks if exceptions inside of listeners need to be handled.
+            </summary>
+        </member>
+        <member name="P:MGS.EventManager.Settings.EventManagerSettings.LogService">
+            <summary>
+                Which type of log service the EventManager will use.
+            </summary>
+        </member>
+    </members>
+</doc>
