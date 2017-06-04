@@ -43,6 +43,9 @@ public class GameElement : MonoBehaviour {
             b.a = 0;
             Color c = ColorUtils.Lerp(a, b, f);
             foreach (SpriteRenderer spriteRenderer in renderers) {
+                if (spriteRenderer == null) {
+                    continue;
+                }
                 spriteRenderer.color = c;
             }
         }, 0, 1, 0.33f).setEase(LeanTweenType.easeOutSine);
