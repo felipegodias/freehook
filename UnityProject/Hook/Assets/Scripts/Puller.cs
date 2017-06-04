@@ -12,6 +12,10 @@ public class Puller : GameElement {
 
     private bool isClear;
 
+    public Transform Content {
+        get { return this.content; }
+    }
+
     public override bool IsClear {
         get { return this.isClear; }
     }
@@ -41,7 +45,9 @@ public class Puller : GameElement {
         float time = distance / 6;
         LeanTween.value(this.gameObject, f => {
             this.content.localPosition = from + (dif * f);
-        }, 0, 1, time);
+        }, 0, 1, time).setOnComplete(() => {
+            Destroy(this.content.gameObject);
+        });
         LeanTween.value(this.gameObject, f => {
             this.puller.transform.localScale = new Vector3(1, 1 + f, 1);
         }, 0, 1, 0.25f).setEase(LeanTweenType.easeOutSine);
