@@ -11,7 +11,7 @@ public class CanvasController : MonoBehaviour {
     private Text stageNumberText;
 
     [SerializeField]
-    private GameObject adsScreen;
+    private UIAdScreen adsScreen;
 
     private void Awake() {
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
@@ -64,7 +64,7 @@ public class CanvasController : MonoBehaviour {
 
     private void OnHeartsCountWasChanged(object sender, OnHeartsCountWasChanged onHeartsCountWasChanged) {
         if (onHeartsCountWasChanged.HeartCount == 0) {
-            adsScreen.gameObject.SetActive(true);
+            this.adsScreen.Show();
         }
     }
 

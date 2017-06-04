@@ -9,6 +9,22 @@ public class UIAdScreen : MonoBehaviour {
     private Button watchAdsButton;
     [SerializeField]
     private Button removeAdsButton;
+    [SerializeField]
+    private CanvasGroup canvasGroup;
+
+    public void Show() {
+        this.canvasGroup.alpha = 0;
+        this.canvasGroup.interactable = false;
+        this.gameObject.SetActive(true);
+        LeanTween.value(this.gameObject, f => {
+            this.canvasGroup.alpha = f;
+            this.canvasGroup.interactable = true;
+        }, 0, 1, 0.33f).setDelay(1).setEase(LeanTweenType.easeOutSine);
+    }
+
+    public void Hide() {
+        this.gameObject.SetActive(false);
+    }
 
     private void Awake() {
         this.watchAdsButton.onClick.AddListener(this.OnWatchAdsButtonClick);
@@ -31,7 +47,7 @@ public class UIAdScreen : MonoBehaviour {
             EventManager.Dispatch(onHeartsCountWasChanged);
             EventManager.Dispatch(new OnWatchAdsCompleted());
         }
-        this.gameObject.SetActive(false);
+        this.Hide();
     }
 
     private void OnRemoveAdsButtonClick() {
