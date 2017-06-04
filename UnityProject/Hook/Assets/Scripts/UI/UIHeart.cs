@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIHeart : MonoBehaviour {
 
     [SerializeField]
-    private Text empty;
+    private TextMeshProUGUI empty;
     [SerializeField]
-    private Text fill;
+    private TextMeshProUGUI fill;
 
     private bool isFill;
 
