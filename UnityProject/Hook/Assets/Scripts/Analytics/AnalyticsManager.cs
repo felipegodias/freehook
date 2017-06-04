@@ -20,10 +20,12 @@ public class AnalyticsManager : MonoBehaviour {
     }
 
     private IEnumerator FlushEvents() {
-        foreach (IAnalytics analytics in this.analytics) {
-            analytics.FlushEvents();
+        while (true) {
+            foreach (IAnalytics analytics in this.analytics) {
+                analytics.FlushEvents();
+            }
+            yield return new WaitForSeconds(1);
         }
-        yield return new WaitForSeconds(1);
     }
 
     private void OnApplicationStart(object sender, OnApplicationStart eventArgs) {

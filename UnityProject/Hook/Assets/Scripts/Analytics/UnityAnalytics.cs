@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Analytics;
 #if UNITY_EDITOR
 using UnityEditor.Analytics;
+
 #endif
 
 public class UnityAnalytics : IAnalytics {
@@ -26,23 +27,27 @@ public class UnityAnalytics : IAnalytics {
 
     public void OnApplicationStart() {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
-        Analytics.CustomEvent(ON_APPLICATION_START_EVENT_NAME, eventArgs);
+        AnalyticsResult analyticsResult = Analytics.CustomEvent(ON_APPLICATION_START_EVENT_NAME, eventArgs);
+        Debug.Log("OnApplicationStart -> " + analyticsResult);
     }
 
     public void OnStageCompleted(int stage) {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(STAGE_ARGS_NAME, stage);
-        Analytics.CustomEvent(ON_STAGE_COMPLETE_EVENT_NAME, eventArgs);
+        AnalyticsResult analyticsResult = Analytics.CustomEvent(ON_STAGE_COMPLETE_EVENT_NAME, eventArgs);
+        Debug.Log("OnStageCompleted -> " + analyticsResult);
     }
 
     public void OnStageFail(int stage) {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(STAGE_ARGS_NAME, stage);
-        Analytics.CustomEvent(ON_STAGE_FAIL_EVENT_NAME, eventArgs);
+        AnalyticsResult analyticsResult = Analytics.CustomEvent(ON_STAGE_FAIL_EVENT_NAME, eventArgs);
+        Debug.Log("OnStageCompleted -> " + analyticsResult);
     }
 
     public void FlushEvents() {
-        Analytics.FlushEvents();
+        AnalyticsResult analyticsResult = Analytics.FlushEvents();
+        Debug.Log("FlushEvents -> " + analyticsResult);
     }
 
 }
