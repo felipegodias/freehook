@@ -1,4 +1,8 @@
-﻿public interface IAnalytics {
+﻿using UnityEngine.Advertisements;
+
+public interface IAnalytics {
+
+    void OnWatchAdsComplete(ShowResult result);
 
     void OnApplicationStart();
 

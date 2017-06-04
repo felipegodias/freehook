@@ -38,14 +38,14 @@ public class UIAdScreen : MonoBehaviour {
                 Player.SetHearts(5);
                 OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(5);
                 EventManager.Dispatch(onHeartsCountWasChanged);
-                EventManager.Dispatch(new OnWatchAdsCompleted());
+                EventManager.Dispatch(new OnWatchAdsCompleted(result));
             };
             Advertisement.Show(showOptions);
         } else {
             Player.SetHearts(5);
             OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(5);
             EventManager.Dispatch(onHeartsCountWasChanged);
-            EventManager.Dispatch(new OnWatchAdsCompleted());
+            EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Failed));
         }
         this.Hide();
     }

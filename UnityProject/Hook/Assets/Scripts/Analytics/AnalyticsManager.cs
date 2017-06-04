@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using MGS.EventManager;
 using UnityEngine;
-#if UNITY_EDITOR
-#endif
+using UnityEngine.Advertisements;
 
 public class AnalyticsManager : MonoBehaviour {
 
@@ -10,6 +9,7 @@ public class AnalyticsManager : MonoBehaviour {
 
     private void Awake() {
         this.analytics = new IAnalytics[] {new UnityAnalytics()};
+        EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.AddListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
@@ -25,6 +25,13 @@ public class AnalyticsManager : MonoBehaviour {
                 analytics.FlushEvents();
             }
             yield return new WaitForSeconds(1);
+        }
+    }
+
+    private void OnWatchAdsCompleted(object sender, OnWatchAdsCompleted eventArgs) {
+        ShowResult result = eventArgs.Result;
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnWatchAdsComplete(result);
         }
     }
 

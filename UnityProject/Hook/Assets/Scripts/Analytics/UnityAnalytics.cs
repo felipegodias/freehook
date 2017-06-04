@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.Analytics;
 #if UNITY_EDITOR
 using UnityEditor.Analytics;
@@ -7,6 +8,8 @@ using UnityEditor.Analytics;
 #endif
 
 public class UnityAnalytics : IAnalytics {
+
+    private const string ON_WATCH_ADS_COMPLETED = "hook.ads.completed";
 
     private const string ON_APPLICATION_START_EVENT_NAME = "hook.aplication.start";
 
@@ -16,6 +19,8 @@ public class UnityAnalytics : IAnalytics {
 
     private const string STAGE_ARGS_NAME = "stage";
 
+    private const string ADS_RESULT_ARGS_NAME = "result";
+
     public UnityAnalytics() {
 #if UNITY_EDITOR
         AnalyticsSettings.enabled = true;
@@ -23,6 +28,13 @@ public class UnityAnalytics : IAnalytics {
 #endif
         Analytics.enabled = true;
         Analytics.SetUserId(SystemInfo.deviceUniqueIdentifier);
+    }
+
+    public void OnWatchAdsComplete(ShowResult result) {
+        IDictionary<string, object> eventArgs = new Dictionary<string, object>();
+        eventArgs.Add(ADS_RESULT_ARGS_NAME, result.ToString().ToLower());
+        AnalyticsResult analyticsResult = Analytics.CustomEvent(ON_WATCH_ADS_COMPLETED, eventArgs);
+        Debug.Log("OnWatchAdsComplete -> " + analyticsResult);
     }
 
     public void OnApplicationStart() {
