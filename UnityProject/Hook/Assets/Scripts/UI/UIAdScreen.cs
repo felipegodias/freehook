@@ -35,15 +35,17 @@ public class UIAdScreen : MonoBehaviour {
         if (Advertisement.IsReady()) {
             ShowOptions showOptions = new ShowOptions();
             showOptions.resultCallback = result => {
-                Player.SetHearts(5);
-                OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(5);
+                int maxHearts = GameSettings.MAX_HEARTS;
+                Player.SetHearts(maxHearts);
+                OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts);
                 EventManager.Dispatch(onHeartsCountWasChanged);
                 EventManager.Dispatch(new OnWatchAdsCompleted(result));
             };
             Advertisement.Show(showOptions);
         } else {
-            Player.SetHearts(5);
-            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(5);
+            int maxHearts = GameSettings.MAX_HEARTS;
+            Player.SetHearts(maxHearts);
+            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts);
             EventManager.Dispatch(onHeartsCountWasChanged);
             EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Failed));
         }

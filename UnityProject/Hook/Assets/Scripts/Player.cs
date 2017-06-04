@@ -3,7 +3,8 @@
 public class Player {
 
     public static int GetHearts() {
-        return PlayerPrefs.GetInt("HEARTS", 5);
+        int defaultMaxHearts = GameSettings.MAX_HEARTS;
+        return PlayerPrefs.GetInt("HEARTS", defaultMaxHearts);
     }
 
     public static void SetHearts(int hearts) {

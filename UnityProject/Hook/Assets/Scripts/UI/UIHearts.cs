@@ -6,6 +6,12 @@ public class UIHearts : MonoBehaviour {
     private UIHeart[] uiHearts;
 
     private void Awake() {
+        UIHeart uiHeart = this.GetComponentInChildren<UIHeart>();
+        int maxHearts = GameSettings.MAX_HEARTS;
+        for (int i = 0; i < maxHearts - 1; i++) {
+            Instantiate(uiHeart, this.transform, false);
+        }
+
         this.uiHearts = this.GetComponentsInChildren<UIHeart>();
         EventManager.AddListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
     }
@@ -15,7 +21,8 @@ public class UIHearts : MonoBehaviour {
     }
 
     private void UpdateHeartCount(int heartCount) {
-        int hearts = 5 - heartCount;
+        int maxHearts = GameSettings.MAX_HEARTS;
+        int hearts = maxHearts - heartCount;
         for (int i = 0; i < this.uiHearts.Length; i++) {
             if (i >= hearts) {
                 this.uiHearts[i].SetFill();
