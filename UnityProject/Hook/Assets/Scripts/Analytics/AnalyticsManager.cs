@@ -24,7 +24,7 @@ public class AnalyticsManager : MonoBehaviour {
             foreach (IAnalytics analytics in this.analytics) {
                 analytics.FlushEvents();
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(5);
         }
     }
 
