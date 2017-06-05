@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Globalization;
 using MGS.EventManager;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
     private Stage currentStage;
+
+    private string stageToLoad;
 
     private void Awake() {
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
@@ -20,24 +23,35 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            EventManager.Dispatch(new OnStageCompleted(0));
+        if (Input.GetKeyDown(KeyCode.Keypad0)) {
+            this.stageToLoad += "0";
+        } else if (Input.GetKeyDown(KeyCode.Keypad1)) {
+            this.stageToLoad += "1";
         } else if (Input.GetKeyDown(KeyCode.Keypad2)) {
-            EventManager.Dispatch(new OnStageCompleted(1));
+            this.stageToLoad += "2";
         } else if (Input.GetKeyDown(KeyCode.Keypad3)) {
-            EventManager.Dispatch(new OnStageCompleted(2));
+            this.stageToLoad += "3";
         } else if (Input.GetKeyDown(KeyCode.Keypad4)) {
-            EventManager.Dispatch(new OnStageCompleted(3));
+            this.stageToLoad += "4";
         } else if (Input.GetKeyDown(KeyCode.Keypad5)) {
-            EventManager.Dispatch(new OnStageCompleted(4));
+            this.stageToLoad += "5";
         } else if (Input.GetKeyDown(KeyCode.Keypad6)) {
-            EventManager.Dispatch(new OnStageCompleted(5));
+            this.stageToLoad += "6";
         } else if (Input.GetKeyDown(KeyCode.Keypad7)) {
-            EventManager.Dispatch(new OnStageCompleted(6));
+            this.stageToLoad += "7";
         } else if (Input.GetKeyDown(KeyCode.Keypad8)) {
-            EventManager.Dispatch(new OnStageCompleted(7));
+            this.stageToLoad += "8";
         } else if (Input.GetKeyDown(KeyCode.Keypad9)) {
-            EventManager.Dispatch(new OnStageCompleted(8));
+            this.stageToLoad += "9";
+        } else if (Input.GetKeyDown(KeyCode.KeypadPeriod)) {
+            this.stageToLoad = "";
+        } else if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
+            if (this.stageToLoad != "") {
+                int stage = int.Parse(this.stageToLoad);
+                Debug.Log(stage);
+                this.stageToLoad = "";
+                EventManager.Dispatch(new OnStageCompleted(stage - 2));
+            }
         }
     }
 
