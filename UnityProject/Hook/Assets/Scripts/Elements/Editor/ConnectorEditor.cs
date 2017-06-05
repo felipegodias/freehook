@@ -26,7 +26,9 @@ public class ConnectorEditor : Editor {
             for (int i = 0; i < this.lines.arraySize; i++) {
                 SerializedProperty line = this.lines.GetArrayElementAtIndex(i);
                 SpriteRenderer spriteRenderer = line.objectReferenceValue as SpriteRenderer;
-                DestroyImmediate(spriteRenderer.gameObject);
+                if (spriteRenderer != null) {
+                    DestroyImmediate(spriteRenderer.gameObject);
+                }
             }
 
             this.lines.ClearArray();
