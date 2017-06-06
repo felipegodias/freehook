@@ -12,6 +12,8 @@ public class Puller : GameElement {
 
     private bool isClear;
 
+    private bool isBreaked;
+
     public Transform Content {
         get { return this.content; }
     }
@@ -56,7 +58,25 @@ public class Puller : GameElement {
     }
 
     public void BreakPull() {
+        if (this.isBreaked) {
+            return;
+        }
+        this.isBreaked = true;
         LeanTween.cancel(this.gameObject);
+
+        if (this.isStartedToPull) {
+            Vector3 from = this.content.localPosition;
+            Vector3 to = -this.pullerEnd.localPosition;
+            Vector3 dif = -(to - from).normalized * 0.125f;
+            LeanTween.value(this.gameObject, f => {
+                this.content.localPosition = from + dif * f;
+            }, 0, 1, 0.2f).setOnComplete(() => {
+                LeanTween.value(this.gameObject, f => {
+                    this.content.localPosition = from + dif * (1 - f);
+                }, 0, 1, 0.1f);
+            });
+        }
+
         this.stage.FailStage();
     }
 
