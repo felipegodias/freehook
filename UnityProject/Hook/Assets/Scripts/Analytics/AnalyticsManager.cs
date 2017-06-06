@@ -43,6 +43,9 @@ public class AnalyticsManager : MonoBehaviour {
 
     private void OnStageCompleted(object sender, OnStageCompleted eventArgs) {
         int stage = eventArgs.Stage;
+        if (stage < Player.GetLastStage()) {
+            return;
+        }
         foreach (IAnalytics analytics in this.analytics) {
             analytics.OnStageCompleted(stage);
         }
@@ -50,6 +53,9 @@ public class AnalyticsManager : MonoBehaviour {
 
     private void OnStageFail(object sender, OnStageFail eventArgs) {
         int stage = eventArgs.Stage;
+        if (stage < Player.GetLastStage()) {
+            return;
+        }
         foreach (IAnalytics analytics in this.analytics) {
             analytics.OnStageFail(stage);
         }
