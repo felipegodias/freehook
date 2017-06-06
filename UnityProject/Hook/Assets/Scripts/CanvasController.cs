@@ -13,12 +13,53 @@ public class CanvasController : MonoBehaviour {
     [SerializeField]
     private UIAdScreen adsScreen;
 
+    [SerializeField]
+    private Button nextStageButton;
+    [SerializeField]
+    private Button previousStageButton;
+
+    private bool isSwitchStageButtonBlocked;
+
     private void Awake() {
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
         EventManager.AddListener<OnStageLoaded>(this.OnStageLoaded);
         EventManager.AddListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
 
+        this.nextStageButton.onClick.AddListener(this.OnNextStageButtonClicked);
+        this.previousStageButton.onClick.AddListener(this.OnPreviousStageButtonClicked);
+    }
+
+    private void OnNextStageButtonClicked() {
+        if (this.isSwitchStageButtonBlocked) {
+            return;
+        }
+
+        LeanTween.value(this.nextStageButton.gameObject, f => {
+            this.nextStageButton.transform.localScale = Vector3.one + (Vector3.one * f) * 0.1f;
+        }, 0, 1, 0.5f).setEase(LeanTweenType.punch); ;
+
+        Color color = this.fade.color;
+        color.a = 1;
+        this.fade.color = color;
+        this.fade.raycastTarget = true;
+        EventManager.Dispatch(new OnStageSwitch(1));
+    }
+
+    private void OnPreviousStageButtonClicked() {
+        if (this.isSwitchStageButtonBlocked) {
+            return;
+        }
+
+        LeanTween.value(this.previousStageButton.gameObject, f => {
+            this.previousStageButton.transform.localScale = Vector3.one + (Vector3.one * f) * 0.1f;
+        }, 0, 1, 0.5f).setEase(LeanTweenType.punch); ;
+
+        Color color = this.fade.color;
+        color.a = 1;
+        this.fade.color = color;
+        this.fade.raycastTarget = true;
+        EventManager.Dispatch(new OnStageSwitch(-1));
     }
 
     private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
@@ -31,6 +72,11 @@ public class CanvasController : MonoBehaviour {
 
     private void OnStageLoaded(object sender, OnStageLoaded onStageLoaded) {
         this.fade.raycastTarget = true;
+        this.isSwitchStageButtonBlocked = true;
+
+        this.previousStageButton.gameObject.SetActive(onStageLoaded.Stage != 0);
+        this.nextStageButton.gameObject.SetActive(onStageLoaded.Stage != Player.GetLastStage());
+
         if (onStageLoaded.Stage > 0) {
             int stage = onStageLoaded.Stage + 1;
             this.stageNumberText.text = stage.ToString();
@@ -38,18 +84,19 @@ public class CanvasController : MonoBehaviour {
                 Color color = this.stageNumberText.color;
                 color.a = f;
                 this.stageNumberText.color = color;
-            }, 0, 1, 0.5f).setDelay(0).setEase(LeanTweenType.easeOutSine);
+            }, 0, 1, 0.2f).setDelay(0).setEase(LeanTweenType.easeOutSine);
             LeanTween.value(this.gameObject, f => {
                 Color color = this.stageNumberText.color;
                 color.a = 1 - f;
                 this.stageNumberText.color = color;
-            }, 0, 1, 0.5f).setDelay(1.5f).setEase(LeanTweenType.easeOutSine);
+            }, 0, 1, 0.2f).setDelay(1.3f).setEase(LeanTweenType.easeOutSine);
             LeanTween.value(this.gameObject, f => {
                 Color color = this.fade.color;
                 color.a = 1 - f;
                 this.fade.color = color;
-            }, 0, 1, 0.5f).setDelay(2).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
+            }, 0, 1, 0.25f).setDelay(1.5f).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
                 this.fade.raycastTarget = false;
+                this.isSwitchStageButtonBlocked = false;
             });
         } else {
             LeanTween.value(this.gameObject, f => {
@@ -58,6 +105,7 @@ public class CanvasController : MonoBehaviour {
                 this.fade.color = color;
             }, 0, 1, 0.5f).setDelay(0.5f).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
                 this.fade.raycastTarget = false;
+                this.isSwitchStageButtonBlocked = false;
             });
         }
     }
@@ -73,7 +121,7 @@ public class CanvasController : MonoBehaviour {
             Color color = this.fade.color;
             color.a = f;
             this.fade.color = color;
-        }, 0, 1, 0.5f).setDelay(0.5f).setEase(LeanTweenType.easeOutSine);
+        }, 0, 1, 0.25f).setDelay(0.25f).setEase(LeanTweenType.easeOutSine);
     }
 
     private void OnDestroy() {

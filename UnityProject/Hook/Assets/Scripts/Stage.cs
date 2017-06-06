@@ -11,6 +11,10 @@ public class Stage : MonoBehaviour {
     private bool stageFail;
     private bool stageClear;
 
+    public int StageNum {
+        get { return this.stage; }
+    }
+
     public void RegisterNewPuller(Puller puller) {
         this.pullers.Add(puller);
     }

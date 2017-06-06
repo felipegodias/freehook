@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Globalization;
 using MGS.EventManager;
 using UnityEngine;
 
@@ -13,12 +12,13 @@ public class GameManager : MonoBehaviour {
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
         EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
+        EventManager.AddListener<OnStageSwitch>(this.OnStageSwitch);
     }
 
     private void Start() {
         EventManager.Dispatch(new OnApplicationStart());
         int lastStage = Player.GetLastPlayedStage();
-        IEnumerator routine = this.LoadNewStage(lastStage);
+        IEnumerator routine = this.LoadNewStage(lastStage, false);
         this.StartCoroutine(routine);
     }
 
@@ -50,20 +50,27 @@ public class GameManager : MonoBehaviour {
                 int stage = int.Parse(this.stageToLoad);
                 Debug.Log(stage);
                 this.stageToLoad = "";
-                EventManager.Dispatch(new OnStageCompleted(stage - 2));
+                IEnumerator routine = this.LoadNewStage(stage, true);
+                this.StartCoroutine(routine);
             }
         }
     }
 
+    private void OnStageSwitch(object sender, OnStageSwitch eventArgs) {
+        int stageToLoad = this.currentStage.StageNum + eventArgs.Increment;
+        IEnumerator routine = this.LoadNewStage(stageToLoad, true);
+        this.StartCoroutine(routine);
+    }
+
     private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
         int stageToLoad = onStageCompleted.Stage + 1;
-        IEnumerator routine = this.LoadNewStage(stageToLoad);
+        IEnumerator routine = this.LoadNewStage(stageToLoad, false);
         this.StartCoroutine(routine);
     }
 
     private void OnWatchAdsCompleted(object sender, OnWatchAdsCompleted onWatchAdsCompleted) {
         int lastStage = Player.GetLastPlayedStage();
-        IEnumerator routine = this.LoadNewStage(lastStage);
+        IEnumerator routine = this.LoadNewStage(lastStage, false);
         this.StartCoroutine(routine);
     }
 
@@ -76,13 +83,16 @@ public class GameManager : MonoBehaviour {
 
         if (heartCount > 0) {
             int stageToLoad = onStageFail.Stage;
-            IEnumerator routine = this.LoadNewStage(stageToLoad);
+            IEnumerator routine = this.LoadNewStage(stageToLoad, false);
             this.StartCoroutine(routine);
         }
     }
 
-    private IEnumerator LoadNewStage(int stageToLoad) {
-        yield return new WaitForSeconds(1);
+    private IEnumerator LoadNewStage(int stageToLoad, bool imediatly) {
+        if (!imediatly) {
+            yield return new WaitForSeconds(0.5f);
+        }
+
         if (this.currentStage != null) {
             Destroy(this.currentStage.gameObject);
         }
