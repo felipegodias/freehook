@@ -32,7 +32,7 @@ public class UIAdScreen : MonoBehaviour {
     }
 
     private void OnWatchAdsButtonClick() {
-        if (Advertisement.IsReady()) {
+        if (Advertisement.IsReady("rewardedVideo")) {
             ShowOptions showOptions = new ShowOptions();
             showOptions.resultCallback = result => {
                 int maxHearts = GameSettings.MAX_HEARTS;
@@ -41,7 +41,7 @@ public class UIAdScreen : MonoBehaviour {
                 EventManager.Dispatch(onHeartsCountWasChanged);
                 EventManager.Dispatch(new OnWatchAdsCompleted(result));
             };
-            Advertisement.Show(showOptions);
+            Advertisement.Show("rewardedVideo", showOptions);
         } else {
             int maxHearts = GameSettings.MAX_HEARTS;
             Player.SetHearts(maxHearts);
