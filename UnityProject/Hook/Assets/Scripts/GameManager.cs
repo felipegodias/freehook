@@ -47,11 +47,11 @@ public class GameManager : MonoBehaviour {
             this.stageToLoad = "";
         } else if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
             if (this.stageToLoad != "") {
-                int stage = int.Parse(this.stageToLoad);
-                Debug.Log(stage);
+                int stage = int.Parse(this.stageToLoad) - 1;
                 this.stageToLoad = "";
-                IEnumerator routine = this.LoadNewStage(stage, true);
-                this.StartCoroutine(routine);
+                int increment = stage - this.currentStage.StageNum;
+                EventManager.Dispatch(new OnStageSwitch(increment));
+                Debug.Log(stage);
             }
         }
     }

@@ -25,10 +25,13 @@ public class CanvasController : MonoBehaviour {
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
         EventManager.AddListener<OnStageLoaded>(this.OnStageLoaded);
         EventManager.AddListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
+        EventManager.AddListener<OnStageSwitch>(this.OnStageSwitch);
 
         this.nextStageButton.onClick.AddListener(this.OnNextStageButtonClicked);
         this.previousStageButton.onClick.AddListener(this.OnPreviousStageButtonClicked);
     }
+
+
 
     private void OnNextStageButtonClicked() {
         if (this.isSwitchStageButtonBlocked) {
@@ -39,10 +42,7 @@ public class CanvasController : MonoBehaviour {
             this.nextStageButton.transform.localScale = Vector3.one + (Vector3.one * f) * 0.1f;
         }, 0, 1, 0.5f).setEase(LeanTweenType.punch); ;
 
-        Color color = this.fade.color;
-        color.a = 1;
-        this.fade.color = color;
-        this.fade.raycastTarget = true;
+
         EventManager.Dispatch(new OnStageSwitch(1));
     }
 
@@ -55,11 +55,14 @@ public class CanvasController : MonoBehaviour {
             this.previousStageButton.transform.localScale = Vector3.one + (Vector3.one * f) * 0.1f;
         }, 0, 1, 0.5f).setEase(LeanTweenType.punch); ;
 
+        EventManager.Dispatch(new OnStageSwitch(-1));
+    }
+
+    private void OnStageSwitch(object sender, OnStageSwitch eventargs) {
         Color color = this.fade.color;
         color.a = 1;
         this.fade.color = color;
         this.fade.raycastTarget = true;
-        EventManager.Dispatch(new OnStageSwitch(-1));
     }
 
     private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
