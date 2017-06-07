@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        EventManager.Dispatch(new OnApplicationStart());
-        int lastStage = Player.GetLastPlayedStage();
-        IEnumerator routine = this.LoadNewStage(lastStage, false);
-        this.StartCoroutine(routine);
+        int hearts = Player.GetHearts();
+        if (hearts > 0) {
+            EventManager.Dispatch(new OnApplicationStart());
+            int lastStage = Player.GetLastPlayedStage();
+            IEnumerator routine = this.LoadNewStage(lastStage, false);
+            this.StartCoroutine(routine);
+        }
     }
 
     private void Update() {

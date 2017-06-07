@@ -31,6 +31,16 @@ public class CanvasController : MonoBehaviour {
         this.previousStageButton.onClick.AddListener(this.OnPreviousStageButtonClicked);
     }
 
+    private void Start() {
+        this.nextStageButton.gameObject.SetActive(false);
+        this.previousStageButton.gameObject.SetActive(false);
+
+        int hearts = Player.GetHearts();
+        if (hearts <= 0) {
+            this.adsScreen.Show();
+        }
+    }
+
 
 
     private void OnNextStageButtonClicked() {
