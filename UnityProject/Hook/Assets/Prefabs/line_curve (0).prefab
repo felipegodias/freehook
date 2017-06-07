@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 114833574542229722}
   - component: {fileID: 50394571427086184}
   m_Layer: 8
-  m_Name: line_curve
+  m_Name: line_curve (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
