@@ -124,7 +124,9 @@ public class CanvasController : MonoBehaviour {
     }
 
     private void OnHeartsCountWasChanged(object sender, OnHeartsCountWasChanged onHeartsCountWasChanged) {
-        if (onHeartsCountWasChanged.HeartCount == 0) {
+        if (onHeartsCountWasChanged.HeartCount <= 0) {
+            this.nextStageButton.gameObject.SetActive(false);
+            this.previousStageButton.gameObject.SetActive(false);
             this.adsScreen.Show();
         }
     }
