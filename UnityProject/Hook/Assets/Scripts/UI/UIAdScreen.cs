@@ -1,4 +1,5 @@
 ﻿using MGS.EventManager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class UIAdScreen : MonoBehaviour {
     private Button removeAdsButton;
     [SerializeField]
     private CanvasGroup canvasGroup;
+    [SerializeField]
+    private TextMeshProUGUI descriptionText;
 
     public void Show() {
         this.canvasGroup.alpha = 0;
@@ -29,6 +32,12 @@ public class UIAdScreen : MonoBehaviour {
     private void Awake() {
         this.watchAdsButton.onClick.AddListener(this.OnWatchAdsButtonClick);
         this.removeAdsButton.onClick.AddListener(this.OnRemoveAdsButtonClick);
+    }
+
+    private void Start() {
+        int maxHearts = GameSettings.MAX_HEARTS;
+        string description = I18N.GetText("ads_screen_description", maxHearts);
+        this.descriptionText.text = description;
     }
 
     private void OnWatchAdsButtonClick() {

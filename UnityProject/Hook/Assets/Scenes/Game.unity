@@ -1360,6 +1360,7 @@ MonoBehaviour:
   watchAdsButton: {fileID: 261699381}
   removeAdsButton: {fileID: 91298673}
   canvasGroup: {fileID: 886606036}
+  descriptionText: {fileID: 2052625235}
 --- !u!1 &888183373
 GameObject:
   m_ObjectHideFlags: 0
