@@ -25,11 +25,16 @@ public class Connector : GameElement {
                 continue;
             }
 
-            Vector3 dir = (gameElement.transform.position - this.transform.position).normalized;
-            float distance = Vector3.Distance(gameElement.transform.position, this.transform.position);
-            dir.z = 0;
-            line.transform.right = dir;
-            line.size = new Vector3(distance, 1);
+            if (gameElement is Switch) {
+                line.size = Vector2.zero;
+            } else {
+                Vector3 dir = (gameElement.transform.position - this.transform.position).normalized;
+                float distance = Vector3.Distance(gameElement.transform.position, this.transform.position);
+                dir.z = 0;
+                line.transform.right = dir;
+                line.size = new Vector3(distance, 1);
+            }
+            
         }
     }
 
