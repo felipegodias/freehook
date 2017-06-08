@@ -85,7 +85,9 @@ public class Puller : GameElement {
         this.Hide();
         GameElement interator = this.previousElement;
         while (interator != null) {
+            interator.SetClear();
             if (!interator.IsClear) {
+                interator.ParcialHide();
                 break;
             }
             interator.Hide();

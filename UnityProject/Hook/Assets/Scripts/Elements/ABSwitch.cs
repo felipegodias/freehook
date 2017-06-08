@@ -13,12 +13,23 @@ public class ABSwitch : Switch {
     [SerializeField]
     private GameElement outB;
 
+    
     public override bool IsClear {
         get { return true; }
     }
 
     public override void Hide() {
-        if (this.outA.IsClear && this.outB.IsClear) {
+        bool canHide = true;
+
+        if (this.outA != null) {
+            canHide = this.outA.IsClear;
+        }
+
+        if (this.outB != null) {
+            canHide = this.outB.IsClear && canHide;
+        }
+
+        if (canHide) {
             base.Hide();
         }
     }

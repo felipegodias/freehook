@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameElement : MonoBehaviour {
 
@@ -8,6 +6,12 @@ public class GameElement : MonoBehaviour {
     private GameElement[] gameElements;
 
     protected GameElement previousElement;
+
+    private bool isClear;
+
+    public void SetClear() {
+        this.isClear = true;
+    }
 
     public GameElement PreviousElement {
         get { return this.previousElement; }
@@ -20,11 +24,12 @@ public class GameElement : MonoBehaviour {
     public virtual bool IsClear {
         get {
             foreach (GameElement gameElement in this.gameElements) {
-                if (!gameElement.IsClear) {
+                bool isClear = gameElement.IsClear;
+                if (!isClear) {
                     return false;
                 }
             }
-            return true;
+            return this.isClear;
         }
     }
 
@@ -50,5 +55,7 @@ public class GameElement : MonoBehaviour {
             }
         }, 0, 1, 0.33f).setEase(LeanTweenType.easeOutSine);
     }
+
+    public virtual void ParcialHide() {}
 
 }
