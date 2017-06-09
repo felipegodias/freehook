@@ -5,7 +5,11 @@ public static class ColorUtils {
     public static Color BackgroundColor {
         get {
             Color color;
-            ColorUtility.TryParseHtmlString("#F0F0E6FF", out color);
+            if (Player.IsLightSOn()) {
+                ColorUtility.TryParseHtmlString("#F0F0E6FF", out color);
+            } else {
+                ColorUtility.TryParseHtmlString("#0f0f19FF", out color);
+            }
             return color;
         }
     }
@@ -13,7 +17,11 @@ public static class ColorUtils {
     public static Color LineColor {
         get {
             Color color;
-            ColorUtility.TryParseHtmlString("#585451FF", out color);
+            if (Player.IsLightSOn()) {
+                ColorUtility.TryParseHtmlString("#585451FF", out color);
+            } else {
+                ColorUtility.TryParseHtmlString("#a7abaeFF", out color);
+            }
             return color;
         }
     }
