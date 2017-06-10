@@ -43,7 +43,7 @@ public class Puller : GameElement {
         Vector3 from = this.content.localPosition;
         Vector3 to = -this.pullerEnd.localPosition;
         Vector3 dif = to - from;
-        float time = distance / 6;
+        float time = distance / 5;
         LeanTween.value(this.gameObject, f => {
             this.content.localPosition = from + (dif * f);
         }, 0, 1, time).setOnComplete(() => {
