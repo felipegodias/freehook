@@ -10,7 +10,7 @@ public class Puller : GameElement {
 
     private bool isStartedToPull;
 
-    private bool isClear;
+    private bool isPullerClear;
 
     private bool isBreaked;
 
@@ -19,7 +19,7 @@ public class Puller : GameElement {
     }
 
     public override bool IsClear {
-        get { return this.isClear; }
+        get { return this.isPullerClear; }
     }
 
     private void Awake() {
@@ -61,6 +61,7 @@ public class Puller : GameElement {
         if (this.isBreaked) {
             return;
         }
+
         this.isBreaked = true;
         LeanTween.cancel(this.gameObject);
 
@@ -81,7 +82,7 @@ public class Puller : GameElement {
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D) {
-        this.isClear = true;
+        this.isPullerClear = true;
         this.Hide();
         GameElement interator = this.previousElement;
         while (interator != null) {
