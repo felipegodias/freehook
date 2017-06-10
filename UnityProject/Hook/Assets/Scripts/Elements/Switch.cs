@@ -15,10 +15,10 @@ public abstract class Switch : GameElement, IPointerClickHandler {
     }
 
     public override void Pull(GameElement element) {
-        this.previousElement = element;
         if (!this.IsElementInsideInput(element)) {
             return;
         }
+        this.previousElement = element;
         GameElement[] gameElements = this.GetOutput();
         foreach (GameElement gameElement in gameElements) {
             gameElement.Pull(this);
