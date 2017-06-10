@@ -3919,10 +3919,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements: []
   switchState: 1
-  inA: {fileID: 114095281247365830}
-  outA: {fileID: 114726560647838510}
-  inB: {fileID: 114842924086530470}
-  outB: {fileID: 114064976719603616}
+  a: {fileID: 114726560647838510}
+  b: {fileID: 114064976719603616}
+  c: {fileID: 114095281247365830}
+  d: {fileID: 114842924086530470}
 --- !u!114 &114988121959540168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3936,10 +3936,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements: []
   switchState: 0
-  inA: {fileID: 114726819786631304}
-  outA: {fileID: 114499837675399344}
-  inB: {fileID: 114133231787517228}
-  outB: {fileID: 114480925703753122}
+  a: {fileID: 114726819786631304}
+  b: {fileID: 114480925703753122}
+  c: {fileID: 114499837675399344}
+  d: {fileID: 114133231787517228}
 --- !u!212 &212014028636500514
 SpriteRenderer:
   m_ObjectHideFlags: 1

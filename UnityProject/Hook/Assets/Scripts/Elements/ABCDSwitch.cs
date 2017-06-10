@@ -3,162 +3,105 @@ using UnityEngine;
 
 public class ABCDSwitch : Switch {
 
-    [SerializeField]
-    private GameElement inA;
-
-    [SerializeField]
-    private GameElement outA;
-
-    [SerializeField]
-    private GameElement inB;
-
-    [SerializeField]
-    private GameElement outB;
-
-    [SerializeField]
-    private GameElement inC;
-
-    [SerializeField]
-    private GameElement outC;
-
-    [SerializeField]
-    private GameElement inD;
-
-    [SerializeField]
-    private GameElement outD;
-
     public override bool IsClear {
         get { return true; }
     }
 
-    public override void Hide() {
-        bool canHide = true;
 
-        if (this.outA != null) {
-            canHide = this.outA.IsClear;
-        }
-
-        if (this.outB != null) {
-            canHide = this.outB.IsClear && canHide;
-        }
-
-        if (this.outC != null) {
-            canHide = this.outC.IsClear && canHide;
-        }
-
-        if (this.outD != null) {
-            canHide = this.outD.IsClear && canHide;
-        }
-
-        if (canHide) {
-            base.Hide();
-        }
-    }
 
     protected override bool IsElementInsideInput(GameElement element) {
         switch (this.SwitchState) {
             case SwitchState.A:
-                return this.inA == element || element == this.inB;
+                return this.A == element || element == this.B;
             case SwitchState.B:
-                return this.inB == element || element == this.inC;
+                return this.B == element || element == this.C;
             case SwitchState.C:
-                return this.inC == element || element == this.inD;
+                return this.C == element || element == this.D;
             case SwitchState.D:
-                return this.inD == element || element == this.inA;
+                return this.D == element || element == this.A;
         }
         return false;
     }
 
     protected override GameElement[] GetOutput(GameElement element) {
-        if (element == this.inA) {
+        if (element == this.A) {
             switch (this.SwitchState) {
                 case SwitchState.A:
-                    return new[] { this.outA };
+                    return new[] { this.B };
                 case SwitchState.D:
-                    return new[] { this.outC };
+                    return new[] { this.D };
             }
-        } else if (element == this.inB) {
+        } else if (element == this.B) {
             switch (this.SwitchState) {
                 case SwitchState.A:
-                    return new[] { this.outD };
+                    return new[] { this.A };
                 case SwitchState.B:
-                    return new[] { this.outB };
+                    return new[] { this.C };
             }
-        } else if (element == this.inC) {
+        } else if (element == this.C) {
             switch (this.SwitchState) {
                 case SwitchState.B:
-                    return new[] { this.outA };
+                    return new[] { this.B };
                 case SwitchState.C:
-                    return new[] { this.outC };
+                    return new[] { this.D };
             }
-        } else if (element == this.inD) {
+        } else if (element == this.D) {
             switch (this.SwitchState) {
                 case SwitchState.C:
-                    return new[] { this.outB };
+                    return new[] { this.C };
                 case SwitchState.D:
-                    return new[] { this.outD };
+                    return new[] { this.A };
             }
         }
         return new GameElement[0];
     }
 
     public override bool IsClearForElement(GameElement element) {
-        if (element == this.inA) {
-            bool isOutAClear = true;
-            bool isOutCClear = true;
-            if (this.outA != null) {
-                isOutAClear = this.outA.IsClear;
+        if (element == this.A) {
+            bool isBClear = true;
+            bool isDClear = true;
+            if (this.B != null) {
+                isBClear = this.B.IsClear;
             }
-            if (this.outC != null) {
-                isOutCClear = this.outC.IsClear;
+            if (this.D != null) {
+                isDClear = this.D.IsClear;
             }
-            return isOutAClear && isOutCClear;
+            return isBClear && isDClear;
         }
-        if (element == this.inB) {
-            bool isOutDClear = true;
-            bool isOutBClear = true;
-            if (this.outD != null) {
-                isOutDClear = this.outD.IsClear;
+        if (element == this.B) {
+            bool isAClear = true;
+            bool isCClear = true;
+            if (this.A != null) {
+                isAClear = this.A.IsClear;
             }
-            if (this.outB != null) {
-                isOutBClear = this.outB.IsClear;
+            if (this.C != null) {
+                isCClear = this.C.IsClear;
             }
-            return isOutDClear && isOutBClear;
+            return isAClear && isCClear;
         }
-        if (element == this.inC) {
-            bool isOutAClear = true;
-            bool isOutCClear = true;
-            if (this.outA != null) {
-                isOutAClear = this.outA.IsClear;
+        if (element == this.C) {
+            bool isBClear = true;
+            bool isDClear = true;
+            if (this.B != null) {
+                isBClear = this.B.IsClear;
             }
-            if (this.outC != null) {
-                isOutCClear = this.outC.IsClear;
+            if (this.D != null) {
+                isDClear = this.D.IsClear;
             }
-            return isOutAClear && isOutCClear;
+            return isBClear && isDClear;
         }
-        if (element == this.inD) {
-            bool isOutBClear = true;
-            bool isOutDClear = true;
-            if (this.outB != null) {
-                isOutBClear = this.outB.IsClear;
+        if (element == this.D) {
+            bool isCClear = true;
+            bool isAClear = true;
+            if (this.C != null) {
+                isCClear = this.C.IsClear;
             }
-            if (this.outD != null) {
-                isOutDClear = this.outD.IsClear;
+            if (this.A != null) {
+                isAClear = this.A.IsClear;
             }
-            return isOutBClear && isOutDClear;
+            return isCClear && isAClear;
         }
         return false;
-    }
-
-    private void OnDrawGizmos() {
-        Vector3 ad = this.transform.position + Vector3.left / 2;
-        Handles.Label(ad, "A/D", EditorStyles.whiteLabel);
-        Vector3 ba = this.transform.position + Vector3.up / 2;
-        Handles.Label(ba, "B/A", EditorStyles.whiteLabel);
-        Vector3 cb = this.transform.position + Vector3.right / 2;
-        Handles.Label(cb, "C/B", EditorStyles.label);
-        Vector3 dc = this.transform.position + Vector3.down / 2;
-        Handles.Label(dc, "D/C", EditorStyles.label);
     }
 
 }

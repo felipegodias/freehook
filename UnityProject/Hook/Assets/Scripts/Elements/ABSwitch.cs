@@ -2,78 +2,51 @@
 
 public class ABSwitch : Switch {
 
-    [SerializeField]
-    private GameElement inA;
-    [SerializeField]
-    private GameElement outA;
-
-    [SerializeField]
-    private GameElement inB;
-
-    [SerializeField]
-    private GameElement outB;
-
-    
     public override bool IsClear {
         get { return true; }
     }
 
-    public override void Hide() {
-        bool canHide = true;
-
-        if (this.outA != null) {
-            canHide = this.outA.IsClear;
-        }
-
-        if (this.outB != null) {
-            canHide = this.outB.IsClear && canHide;
-        }
-
-        if (canHide) {
-            base.Hide();
-        }
-    }
-
     protected override bool IsElementInsideInput(GameElement element) {
         if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
-            return this.inA == element;
+            return this.A == element || this.C == element;
         }
-        return this.inB == element;
+        return this.B == element || this.D == element;
     }
 
     protected override GameElement[] GetOutput(GameElement element) {
         if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
-            return new []{ this.outA };
+            if (element == this.A) {
+                return new[] { this.C };
+            }
+            if (element == this.C) {
+                return new[] { this.A };
+            }
         }
-        return new[] { this.outB };
-    }
-
-    private void OnDrawGizmos() {
-        Color oldColor = Gizmos.color;
-        Gizmos.color = Color.blue;
-
-        if (this.inA != null) {
-            Gizmos.DrawLine(this.inA.transform.position, this.transform.position);
+        if (element == this.B) {
+            return new[] { this.D };
         }
 
-        if (this.outA != null) {
-            Gizmos.DrawLine(this.outA.transform.position, this.transform.position);
+        if (element == this.D) {
+            return new[] { this.B };
         }
 
-        Gizmos.color = Color.red;
-
-        if (this.inB != null) {
-            Gizmos.DrawLine(this.inB.transform.position, this.transform.position);
-        }
-
-        if (this.outB != null) {
-            Gizmos.DrawLine(this.outB.transform.position, this.transform.position);
-        }
-        Gizmos.color = oldColor;
+        return new GameElement[0];
     }
 
     public override bool IsClearForElement(GameElement element) {
-        return element == this.inA ? this.outA.IsClear : this.outB.IsClear;
+        if (element == this.A) {
+            return this.C.IsClear;
+        }
+        if (element == this.B) {
+            return this.D.IsClear;
+        }
+        if (element == this.C) {
+            return this.A.IsClear;
+        }
+        if (element == this.D) {
+            return this.B.IsClear;
+        }
+        return false;
     }
 
 }

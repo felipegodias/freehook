@@ -3374,14 +3374,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements: []
   switchState: 0
-  inA: {fileID: 0}
-  outA: {fileID: 0}
-  inB: {fileID: 0}
-  outB: {fileID: 114618592477715402}
-  inC: {fileID: 0}
-  outC: {fileID: 0}
-  inD: {fileID: 114757364551911508}
-  outD: {fileID: 114263292149798894}
+  a: {fileID: 114263292149798894}
+  b: {fileID: 0}
+  c: {fileID: 114618592477715402}
+  d: {fileID: 114757364551911508}
 --- !u!114 &114281296826460060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3466,14 +3462,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements: []
   switchState: 0
-  inA: {fileID: 0}
-  outA: {fileID: 0}
-  inB: {fileID: 0}
-  outB: {fileID: 114283783630165804}
-  inC: {fileID: 0}
-  outC: {fileID: 0}
-  inD: {fileID: 114566932471265128}
-  outD: {fileID: 114248560087623748}
+  a: {fileID: 114248560087623748}
+  b: {fileID: 0}
+  c: {fileID: 114283783630165804}
+  d: {fileID: 114566932471265128}
 --- !u!114 &114495979830189888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3556,14 +3548,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements: []
   switchState: 2
-  inA: {fileID: 0}
-  outA: {fileID: 0}
-  inB: {fileID: 0}
-  outB: {fileID: 114058541141023090}
-  inC: {fileID: 0}
-  outC: {fileID: 0}
-  inD: {fileID: 114058388847559228}
-  outD: {fileID: 114723485229143438}
+  a: {fileID: 114723485229143438}
+  b: {fileID: 0}
+  c: {fileID: 114058541141023090}
+  d: {fileID: 114058388847559228}
 --- !u!114 &114618592477715402
 MonoBehaviour:
   m_ObjectHideFlags: 1
