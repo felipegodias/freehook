@@ -31,6 +31,9 @@ public class Player {
     }
 
     public static bool IsLightSOn() {
+        if (!Application.isPlaying) {
+            return true;
+        }
         int value = PlayerPrefs.GetInt("IS_LIGHTS_ON", 1);
         return value == 1;
     }
