@@ -48,7 +48,7 @@ public class ABSwitch : Switch {
         return new[] { this.outB };
     }
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmos() {
         Color oldColor = Gizmos.color;
         Gizmos.color = Color.blue;
 
