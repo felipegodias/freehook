@@ -24,7 +24,13 @@ public class GameElement : MonoBehaviour {
     public virtual bool IsClear {
         get {
             foreach (GameElement gameElement in this.gameElements) {
-                bool isClear = gameElement.IsClear;
+                bool isClear;
+                if (gameElement is Switch) {
+                    Switch switchElement = gameElement as Switch;
+                    isClear = switchElement.IsClearForElement(this);
+                } else {
+                    isClear = gameElement.IsClear;
+                }
                 if (!isClear) {
                     return false;
                 }

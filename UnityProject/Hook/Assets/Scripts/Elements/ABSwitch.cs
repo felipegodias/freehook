@@ -41,7 +41,7 @@ public class ABSwitch : Switch {
         return this.inB == element;
     }
 
-    protected override GameElement[] GetOutput() {
+    protected override GameElement[] GetOutput(GameElement element) {
         if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
             return new []{ this.outA };
         }
@@ -70,6 +70,10 @@ public class ABSwitch : Switch {
             Gizmos.DrawLine(this.outB.transform.position, this.transform.position);
         }
         Gizmos.color = oldColor;
+    }
+
+    public override bool IsClearForElement(GameElement element) {
+        return element == this.inA ? this.outA.IsClear : this.outB.IsClear;
     }
 
 }
