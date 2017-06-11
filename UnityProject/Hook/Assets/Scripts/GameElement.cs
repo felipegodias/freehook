@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class GameElement : MonoBehaviour {
 
+    
     [SerializeField]
     private GameElement[] gameElements;
     [SerializeField]
     protected Puller[] pullers;
 
+    private Stage stage;
     private bool isHidden;
-
-    protected GameElement previousElement;
-
-
-    public GameElement PreviousElement {
-        get { return this.previousElement; }
-    }
 
     public GameElement[] GameElements {
         get { return this.gameElements; }
@@ -24,6 +19,16 @@ public class GameElement : MonoBehaviour {
 
     public bool IsHidden {
         get { return this.isHidden; }
+    }
+
+    public Stage Stage {
+        get {
+            if (this.stage != null) {
+                return this.stage;
+            }
+            this.stage = this.GetComponentInParent<Stage>();
+            return this.stage;
+        }
     }
 
     protected virtual void LateUpdate() {
@@ -76,7 +81,10 @@ public class GameElement : MonoBehaviour {
     }
 
     public virtual void Pull(GameElement element) {
-        this.previousElement = element;
+        if (!this.Stage.CanPull(this)) {
+            return;
+        }
+        this.Stage.AddToPullingList(this);
         foreach (GameElement gameElement in this.gameElements) {
             gameElement.Pull(this);
         }

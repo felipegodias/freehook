@@ -6,8 +6,6 @@ public class Puller : GameElement {
     private Transform puller;
     private Transform pullerEnd;
 
-    private Stage stage;
-
     private bool isStartedToPull;
 
     private bool isPullerClear;
@@ -23,14 +21,13 @@ public class Puller : GameElement {
     }
 
     private void Awake() {
-        this.stage = this.GetComponentInParent<Stage>();
         this.content = this.transform.Find("content");
         this.puller = this.transform.Find("puller");
         this.pullerEnd = this.content.Find("puller_end");
     }
 
     private void Start() {
-        this.stage.RegisterNewPuller(this);
+        this.Stage.RegisterNewPuller(this);
     }
 
     public override void Pull(GameElement element) {
@@ -78,7 +75,7 @@ public class Puller : GameElement {
             });
         }
 
-        this.stage.FailStage();
+        this.Stage.FailStage();
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D) {
