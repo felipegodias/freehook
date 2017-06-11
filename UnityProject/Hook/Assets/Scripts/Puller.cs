@@ -18,7 +18,7 @@ public class Puller : GameElement {
         get { return this.content; }
     }
 
-    public override bool IsClear {
+    public bool IsClear {
         get { return this.isPullerClear; }
     }
 
@@ -84,16 +84,6 @@ public class Puller : GameElement {
     private void OnTriggerEnter2D(Collider2D collider2D) {
         this.isPullerClear = true;
         this.Hide();
-        GameElement interator = this.previousElement;
-        while (interator != null) {
-            interator.SetClear();
-            if (!interator.IsClear) {
-                interator.ParcialHide();
-                break;
-            }
-            interator.Hide();
-            interator = interator.PreviousElement;
-        }
     }
 
 }

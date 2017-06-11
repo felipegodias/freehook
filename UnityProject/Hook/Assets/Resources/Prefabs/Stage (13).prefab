@@ -3052,6 +3052,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers:
+  - {fileID: 114047358122588924}
 --- !u!114 &114118262879909538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3064,6 +3066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers:
+  - {fileID: 114118262879909538}
 --- !u!114 &114144727137177864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3091,6 +3095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114470873839939372}
+  pullers:
+  - {fileID: 114118262879909538}
   lines:
   - {fileID: 212485818801377742}
   spriteRenderer: {fileID: 212294646287875574}
@@ -3107,6 +3113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114500130342001312}
+  pullers:
+  - {fileID: 114848859985592540}
 --- !u!114 &114157673428786446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3120,6 +3128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114919022695001848}
+  pullers:
+  - {fileID: 114256259241520974}
+  - {fileID: 114047358122588924}
   lines:
   - {fileID: 212171109974082714}
   spriteRenderer: {fileID: 212740237394622354}
@@ -3149,6 +3160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers:
+  - {fileID: 114256259241520974}
 --- !u!114 &114286832710771994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3162,6 +3175,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114157673428786446}
+  pullers:
+  - {fileID: 114256259241520974}
+  - {fileID: 114047358122588924}
 --- !u!114 &114317679096809228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3200,6 +3216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114921263474964720}
+  pullers:
+  - {fileID: 114118262879909538}
   lines:
   - {fileID: 212792822170117568}
   spriteRenderer: {fileID: 212757703269391340}
@@ -3216,6 +3234,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114922487487215780}
+  pullers:
+  - {fileID: 114848859985592540}
   lines:
   - {fileID: 212368739757757272}
   spriteRenderer: {fileID: 212220415531235426}
@@ -3271,6 +3291,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114148221205968804}
+  pullers:
+  - {fileID: 114118262879909538}
 --- !u!114 &114748408371055352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3309,6 +3331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114047358122588924}
+  pullers:
+  - {fileID: 114047358122588924}
   lines:
   - {fileID: 212057519347488962}
   spriteRenderer: {fileID: 212165173794922670}
@@ -3324,6 +3348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers:
+  - {fileID: 114848859985592540}
 --- !u!114 &114891075186160070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3361,6 +3387,9 @@ MonoBehaviour:
   gameElements:
   - {fileID: 114256259241520974}
   - {fileID: 114844563686971134}
+  pullers:
+  - {fileID: 114256259241520974}
+  - {fileID: 114047358122588924}
   lines:
   - {fileID: 212740707616856236}
   - {fileID: 212877763985885298}
@@ -3378,6 +3407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114118262879909538}
+  pullers:
+  - {fileID: 114118262879909538}
   lines:
   - {fileID: 212984956443974218}
   spriteRenderer: {fileID: 212380876654368814}
@@ -3393,6 +3424,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements:
+  - {fileID: 114848859985592540}
+  pullers:
   - {fileID: 114848859985592540}
   lines:
   - {fileID: 212350940372148246}

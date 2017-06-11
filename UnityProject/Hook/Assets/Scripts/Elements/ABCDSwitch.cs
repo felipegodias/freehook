@@ -1,13 +1,8 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ABCDSwitch : Switch {
-
-    public override bool IsClear {
-        get { return true; }
-    }
-
-
 
     protected override bool IsElementInsideInput(GameElement element) {
         switch (this.SwitchState) {
@@ -56,52 +51,48 @@ public class ABCDSwitch : Switch {
         return new GameElement[0];
     }
 
-    public override bool IsClearForElement(GameElement element) {
+    public override GameElement[] GetAllOutputsFor(GameElement element) {
         if (element == this.A) {
-            bool isBClear = true;
-            bool isDClear = true;
-            if (this.B != null) {
-                isBClear = this.B.IsClear;
-            }
-            if (this.D != null) {
-                isDClear = this.D.IsClear;
-            }
-            return isBClear && isDClear;
+            return new[] { this.B, this.D };
         }
         if (element == this.B) {
-            bool isAClear = true;
-            bool isCClear = true;
-            if (this.A != null) {
-                isAClear = this.A.IsClear;
-            }
-            if (this.C != null) {
-                isCClear = this.C.IsClear;
-            }
-            return isAClear && isCClear;
+            return new[] { this.A, this.C };
         }
         if (element == this.C) {
-            bool isBClear = true;
-            bool isDClear = true;
-            if (this.B != null) {
-                isBClear = this.B.IsClear;
-            }
-            if (this.D != null) {
-                isDClear = this.D.IsClear;
-            }
-            return isBClear && isDClear;
+            return new[] { this.B, this.D };
         }
         if (element == this.D) {
-            bool isCClear = true;
-            bool isAClear = true;
-            if (this.C != null) {
-                isCClear = this.C.IsClear;
-            }
-            if (this.A != null) {
-                isAClear = this.A.IsClear;
-            }
-            return isCClear && isAClear;
+            return new[] { this.C, this.A };
         }
-        return false;
+        return new GameElement[0];
+    }
+
+    public override Puller[] GetPullersFor(GameElement element) {
+        if (element == this.A) {
+            List<Puller> pullers = new List<Puller>();
+            pullers.AddRange(this.BPullers);
+            pullers.AddRange(this.DPullers);
+            return pullers.ToArray();
+        }
+        if (element == this.B) {
+            List<Puller> pullers = new List<Puller>();
+            pullers.AddRange(this.APullers);
+            pullers.AddRange(this.CPullers);
+            return pullers.ToArray();
+        }
+        if (element == this.C) {
+            List<Puller> pullers = new List<Puller>();
+            pullers.AddRange(this.BPullers);
+            pullers.AddRange(this.DPullers);
+            return pullers.ToArray();
+        }
+        if (element == this.D) {
+            List<Puller> pullers = new List<Puller>();
+            pullers.AddRange(this.CPullers);
+            pullers.AddRange(this.APullers);
+            return pullers.ToArray();
+        }
+        return new Puller[0];
     }
 
 }

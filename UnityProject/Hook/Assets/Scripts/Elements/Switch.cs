@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,7 +20,15 @@ public abstract class Switch : GameElement, IPointerClickHandler {
     [SerializeField]
     private GameElement d;
 
-    private bool isHidden;
+    [SerializeField]
+    private Puller[] aPullers;
+    [SerializeField]
+    private Puller[] bPullers;
+    [SerializeField]
+    private Puller[] cPullers;
+    [SerializeField]
+    private Puller[] dPullers;
+
 
     public SwitchState SwitchState {
         get { return this.switchState; }
@@ -41,35 +50,70 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         get { return this.d; }
     }
 
-    public override void Hide() {
-        bool canHide = true;
-
-        if (this.A != null) {
-            canHide = this.A.IsClear;
-        }
-
-        if (this.B != null) {
-            canHide = this.B.IsClear && canHide;
-        }
-
-        if (this.C != null) {
-            canHide = this.C.IsClear && canHide;
-        }
-
-        if (this.D != null) {
-            canHide = this.D.IsClear && canHide;
-        }
-
-        if (canHide) {
-            this.isHidden = true;
-            base.Hide();
-        }
+    public Puller[] APullers {
+        get { return this.aPullers; }
     }
 
-    private void Update() {
-        if (!this.isHidden) {
-            this.Hide();
+    public Puller[] BPullers {
+        get { return this.bPullers; }
+    }
+
+    public Puller[] CPullers {
+        get { return this.cPullers; }
+    }
+
+    public Puller[] DPullers {
+        get { return this.dPullers; }
+    }
+
+    public void LookForPullers() {
+        List<Puller> pullers = new List<Puller>();
+        if (this.A != null) {
+            foreach (GameElement e in this.A.GameElements) {
+                if (e == this) {
+                    continue;
+                }
+                pullers.AddRange(e.GetPullers(e, null));
+            }
         }
+        aPullers = pullers.ToArray();
+        pullers.Clear();
+        if (this.B != null) {
+            foreach (GameElement e in this.B.GameElements) {
+                if (e == this) {
+                    continue;
+                }
+                pullers.AddRange(e.GetPullers(e, null));
+            }
+        }
+        bPullers = pullers.ToArray();
+        pullers.Clear();
+        if (this.C != null) {
+            foreach (GameElement e in this.C.GameElements) {
+                if (e == this) {
+                    continue;
+                }
+                pullers.AddRange(e.GetPullers(e, null));
+            }
+        }
+        cPullers = pullers.ToArray();
+        pullers.Clear();
+        if (this.D != null) {
+            foreach (GameElement e in this.D.GameElements) {
+                if (e == this) {
+                    continue;
+                }
+                pullers.AddRange(e.GetPullers(e, null));
+            }
+        }
+        dPullers = pullers.ToArray();
+
+        pullers.Clear();
+        pullers.AddRange(aPullers);
+        pullers.AddRange(bPullers);
+        pullers.AddRange(cPullers);
+        pullers.AddRange(dPullers);
+        this.pullers = pullers.ToArray();
     }
 
     public void OnPointerClick(PointerEventData eventData) {
@@ -91,11 +135,11 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         }
     }
 
-    public abstract bool IsClearForElement(GameElement element);
-
     protected abstract bool IsElementInsideInput(GameElement element);
-
     protected abstract GameElement[] GetOutput(GameElement element);
+    public abstract GameElement[] GetAllOutputsFor(GameElement element);
+
+    public abstract Puller[] GetPullersFor(GameElement element);
 
     private void OnValidate() {
         this.transform.rotation = Quaternion.Euler(0, 0, -90 * (int) this.switchState);

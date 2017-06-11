@@ -38,6 +38,22 @@ public class StageEditor : Editor {
             }
         }
 
+        bool isSetPullersButtonClicked = GUILayout.Button("Set Pullers");
+        if (isSetPullersButtonClicked) {
+            Switch[] switches = this.target.GetComponentsInChildren<Switch>(true);
+            for (int i = 0; i < 10; i++) {
+                foreach (Switch swt in switches) {
+                    swt.LookForPullers();
+                }
+            }
+
+            GameElement[] gameElements = this.target.GetComponentsInChildren<GameElement>(true);
+            foreach (GameElement gameElement in gameElements) {
+                if (!(gameElement is Switch)) {
+                    gameElement.SetPullers();
+                }
+            }
+        }
     }
 
 }

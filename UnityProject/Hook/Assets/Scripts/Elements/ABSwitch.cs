@@ -2,10 +2,6 @@
 
 public class ABSwitch : Switch {
 
-    public override bool IsClear {
-        get { return true; }
-    }
-
     protected override bool IsElementInsideInput(GameElement element) {
         if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
             return this.A == element || this.C == element;
@@ -33,20 +29,36 @@ public class ABSwitch : Switch {
         return new GameElement[0];
     }
 
-    public override bool IsClearForElement(GameElement element) {
+    public override GameElement[] GetAllOutputsFor(GameElement element) {
         if (element == this.A) {
-            return this.C.IsClear;
+            return new[] { this.C };
         }
         if (element == this.B) {
-            return this.D.IsClear;
+            return new[] { this.D };
         }
         if (element == this.C) {
-            return this.A.IsClear;
+            return new[] { this.A };
         }
         if (element == this.D) {
-            return this.B.IsClear;
+            return new[] { this.B };
         }
-        return false;
+        return new GameElement[0];
+    }
+
+    public override Puller[] GetPullersFor(GameElement element) {
+        if (element == this.A) {
+            return this.CPullers;
+        }
+        if (element == this.B) {
+            return this.DPullers;
+        }
+        if (element == this.C) {
+            return this.APullers;
+        }
+        if (element == this.D) {
+            return this.BPullers;
+        }
+        return new Puller[0];
     }
 
 }

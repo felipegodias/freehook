@@ -54,4 +54,8 @@ public class SwitchEditor : Editor {
         serializedObject.ApplyModifiedProperties();
     }
 
+    public static void SetPullers(Switch switchElement) {
+        
+    }
+
 }
