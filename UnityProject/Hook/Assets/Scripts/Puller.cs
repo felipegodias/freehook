@@ -34,7 +34,6 @@ public class Puller : GameElement {
         if (this.isStartedToPull) {
             return;
         }
-        this.previousElement = element;
         this.isStartedToPull = true;
         float distance = Vector3.Distance(this.content.localPosition, -this.pullerEnd.localPosition);
         Vector3 from = this.content.localPosition;

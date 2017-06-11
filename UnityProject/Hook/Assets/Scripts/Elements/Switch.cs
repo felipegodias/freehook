@@ -128,7 +128,6 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         if (!this.IsElementInsideInput(element)) {
             return;
         }
-        this.previousElement = element;
         GameElement[] gameElements = this.GetOutput(element);
         foreach (GameElement gameElement in gameElements) {
             gameElement.Pull(this);
