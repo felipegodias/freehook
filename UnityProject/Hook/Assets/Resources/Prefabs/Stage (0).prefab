@@ -117,8 +117,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4750799098859768}
-  - component: {fileID: 61073866087075126}
-  - component: {fileID: 50544330781404398}
+  - component: {fileID: 61215836603666382}
+  - component: {fileID: 50748367796181694}
   m_Layer: 10
   m_Name: puller_end
   m_TagString: Untagged
@@ -218,8 +218,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4470451131885226}
   - component: {fileID: 114443531615490090}
-  - component: {fileID: 61230542931083506}
-  - component: {fileID: 50072020144943292}
+  - component: {fileID: 61796301696251158}
+  - component: {fileID: 50982673532633604}
   m_Layer: 10
   m_Name: puller
   m_TagString: Untagged
@@ -561,13 +561,13 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
---- !u!50 &50072020144943292
+--- !u!50 &50748367796181694
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1765698439684528}
+  m_GameObject: {fileID: 1551188063290050}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -581,13 +581,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!50 &50544330781404398
+--- !u!50 &50982673532633604
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1551188063290050}
+  m_GameObject: {fileID: 1765698439684528}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -616,7 +616,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!61 &61073866087075126
+--- !u!61 &61215836603666382
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -641,7 +641,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!61 &61230542931083506
+--- !u!61 &61796301696251158
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -824,6 +824,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114374832943534690}
+  pullers:
+  - {fileID: 114443531615490090}
 --- !u!114 &114077876250323378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -917,6 +919,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114443531615490090}
+  pullers:
+  - {fileID: 114443531615490090}
   lines:
   - {fileID: 212649269914637902}
   spriteRenderer: {fileID: 212473902847435776}
@@ -932,6 +936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers: []
 --- !u!114 &114492059825831238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -956,6 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 0
+  pullingList: []
 --- !u!114 &114574347241662506
 MonoBehaviour:
   m_ObjectHideFlags: 1

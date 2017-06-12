@@ -11,7 +11,7 @@ public class GameElement : MonoBehaviour {
     protected Puller[] pullers;
 
     private Stage stage;
-    private bool isHidden;
+    protected bool isHidden;
 
     public GameElement[] GameElements {
         get { return this.gameElements; }
@@ -32,6 +32,9 @@ public class GameElement : MonoBehaviour {
     }
 
     protected virtual void LateUpdate() {
+        if (!Application.isPlaying) {
+            return;
+        }
         if (this.isHidden || this.pullers.Length == 0) {
             return;
         }
@@ -45,39 +48,56 @@ public class GameElement : MonoBehaviour {
     }
 
     public void SetPullers() {
-        this.pullers = this.GetPullers(this, null);
+        this.pullers = this.GetPullers();
     }
 
-    public Puller[] GetPullers(GameElement gameElement, GameElement previous) {
-        if (gameElement is Puller) {
-            return new[] {gameElement as Puller};
-        }
+    public Puller[] GetPullers() {
+        List<GameElement> closeList = new List<GameElement>();
         List<Puller> pullers = new List<Puller>();
-        if (gameElement is Switch) {
-            Puller[] p = (gameElement as Switch).GetPullersFor(previous);
-            foreach (Puller puller in p) {
-                if (!pullers.Contains(puller)) {
-                    pullers.Add(puller);
-                }
+        closeList.Add(this);
+        Queue<GameElement> elementsToInterate = new Queue<GameElement>();
+        foreach (GameElement gameElement in this.GameElements) {
+            if (gameElement is Puller) {
+                pullers.Add(gameElement as Puller);
+                closeList.Add(gameElement);
             }
-        } else {
-            foreach (GameElement e in gameElement.gameElements) {
-                if (e == null) {
+            if (gameElement is Switch) {
+                Switch swt = gameElement as Switch;
+                Puller[] p = swt.GetPullersFor(this);
+                pullers.AddRange(p);
+            } else {
+                elementsToInterate.Enqueue(gameElement);
+            }
+        }
+        while (elementsToInterate.Count > 0) {
+            GameElement gameElement = elementsToInterate.Dequeue();
+            closeList.Add(gameElement);
+            foreach (GameElement ge in gameElement.GameElements) {
+                if (closeList.Contains(ge)) {
                     continue;
                 }
-                if (e is Puller) {
-                    pullers.Add(e as Puller);
+                if (ge is Puller) {
+                    pullers.Add(ge as Puller);
+                    closeList.Add(ge);
+                }
+                if (ge is Switch) {
+                    Switch swt = ge as Switch;
+                    Puller[] p = swt.GetPullersFor(gameElement);
+                    pullers.AddRange(p);
                 } else {
-                    Puller[] p = this.GetPullers(e, gameElement);
-                    foreach (Puller puller in p) {
-                        if (!pullers.Contains(puller)) {
-                            pullers.Add(puller);
-                        }
-                    }
+                    elementsToInterate.Enqueue(ge);
                 }
             }
         }
-        return pullers.ToArray();
+
+        // Removes duplicated elements.
+        List<Puller> result = new List<Puller>();
+        foreach (Puller puller in pullers) {
+            if (!result.Contains(puller)) {
+                result.Add(puller);
+            }
+        }
+        return result.ToArray();
     }
 
     public virtual void Pull(GameElement element) {

@@ -43,6 +43,7 @@ public class Puller : GameElement {
         LeanTween.value(this.gameObject, f => {
             this.content.localPosition = from + (dif * f);
         }, 0, 1, time).setOnComplete(() => {
+            this.isHidden = true;
             Destroy(this.content.gameObject);
         });
         LeanTween.value(this.gameObject, f => {

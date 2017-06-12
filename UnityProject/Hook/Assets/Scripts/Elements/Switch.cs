@@ -73,7 +73,11 @@ public abstract class Switch : GameElement, IPointerClickHandler {
                 if (e == this) {
                     continue;
                 }
-                pullers.AddRange(e.GetPullers(e, null));
+                if (e is Puller) {
+                    pullers.AddIfNotContains(e as Puller);
+                } else {
+                    pullers.AddRangeIfNotContains(e.GetPullers());
+                }
             }
         }
         aPullers = pullers.ToArray();
@@ -83,7 +87,11 @@ public abstract class Switch : GameElement, IPointerClickHandler {
                 if (e == this) {
                     continue;
                 }
-                pullers.AddRange(e.GetPullers(e, null));
+                if (e is Puller) {
+                    pullers.AddIfNotContains(e as Puller);
+                } else {
+                    pullers.AddRangeIfNotContains(e.GetPullers());
+                }
             }
         }
         bPullers = pullers.ToArray();
@@ -93,7 +101,11 @@ public abstract class Switch : GameElement, IPointerClickHandler {
                 if (e == this) {
                     continue;
                 }
-                pullers.AddRange(e.GetPullers(e, null));
+                if (e is Puller) {
+                    pullers.AddIfNotContains(e as Puller);
+                } else {
+                    pullers.AddRangeIfNotContains(e.GetPullers());
+                }
             }
         }
         cPullers = pullers.ToArray();
@@ -103,16 +115,19 @@ public abstract class Switch : GameElement, IPointerClickHandler {
                 if (e == this) {
                     continue;
                 }
-                pullers.AddRange(e.GetPullers(e, null));
+                if (e is Puller) {
+                    pullers.AddIfNotContains(e as Puller);
+                } else {
+                    pullers.AddRangeIfNotContains(e.GetPullers());
+                }
             }
         }
         dPullers = pullers.ToArray();
-
         pullers.Clear();
-        pullers.AddRange(aPullers);
-        pullers.AddRange(bPullers);
-        pullers.AddRange(cPullers);
-        pullers.AddRange(dPullers);
+        pullers.AddRangeIfNotContains(aPullers);
+        pullers.AddRangeIfNotContains(bPullers);
+        pullers.AddRangeIfNotContains(cPullers);
+        pullers.AddRangeIfNotContains(dPullers);
         this.pullers = pullers.ToArray();
     }
 
