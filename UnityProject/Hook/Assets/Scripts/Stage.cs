@@ -8,6 +8,8 @@ public class Stage : MonoBehaviour {
     private int stage;
 
     private IList<Puller> pullers = new List<Puller>();
+    [SerializeField]
+    private List<GameElement> pullingList = new List<GameElement>();
     private bool stageFail;
     private bool stageClear;
 
@@ -19,7 +21,20 @@ public class Stage : MonoBehaviour {
         this.pullers.Add(puller);
     }
 
+    public bool CanPull(GameElement gameElement) {
+        return !this.pullingList.Contains(gameElement);
+    }
+
+    public void AddToPullingList(GameElement gameElement) {
+        this.pullingList.Add(gameElement);
+    }
+
+    public void ClearPullingList() {
+        this.pullingList.Clear();
+    }
+
     private void Update() {
+
         if (this.stage == -1) {
             return;
         }
@@ -33,6 +48,7 @@ public class Stage : MonoBehaviour {
         }
         this.stageClear = true;
         EventManager.Dispatch(new OnStageCompleted(this.stage));
+
     }
 
     public void FailStage() {

@@ -6,11 +6,9 @@ public class Puller : GameElement {
     private Transform puller;
     private Transform pullerEnd;
 
-    private Stage stage;
-
     private bool isStartedToPull;
 
-    private bool isClear;
+    private bool isPullerClear;
 
     private bool isBreaked;
 
@@ -18,35 +16,34 @@ public class Puller : GameElement {
         get { return this.content; }
     }
 
-    public override bool IsClear {
-        get { return this.isClear; }
+    public bool IsClear {
+        get { return this.isPullerClear; }
     }
 
     private void Awake() {
-        this.stage = this.GetComponentInParent<Stage>();
         this.content = this.transform.Find("content");
         this.puller = this.transform.Find("puller");
         this.pullerEnd = this.content.Find("puller_end");
     }
 
     private void Start() {
-        this.stage.RegisterNewPuller(this);
+        this.Stage.RegisterNewPuller(this);
     }
 
     public override void Pull(GameElement element) {
         if (this.isStartedToPull) {
             return;
         }
-        this.previousElement = element;
         this.isStartedToPull = true;
         float distance = Vector3.Distance(this.content.localPosition, -this.pullerEnd.localPosition);
         Vector3 from = this.content.localPosition;
         Vector3 to = -this.pullerEnd.localPosition;
         Vector3 dif = to - from;
-        float time = distance / 6;
+        float time = distance / 5;
         LeanTween.value(this.gameObject, f => {
             this.content.localPosition = from + (dif * f);
         }, 0, 1, time).setOnComplete(() => {
+            this.isHidden = true;
             Destroy(this.content.gameObject);
         });
         LeanTween.value(this.gameObject, f => {
@@ -61,6 +58,7 @@ public class Puller : GameElement {
         if (this.isBreaked) {
             return;
         }
+
         this.isBreaked = true;
         LeanTween.cancel(this.gameObject);
 
@@ -77,20 +75,12 @@ public class Puller : GameElement {
             });
         }
 
-        this.stage.FailStage();
+        this.Stage.FailStage();
     }
 
     private void OnTriggerEnter2D(Collider2D collider2D) {
-        this.isClear = true;
+        this.isPullerClear = true;
         this.Hide();
-        GameElement interator = this.previousElement;
-        while (interator != null) {
-            if (!interator.IsClear) {
-                break;
-            }
-            interator.Hide();
-            interator = interator.PreviousElement;
-        }
     }
 
 }

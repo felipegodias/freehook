@@ -30,4 +30,16 @@ public class Player {
         PlayerPrefs.SetInt("LAST_PLAYED_STAGE", stage);
     }
 
+    public static bool IsLightSOn() {
+        if (!Application.isPlaying) {
+            return true;
+        }
+        int value = PlayerPrefs.GetInt("IS_LIGHTS_ON", 1);
+        return value == 1;
+    }
+
+    public static void SetLightsOn(bool isLightsOn) {
+        PlayerPrefs.SetInt("IS_LIGHTS_ON", isLightsOn ? 1 : 0);
+    }
+
 }

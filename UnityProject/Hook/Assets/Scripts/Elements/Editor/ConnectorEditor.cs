@@ -9,11 +9,13 @@ public class ConnectorEditor : Editor {
     private SerializedProperty spriteRenderer;
 
     private SerializedProperty gameElements;
+    private SerializedProperty pullers;
 
     private SerializedProperty lines;
 
     public override void OnInspectorGUI() {
         EditorGUILayout.PropertyField(this.gameElements, true);
+        EditorGUILayout.PropertyField(this.pullers, true);
 
         if (this.spriteRenderer.objectReferenceValue == null) {
             SpriteRenderer spriteRenderer = this.target.gameObject.AddComponent<SpriteRenderer>();
@@ -55,6 +57,7 @@ public class ConnectorEditor : Editor {
         this.target = base.target as Connector;
         this.spriteRenderer = this.serializedObject.FindProperty("spriteRenderer");
         this.gameElements = this.serializedObject.FindProperty("gameElements");
+        this.pullers = this.serializedObject.FindProperty("pullers");
         this.lines = this.serializedObject.FindProperty("lines");
     }
 

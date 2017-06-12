@@ -36,8 +36,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4407074800420428}
-  - component: {fileID: 61930409365141012}
-  - component: {fileID: 50891906504359850}
+  - component: {fileID: 61861927977450568}
+  - component: {fileID: 50691645948520642}
   m_Layer: 10
   m_Name: puller_end
   m_TagString: Untagged
@@ -69,6 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4241502742968654}
   - component: {fileID: 114552833268597322}
+  - component: {fileID: 114258932879015080}
   m_Layer: 0
   m_Name: Stage (1)
   m_TagString: Untagged
@@ -85,8 +86,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4002473978337836}
   - component: {fileID: 114851667398219652}
-  - component: {fileID: 61480701778861744}
-  - component: {fileID: 50222837985326346}
+  - component: {fileID: 61475745828408164}
+  - component: {fileID: 50683364581459904}
   m_Layer: 10
   m_Name: puller (0)
   m_TagString: Untagged
@@ -425,8 +426,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4760032153263486}
-  - component: {fileID: 61342781757500388}
-  - component: {fileID: 50672061471878312}
+  - component: {fileID: 61006731156571976}
+  - component: {fileID: 50949391800408224}
   m_Layer: 10
   m_Name: puller_end
   m_TagString: Untagged
@@ -443,8 +444,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4119748919434904}
   - component: {fileID: 114692128660256210}
-  - component: {fileID: 61030564228522142}
-  - component: {fileID: 50025145894411778}
+  - component: {fileID: 61788185758539614}
+  - component: {fileID: 50345332184716854}
   m_Layer: 10
   m_Name: puller (0)
   m_TagString: Untagged
@@ -1132,7 +1133,7 @@ Transform:
   m_Father: {fileID: 4522062167129604}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50025145894411778
+--- !u!50 &50345332184716854
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -1152,7 +1153,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!50 &50222837985326346
+--- !u!50 &50683364581459904
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -1172,13 +1173,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!50 &50672061471878312
+--- !u!50 &50691645948520642
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1745658027392074}
+  m_GameObject: {fileID: 1030366919384164}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -1192,13 +1193,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!50 &50891906504359850
+--- !u!50 &50949391800408224
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030366919384164}
+  m_GameObject: {fileID: 1745658027392074}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -1226,7 +1227,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
 --- !u!58 &58441706274223922
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -1241,33 +1242,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!61 &61030564228522142
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780689277092750}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
-  m_EdgeRadius: 0
---- !u!61 &61342781757500388
+  m_Radius: 1
+--- !u!61 &61006731156571976
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1292,7 +1268,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!61 &61480701778861744
+--- !u!61 &61475745828408164
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1317,7 +1293,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!61 &61930409365141012
+--- !u!61 &61788185758539614
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780689277092750}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2}
+  m_EdgeRadius: 0
+--- !u!61 &61861927977450568
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1355,6 +1356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114809811904183338}
+  pullers:
+  - {fileID: 114692128660256210}
   lines:
   - {fileID: 212151266673198592}
   spriteRenderer: {fileID: 212001748083651180}
@@ -1372,6 +1375,17 @@ MonoBehaviour:
   to: {fileID: 4340911017525992}
   renderer: {fileID: 212068376220230464}
   bold: 1
+--- !u!114 &114258932879015080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1142037015007096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 386bbdebc4837634392ec4ba603946c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114363234534203670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1399,6 +1413,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114835115401392160}
+  pullers:
+  - {fileID: 114851667398219652}
   lines:
   - {fileID: 212603097334679828}
   spriteRenderer: {fileID: 212556841489095750}
@@ -1414,6 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 1
+  pullingList: []
 --- !u!114 &114574713004000114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1427,6 +1444,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114044525338088528}
+  pullers:
+  - {fileID: 114692128660256210}
   lines:
   - {fileID: 212281838256923714}
   spriteRenderer: {fileID: 212729906429676396}
@@ -1442,6 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers: []
 --- !u!114 &114789390256445488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1455,6 +1475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114981056604363142}
+  pullers:
+  - {fileID: 114851667398219652}
   lines:
   - {fileID: 212916661805318132}
   spriteRenderer: {fileID: 212406646832390590}
@@ -1471,6 +1493,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114840370158989120}
+  pullers:
+  - {fileID: 114692128660256210}
   lines:
   - {fileID: 212478908772257840}
   spriteRenderer: {fileID: 212407236840597488}
@@ -1487,6 +1511,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114574713004000114}
+  pullers:
+  - {fileID: 114692128660256210}
 --- !u!114 &114835115401392160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1499,6 +1525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements:
+  - {fileID: 114851667398219652}
+  pullers:
   - {fileID: 114851667398219652}
   lines:
   - {fileID: 212208899068504716}
@@ -1516,6 +1544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114692128660256210}
+  pullers:
+  - {fileID: 114692128660256210}
   lines:
   - {fileID: 212280528069653894}
   spriteRenderer: {fileID: 212328441685503378}
@@ -1531,6 +1561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameElements: []
+  pullers: []
 --- !u!114 &114900713835136492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1544,6 +1575,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114789390256445488}
+  pullers:
+  - {fileID: 114851667398219652}
 --- !u!114 &114981056604363142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1557,6 +1590,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameElements:
   - {fileID: 114439334771845166}
+  pullers:
+  - {fileID: 114851667398219652}
   lines:
   - {fileID: 212189261082891800}
   spriteRenderer: {fileID: 212333189554169554}

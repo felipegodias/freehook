@@ -10,7 +10,7 @@ public class Line : MonoBehaviour {
     private Transform to;
 
     [SerializeField, HideInInspector]
-    private SpriteRenderer renderer;
+    private new SpriteRenderer renderer;
 
     [SerializeField]
     private bool bold;
