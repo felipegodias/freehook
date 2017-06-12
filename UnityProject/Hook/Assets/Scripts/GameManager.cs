@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour {
         int hearts = Player.GetHearts();
         if (hearts > 0) {
             EventManager.Dispatch(new OnApplicationStart());
-            int lastStage = Player.GetLastPlayedStage();
             IEnumerator routine = this.LoadNewStage(0, false);
             this.StartCoroutine(routine);
         }
@@ -69,9 +68,12 @@ public class GameManager : MonoBehaviour {
 
     private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
         int stageToLoad = onStageCompleted.Stage + 1;
-        if (isFirstPlay) {
-            isFirstPlay = false;
-            stageToLoad = Player.GetLastPlayedStage();
+        if (this.isFirstPlay) {
+            this.isFirstPlay = false;
+            int lastPlayerStage = Player.GetLastPlayedStage();
+            if (lastPlayerStage != 0) {
+                stageToLoad = lastPlayerStage;
+            }
         }
         IEnumerator routine = this.LoadNewStage(stageToLoad, false);
         this.StartCoroutine(routine);
