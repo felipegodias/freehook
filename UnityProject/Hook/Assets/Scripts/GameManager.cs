@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
 
     private string stageToLoad;
 
+    private bool isFirstPlay = true;
+
     private void Awake() {
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour {
         if (hearts > 0) {
             EventManager.Dispatch(new OnApplicationStart());
             int lastStage = Player.GetLastPlayedStage();
-            IEnumerator routine = this.LoadNewStage(lastStage, false);
+            IEnumerator routine = this.LoadNewStage(0, false);
             this.StartCoroutine(routine);
         }
     }
@@ -67,6 +69,10 @@ public class GameManager : MonoBehaviour {
 
     private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
         int stageToLoad = onStageCompleted.Stage + 1;
+        if (isFirstPlay) {
+            isFirstPlay = false;
+            stageToLoad = Player.GetLastPlayedStage();
+        }
         IEnumerator routine = this.LoadNewStage(stageToLoad, false);
         this.StartCoroutine(routine);
     }
@@ -106,8 +112,11 @@ public class GameManager : MonoBehaviour {
             stagePath = string.Format("Prefabs/Stage ({0})", stageToLoad);
             stage = Resources.Load<Stage>(stagePath);
         }
+        
         Player.SetLastStage(stageToLoad);
-        Player.SetLastPlayedStage(stageToLoad);
+        if (stageToLoad != 0) {
+            Player.SetLastPlayedStage(stageToLoad);
+        }
         this.currentStage = Instantiate(stage);
         EventManager.Dispatch(new OnStageLoaded(stageToLoad));
     }
