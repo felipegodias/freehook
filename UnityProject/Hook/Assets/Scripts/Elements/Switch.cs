@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -159,6 +161,7 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         this.transform.rotation = Quaternion.Euler(0, 0, -90 * (int) this.switchState);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos() {
         Vector3 a = this.transform.position + Vector3.left / 2;
         Handles.Label(a, "A", EditorStyles.centeredGreyMiniLabel);
@@ -169,5 +172,6 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         Vector3 d = this.transform.position + Vector3.down / 2;
         Handles.Label(d, "D", EditorStyles.centeredGreyMiniLabel);
     }
+#endif
 
 }
