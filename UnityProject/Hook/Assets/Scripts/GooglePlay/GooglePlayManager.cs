@@ -11,7 +11,7 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     private void OnSpeedRunEnd(object sender, OnSpeedRunEnd eventArgs) {
-        Social.ReportScore(eventArgs.TimeSpan.Ticks, GPGSIds.leaderboard_speedrun, null);
+        Social.ReportScore((long)eventArgs.TimeSpan.TotalMilliseconds, GPGSIds.leaderboard_speedrun, null);
     }
 
     private void Start() {
