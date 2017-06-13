@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Diagnostics;
 using MGS.EventManager;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,11 +13,26 @@ public class GameManager : MonoBehaviour {
 
     private bool isFirstPlay = true;
 
+    private bool isSpeedRunMode;
+
+    private Stopwatch speedRunStopWatch;
+
+    public TimeSpan SpeedRunTimeSpan {
+        get {
+            if (this.speedRunStopWatch == null) {
+                return new TimeSpan();
+            }
+            return this.speedRunStopWatch.Elapsed;
+        }
+    }
+
     private void Awake() {
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
         EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.AddListener<OnStageSwitch>(this.OnStageSwitch);
+        EventManager.AddListener<OnSpeedRunStart>(this.OnSpeedRunStart);
+        EventManager.AddListener<OnTriggerClick>(this.OnTriggerClick);
     }
 
     private void Start() {
@@ -85,18 +103,32 @@ public class GameManager : MonoBehaviour {
         this.StartCoroutine(routine);
     }
 
-    private void OnStageFail(object sender, OnStageFail onStageFail) {
-        int heartCount = Player.GetHearts();
-        heartCount--;
-        Player.SetHearts(heartCount);
-        OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(heartCount);
-        EventManager.Dispatch(onHeartsCountWasChanged);
+    private void OnSpeedRunStart(object sender, OnSpeedRunStart eventArgs) {
+        this.isSpeedRunMode = true;
+    }
 
-        if (heartCount > 0) {
-            int stageToLoad = onStageFail.Stage;
-            IEnumerator routine = this.LoadNewStage(stageToLoad, false);
-            this.StartCoroutine(routine);
+    private void OnTriggerClick(object sender, OnTriggerClick eventArgs) {
+        if (this.isSpeedRunMode && this.speedRunStopWatch == null) {
+            this.speedRunStopWatch = new Stopwatch();
+            this.speedRunStopWatch.Start();
         }
+    }
+
+    private void OnStageFail(object sender, OnStageFail onStageFail) {
+        int heartCount = 1;
+        if (!this.isSpeedRunMode) {
+            heartCount = Player.GetHearts();
+            heartCount--;
+            Player.SetHearts(heartCount);
+            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(heartCount);
+            EventManager.Dispatch(onHeartsCountWasChanged);
+        }
+        if (heartCount <= 0) {
+            return;
+        }
+        int stageToLoad = onStageFail.Stage;
+        IEnumerator routine = this.LoadNewStage(stageToLoad, false);
+        this.StartCoroutine(routine);
     }
 
     private IEnumerator LoadNewStage(int stageToLoad, bool imediatly) {
@@ -107,6 +139,7 @@ public class GameManager : MonoBehaviour {
         if (this.currentStage != null) {
             Destroy(this.currentStage.gameObject);
         }
+
         string stagePath = string.Format("Prefabs/Stage ({0})", stageToLoad);
         Stage stage = Resources.Load<Stage>(stagePath);
         if (stage == null) {
@@ -114,11 +147,14 @@ public class GameManager : MonoBehaviour {
             stagePath = string.Format("Prefabs/Stage ({0})", stageToLoad);
             stage = Resources.Load<Stage>(stagePath);
         }
-        
-        Player.SetLastStage(stageToLoad);
-        if (stageToLoad != 0) {
-            Player.SetLastPlayedStage(stageToLoad);
+
+        if (!this.isSpeedRunMode) {
+            Player.SetLastStage(stageToLoad);
+            if (stageToLoad != 0) {
+                Player.SetLastPlayedStage(stageToLoad);
+            }
         }
+        
         this.currentStage = Instantiate(stage);
         EventManager.Dispatch(new OnStageLoaded(stageToLoad));
     }
@@ -127,6 +163,9 @@ public class GameManager : MonoBehaviour {
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
         EventManager.RemoveListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
+        EventManager.RemoveListener<OnStageSwitch>(this.OnStageSwitch);
+        EventManager.RemoveListener<OnSpeedRunStart>(this.OnSpeedRunStart);
+        EventManager.RemoveListener<OnTriggerClick>(this.OnTriggerClick);
     }
 
 }
