@@ -1,11 +1,17 @@
 ﻿using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using MGS.EventManager;
 using UnityEngine;
 
 public class GooglePlayManager : MonoBehaviour {
 
     private void Awake() {
         DontDestroyOnLoad(this.gameObject);
+        EventManager.AddListener<OnSpeedRunEnd>(this.OnSpeedRunEnd);
+    }
+
+    private void OnSpeedRunEnd(object sender, OnSpeedRunEnd eventArgs) {
+        Social.ReportScore(eventArgs.TimeSpan.Ticks, GPGSIds.leaderboard_speedrun, null);
     }
 
     private void Start() {

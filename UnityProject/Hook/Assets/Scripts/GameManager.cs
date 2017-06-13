@@ -93,6 +93,13 @@ public class GameManager : MonoBehaviour {
                 stageToLoad = lastPlayerStage;
             }
         }
+        if (this.isSpeedRunMode && stageToLoad >= 24) {
+            this.isSpeedRunMode = false;
+            this.speedRunStopWatch.Stop();
+            TimeSpan timeSpan = this.speedRunStopWatch.Elapsed;
+            this.speedRunStopWatch = null;
+            EventManager.Dispatch(new OnSpeedRunEnd(timeSpan));
+        }
         IEnumerator routine = this.LoadNewStage(stageToLoad, false);
         this.StartCoroutine(routine);
     }
