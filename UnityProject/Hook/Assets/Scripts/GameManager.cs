@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
         int stageToLoad = onStageCompleted.Stage + 1;
-        if (this.isFirstPlay) {
+        if (this.isFirstPlay && !this.isSpeedRunMode) {
             this.isFirstPlay = false;
             int lastPlayerStage = Player.GetLastPlayedStage();
             if (lastPlayerStage != 0) {
