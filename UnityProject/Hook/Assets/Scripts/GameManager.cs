@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using MGS.EventManager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour {
@@ -75,6 +76,12 @@ public class GameManager : MonoBehaviour {
                 EventManager.Dispatch(new OnStageSwitch(increment));
                 Debug.Log(stage);
             }
+        }
+    }
+
+    private void OnApplicationPause(bool pauseStatus) {
+        if (!pauseStatus && this.isSpeedRunMode) {
+            SceneManager.LoadScene("SplashScreen");
         }
     }
 

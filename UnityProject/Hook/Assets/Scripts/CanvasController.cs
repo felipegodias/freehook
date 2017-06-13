@@ -142,6 +142,9 @@ public class CanvasController : MonoBehaviour {
     private void OnDestroy() {
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
+        EventManager.RemoveListener<OnStageLoaded>(this.OnStageLoaded);
+        EventManager.RemoveListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
+        EventManager.RemoveListener<OnStageSwitch>(this.OnStageSwitch);
     }
 
 }
