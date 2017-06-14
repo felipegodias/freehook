@@ -105,8 +105,15 @@ public class GameManager : MonoBehaviour {
             this.speedRunStopWatch.Stop();
             TimeSpan timeSpan = this.speedRunStopWatch.Elapsed;
             this.speedRunStopWatch = null;
+
+            Player.SetLastSpeedRunTime(timeSpan);
+            TimeSpan bestSpeedRuntimeSpan = Player.GetBestSpeedRunTime();
+            if (timeSpan < bestSpeedRuntimeSpan) {
+                Player.SetBestSpeedRunTime(timeSpan);
+            }
+
             EventManager.Dispatch(new OnSpeedRunEnd(timeSpan));
-            stageToLoad = 0;
+            stageToLoad = -1;
         }
         IEnumerator routine = this.LoadNewStage(stageToLoad, false);
         this.StartCoroutine(routine);

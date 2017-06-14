@@ -87,7 +87,7 @@ public class CanvasController : MonoBehaviour {
         this.fade.raycastTarget = true;
         this.isSwitchStageButtonBlocked = true;
 
-        this.previousStageButton.gameObject.SetActive(onStageLoaded.Stage != 0);
+        this.previousStageButton.gameObject.SetActive(onStageLoaded.Stage > 0);
         this.nextStageButton.gameObject.SetActive(onStageLoaded.Stage != Player.GetLastStage());
 
         if (onStageLoaded.Stage > 0) {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Player {
 
@@ -40,6 +41,28 @@ public class Player {
 
     public static void SetLightsOn(bool isLightsOn) {
         PlayerPrefs.SetInt("IS_LIGHTS_ON", isLightsOn ? 1 : 0);
+    }
+
+    public static TimeSpan GetLastSpeedRunTime() {
+        string rawValue = PlayerPrefs.GetString("LAST_SPEED_RUN_TIME", long.MaxValue.ToString());
+        long ticks = long.Parse(rawValue);
+        TimeSpan timeSpan = new TimeSpan(ticks);
+        return timeSpan;
+    }
+
+    public static void SetLastSpeedRunTime(TimeSpan timeSpan) {
+        PlayerPrefs.SetString("LAST_SPEED_RUN_TIME", timeSpan.Ticks.ToString());
+    }
+
+    public static TimeSpan GetBestSpeedRunTime() {
+        string rawValue = PlayerPrefs.GetString("BEST_SPEED_RUN_TIME", long.MaxValue.ToString());
+        long ticks = long.Parse(rawValue);
+        TimeSpan timeSpan = new TimeSpan(ticks);
+        return timeSpan;
+    }
+
+    public static void SetBestSpeedRunTime(TimeSpan timeSpan) {
+        PlayerPrefs.SetString("BEST_SPEED_RUN_TIME", timeSpan.Ticks.ToString());
     }
 
 }
