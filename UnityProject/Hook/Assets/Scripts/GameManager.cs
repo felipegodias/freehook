@@ -86,6 +86,18 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnStageSwitch(object sender, OnStageSwitch eventArgs) {
+        int heartCount = Player.GetHearts();
+
+        if (heartCount <= 0 && !this.isSpeedRunMode) {
+            if (this.currentStage != null) {
+                Destroy(this.currentStage.gameObject);
+            }
+            Player.SetLastPlayedStage(0);
+            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(heartCount, false);
+            EventManager.Dispatch(onHeartsCountWasChanged);
+            return;
+        }
+
         this.isFirstPlay = false;
         int stageToLoad = this.currentStage.StageNum + eventArgs.Increment;
         IEnumerator routine = this.LoadNewStage(stageToLoad, true);
@@ -122,12 +134,20 @@ public class GameManager : MonoBehaviour {
 
     private void OnWatchAdsCompleted(object sender, OnWatchAdsCompleted onWatchAdsCompleted) {
         int lastStage = Player.GetLastPlayedStage();
+        if (this.isFirstPlay) {
+            lastStage = 0;
+        }
         IEnumerator routine = this.LoadNewStage(lastStage, false);
         this.StartCoroutine(routine);
     }
 
     private void OnSpeedRunStart(object sender, OnSpeedRunStart eventArgs) {
         this.isSpeedRunMode = true;
+        int heartCount = Player.GetHearts();
+        heartCount--;
+        Player.SetHearts(heartCount);
+        OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(heartCount, true);
+        EventManager.Dispatch(onHeartsCountWasChanged);
     }
 
     private void OnTriggerClick(object sender, OnTriggerClick eventArgs) {
@@ -143,7 +163,7 @@ public class GameManager : MonoBehaviour {
             heartCount = Player.GetHearts();
             heartCount--;
             Player.SetHearts(heartCount);
-            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(heartCount);
+            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(heartCount, false);
             EventManager.Dispatch(onHeartsCountWasChanged);
         }
         if (heartCount <= 0) {

@@ -21,7 +21,7 @@ public class UIInGameElements : MonoBehaviour {
             this.speedRunElementsCanvasGroup.alpha = f;
             this.defaultElementsCanvasGroup.transform.localPosition = Vector3.up * 25 * f;
             this.speedRunElementsCanvasGroup.transform.localPosition = Vector3.up * 25 * (1 - f);
-        }, 0, 1, 0.5f).setEaseOutSine();
+        }, 0, 1, 0.5f).setDelay(0.75f).setEaseOutSine();
     }
 
     private void OnSpeedRunEnd(object sender, OnSpeedRunEnd eventargs) {
