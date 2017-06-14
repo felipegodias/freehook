@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnStageSwitch(object sender, OnStageSwitch eventArgs) {
+        this.isFirstPlay = false;
         int stageToLoad = this.currentStage.StageNum + eventArgs.Increment;
         IEnumerator routine = this.LoadNewStage(stageToLoad, true);
         this.StartCoroutine(routine);
