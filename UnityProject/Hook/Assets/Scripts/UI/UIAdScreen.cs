@@ -32,6 +32,16 @@ public class UIAdScreen : MonoBehaviour {
     private void Awake() {
         this.watchAdsButton.onClick.AddListener(this.OnWatchAdsButtonClick);
         this.removeAdsButton.onClick.AddListener(this.OnRemoveAdsButtonClick);
+        EventManager.AddListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
+    }
+
+    private void OnDestroy() {
+        EventManager.RemoveListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
+    }
+
+    private void OnRemoveAdsBought(object sender, OnRemoveAdsBought eventargs) {
+        this.Hide();
+        EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Skipped));
     }
 
     private void Start() {
@@ -62,7 +72,7 @@ public class UIAdScreen : MonoBehaviour {
     }
 
     private void OnRemoveAdsButtonClick() {
-
+        EventManager.Dispatch(new OnRemoveAdsButtonClicked());
     }
 
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 public class Player {
 
     public static int GetHearts() {
+        if (!IsAdsEnabled()) {
+            return GameSettings.MAX_HEARTS;
+        }
         int defaultMaxHearts = GameSettings.MAX_HEARTS;
         return PlayerPrefs.GetInt("HEARTS", defaultMaxHearts);
     }
@@ -63,6 +66,14 @@ public class Player {
 
     public static void SetBestSpeedRunTime(TimeSpan timeSpan) {
         PlayerPrefs.SetString("BEST_SPEED_RUN_TIME", timeSpan.Ticks.ToString());
+    }
+
+    public static bool IsAdsEnabled() {
+        return PlayerPrefs.GetInt("IS_ADS_ENABLED", 1) == 1;
+    }
+
+    public static void DisableAds() {
+        PlayerPrefs.SetInt("IS_ADS_ENABLED", 0);
     }
 
 }

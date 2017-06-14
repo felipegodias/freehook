@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour {
 
     private void OnSpeedRunStart(object sender, OnSpeedRunStart eventArgs) {
         this.isSpeedRunMode = true;
+        if (!Player.IsAdsEnabled()) {
+            return;
+        }
         int heartCount = Player.GetHearts();
         heartCount--;
         Player.SetHearts(heartCount);
@@ -159,7 +162,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnStageFail(object sender, OnStageFail onStageFail) {
         int heartCount = 1;
-        if (!this.isSpeedRunMode) {
+        if (!this.isSpeedRunMode && Player.IsAdsEnabled()) {
             heartCount = Player.GetHearts();
             heartCount--;
             Player.SetHearts(heartCount);

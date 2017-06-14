@@ -35,6 +35,10 @@ public class CanvasController : MonoBehaviour {
         this.nextStageButton.gameObject.SetActive(false);
         this.previousStageButton.gameObject.SetActive(false);
 
+        if (!Player.IsAdsEnabled()) {
+            return;
+        }
+
         int hearts = Player.GetHearts();
         if (hearts <= 0) {
             this.adsScreen.Show();
