@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour {
         string stagePath = string.Format("Prefabs/Stage ({0})", stageToLoad);
         Stage stage = Resources.Load<Stage>(stagePath);
         if (stage == null) {
-            stageToLoad = -1;
+            stageToLoad = 0;
             stagePath = string.Format("Prefabs/Stage ({0})", stageToLoad);
             stage = Resources.Load<Stage>(stagePath);
         }
