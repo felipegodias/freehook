@@ -112,10 +112,12 @@ public class GameElement : MonoBehaviour {
 
     public virtual void Hide() {
         SpriteRenderer[] renderers = this.GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (SpriteRenderer spriteRenderer in renderers) {
+            spriteRenderer.sortingOrder = RenderUtils.GetDrawOrder();
+        }
         LeanTween.value(this.gameObject, f => {
             Color a = ColorUtils.LineColor;
-            Color b = a;
-            b.a = 0;
+            Color b = ColorUtils.BackgroundColor;
             Color c = ColorUtils.Lerp(a, b, f);
             foreach (SpriteRenderer spriteRenderer in renderers) {
                 if (spriteRenderer == null) {

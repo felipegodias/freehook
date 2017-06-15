@@ -17,6 +17,10 @@ public class Stage : MonoBehaviour {
         get { return this.stage; }
     }
 
+    public void Awake() {
+        RenderUtils.ClearDrawOrder();
+    }
+
     public void RegisterNewPuller(Puller puller) {
         this.pullers.Add(puller);
     }
