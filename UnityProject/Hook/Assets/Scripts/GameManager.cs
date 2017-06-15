@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Keypad0)) {
             this.stageToLoad += "0";
         } else if (Input.GetKeyDown(KeyCode.Keypad1)) {
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log(stage);
             }
         }
+#endif
     }
 
     private void OnApplicationPause(bool pauseStatus) {
