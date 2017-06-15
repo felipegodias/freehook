@@ -79,7 +79,7 @@ public class Purchaser : MonoBehaviour, IStoreListener {
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'",
                 args.purchasedProduct.definition.id));
         }
-
+        EventManager.Dispatch(new OnProcessPurchaseFinish());
         // Return a flag indicating whether this product has completely been received, or if the application needs 
         // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
         // saving purchased products to the cloud, and when that save is delayed. 
@@ -89,6 +89,7 @@ public class Purchaser : MonoBehaviour, IStoreListener {
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) {
         // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
         // this reason with the user to guide their troubleshooting actions.
+        EventManager.Dispatch(new OnProcessPurchaseFinish());
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}",
             product.definition.storeSpecificId, failureReason));
     }
@@ -211,6 +212,7 @@ public class Purchaser : MonoBehaviour, IStoreListener {
 
             // Otherwise ...
             else {
+                EventManager.Dispatch(new OnProcessPurchaseFinish());
                 // ... report the product look-up failure situation  
                 Debug.Log(
                     "BuyProductID: FAIL. Not purchasing product, either is not found or is not available for purchase");

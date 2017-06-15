@@ -33,15 +33,35 @@ public class UIAdScreen : MonoBehaviour {
         this.watchAdsButton.onClick.AddListener(this.OnWatchAdsButtonClick);
         this.removeAdsButton.onClick.AddListener(this.OnRemoveAdsButtonClick);
         EventManager.AddListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
+        EventManager.AddListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
+        EventManager.AddListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
     }
+
+
 
     private void OnDestroy() {
         EventManager.RemoveListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
+        EventManager.RemoveListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
+        EventManager.RemoveListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
     }
 
     private void OnRemoveAdsBought(object sender, OnRemoveAdsBought eventargs) {
         this.Hide();
         EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Skipped));
+    }
+
+    private void OnProcessPurchaseFinish(object sender, OnProcessPurchaseFinish eventargs) {
+        if (!this.gameObject.activeInHierarchy) {
+            return;
+        }
+        LeanTween.cancel(this.gameObject);
+        this.Show();
+    }
+
+    private void OnProcessPurchaseStart(object sender, OnProcessPurchaseStart eventargs) {
+        LeanTween.cancel(this.gameObject);
+        this.canvasGroup.interactable = false;
+        LeanTween.alphaCanvas(this.canvasGroup, 0, 0.5f).setEaseOutSine();
     }
 
     private void Start() {

@@ -11,6 +11,7 @@ public class IAPManager : MonoBehaviour {
     }
 
     private void OnRemoveAdsButtonClicked(object sender, OnRemoveAdsButtonClicked eventArgs) {
+        EventManager.Dispatch(new OnProcessPurchaseStart());
         purchaser.BuyNonConsumable();
     }
 
