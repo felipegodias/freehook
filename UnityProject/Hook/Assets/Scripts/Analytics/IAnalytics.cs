@@ -1,4 +1,5 @@
-﻿using UnityEngine.Advertisements;
+﻿using System;
+using UnityEngine.Advertisements;
 
 public interface IAnalytics {
 
@@ -10,6 +11,11 @@ public interface IAnalytics {
 
     void OnStageFail(int stage);
 
+    void OnSpeedRunEnd(TimeSpan timeSpan);
+
+    void OnRemoveAdsButtonClicked();
+
     void FlushEvents();
+    
 
 }

@@ -8,11 +8,17 @@ public class AnalyticsManager : MonoBehaviour {
     private IAnalytics[] analytics;
 
     private void Awake() {
+#if UNITY_EDITOR
+        this.analytics = new IAnalytics[0];
+#else
         this.analytics = new IAnalytics[] {new UnityAnalytics()};
+#endif
         EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.AddListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
+        EventManager.AddListener<OnSpeedRunEnd>(this.OnSpeedRunEnd);
+        EventManager.AddListener<OnRemoveAdsButtonClicked>(this.OnRemoveAdsButtonClicked);
     }
 
     private void Start() {
@@ -24,7 +30,7 @@ public class AnalyticsManager : MonoBehaviour {
             foreach (IAnalytics analytics in this.analytics) {
                 analytics.FlushEvents();
             }
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(20);
         }
     }
 
@@ -61,10 +67,24 @@ public class AnalyticsManager : MonoBehaviour {
         }
     }
 
+    private void OnSpeedRunEnd(object sender, OnSpeedRunEnd eventargs) {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnSpeedRunEnd(eventargs.TimeSpan);
+        }
+    }
+
+    private void OnRemoveAdsButtonClicked(object sender, OnRemoveAdsButtonClicked eventargs) {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnRemoveAdsButtonClicked();
+        }
+    }
+
     private void OnDestroy() {
         EventManager.RemoveListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
+        EventManager.RemoveListener<OnSpeedRunEnd>(this.OnSpeedRunEnd);
+        EventManager.RemoveListener<OnRemoveAdsButtonClicked>(this.OnRemoveAdsButtonClicked);
     }
 
 }
