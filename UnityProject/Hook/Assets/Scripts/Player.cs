@@ -1,45 +1,85 @@
-﻿using UnityEngine;
+﻿using System;
+using CodeStage.AntiCheat.ObscuredTypes;
+using UnityEngine;
 
 public class Player {
 
+    private const string kHeartCount = "heart_count";
+    private const string kLastStage = "last_stage";
+    private const string kLastPlayedStage = "last_played_stage";
+    private const string kIsLightsOn = "is_lights_on";
+    private const string kLastSpeedRunTime = "last_speed_run_time";
+    private const string kBestSpeedRunTime = "best_speed_run_time";
+    private const string kIsAdsEnabled = "is_ads_enabled";
+
     public static int GetHearts() {
+        if (!IsAdsEnabled()) {
+            return GameSettings.MAX_HEARTS;
+        }
         int defaultMaxHearts = GameSettings.MAX_HEARTS;
-        return PlayerPrefs.GetInt("HEARTS", defaultMaxHearts);
+        return ObscuredPrefs.GetInt(kHeartCount, defaultMaxHearts);
     }
 
     public static void SetHearts(int hearts) {
-        PlayerPrefs.SetInt("HEARTS", hearts);
+        ObscuredPrefs.SetInt(kHeartCount, hearts);
     }
 
     public static int GetLastStage() {
-        return PlayerPrefs.GetInt("LAST_STAGE", 0);
+        return ObscuredPrefs.GetInt(kLastStage, 0);
     }
 
     public static void SetLastStage(int lastStage) {
         int stage = GetLastStage();
         if (lastStage > stage) {
-            PlayerPrefs.SetInt("LAST_STAGE", lastStage);
+            ObscuredPrefs.SetInt(kLastStage, lastStage);
         }
     }
 
     public static int GetLastPlayedStage() {
-        return PlayerPrefs.GetInt("LAST_PLAYED_STAGE", 0);
+        return ObscuredPrefs.GetInt(kLastPlayedStage, 0);
     }
 
     public static void SetLastPlayedStage(int stage) {
-        PlayerPrefs.SetInt("LAST_PLAYED_STAGE", stage);
+        ObscuredPrefs.SetInt(kLastPlayedStage, stage);
     }
 
     public static bool IsLightSOn() {
         if (!Application.isPlaying) {
             return true;
         }
-        int value = PlayerPrefs.GetInt("IS_LIGHTS_ON", 1);
-        return value == 1;
+        return ObscuredPrefs.GetBool(kIsLightsOn, true);
     }
 
     public static void SetLightsOn(bool isLightsOn) {
-        PlayerPrefs.SetInt("IS_LIGHTS_ON", isLightsOn ? 1 : 0);
+        ObscuredPrefs.SetBool(kIsLightsOn, isLightsOn);
+    }
+
+    public static TimeSpan GetLastSpeedRunTime() {
+        long ticks = ObscuredPrefs.GetLong(kLastSpeedRunTime, long.MaxValue);
+        TimeSpan timeSpan = new TimeSpan(ticks);
+        return timeSpan;
+    }
+
+    public static void SetLastSpeedRunTime(TimeSpan timeSpan) {
+        ObscuredPrefs.SetLong(kLastSpeedRunTime, timeSpan.Ticks);
+    }
+
+    public static TimeSpan GetBestSpeedRunTime() {
+        long ticks = ObscuredPrefs.GetLong(kBestSpeedRunTime, long.MaxValue);
+        TimeSpan timeSpan = new TimeSpan(ticks);
+        return timeSpan;
+    }
+
+    public static void SetBestSpeedRunTime(TimeSpan timeSpan) {
+        ObscuredPrefs.SetLong(kBestSpeedRunTime, timeSpan.Ticks);
+    }
+
+    public static bool IsAdsEnabled() {
+        return ObscuredPrefs.GetBool(kIsAdsEnabled, true);
+    }
+
+    public static void DisableAds() {
+        ObscuredPrefs.SetBool(kIsAdsEnabled, false);
     }
 
 }

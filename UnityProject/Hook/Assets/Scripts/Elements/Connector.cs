@@ -46,7 +46,7 @@ public class Connector : GameElement {
         List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
         for (int i = 0; i < this.GameElements.Length; i++) {
             SpriteRenderer line = this.lines[i];
-            if (line.color.a == 1 && this.GameElements[i].IsHidden) {
+            if (line.color == ColorUtils.LineColor && this.GameElements[i].IsHidden) {
                 renderersToFade.Add(line);
             }
         }
@@ -58,15 +58,18 @@ public class Connector : GameElement {
     private void HideElements(SpriteRenderer[] renderers) {
         List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
         foreach (SpriteRenderer line in renderers) {
-            if (Math.Abs(line.color.a - 1) < Mathf.Epsilon) {
+            if (line.color == ColorUtils.LineColor) {
                 renderersToFade.Add(line);
             }
         }
 
+        foreach (SpriteRenderer spriteRenderer in renderersToFade) {
+            spriteRenderer.sortingOrder = RenderUtils.GetDrawOrder();
+        }
+
         LeanTween.value(this.gameObject, f => {
             Color a = ColorUtils.LineColor;
-            Color b = a;
-            b.a = 0;
+            Color b = ColorUtils.BackgroundColor;
             Color c = ColorUtils.Lerp(a, b, f);
             foreach (SpriteRenderer spriteRenderer in renderersToFade) {
                 spriteRenderer.color = c;

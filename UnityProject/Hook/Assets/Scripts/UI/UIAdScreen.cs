@@ -32,6 +32,36 @@ public class UIAdScreen : MonoBehaviour {
     private void Awake() {
         this.watchAdsButton.onClick.AddListener(this.OnWatchAdsButtonClick);
         this.removeAdsButton.onClick.AddListener(this.OnRemoveAdsButtonClick);
+        EventManager.AddListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
+        EventManager.AddListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
+        EventManager.AddListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
+    }
+
+
+
+    private void OnDestroy() {
+        EventManager.RemoveListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
+        EventManager.RemoveListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
+        EventManager.RemoveListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
+    }
+
+    private void OnRemoveAdsBought(object sender, OnRemoveAdsBought eventargs) {
+        this.Hide();
+        EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Skipped));
+    }
+
+    private void OnProcessPurchaseFinish(object sender, OnProcessPurchaseFinish eventargs) {
+        if (!this.gameObject.activeInHierarchy) {
+            return;
+        }
+        LeanTween.cancel(this.gameObject);
+        this.Show();
+    }
+
+    private void OnProcessPurchaseStart(object sender, OnProcessPurchaseStart eventargs) {
+        LeanTween.cancel(this.gameObject);
+        this.canvasGroup.interactable = false;
+        LeanTween.alphaCanvas(this.canvasGroup, 0, 0.5f).setEaseOutSine();
     }
 
     private void Start() {
@@ -46,7 +76,7 @@ public class UIAdScreen : MonoBehaviour {
             showOptions.resultCallback = result => {
                 int maxHearts = GameSettings.MAX_HEARTS;
                 Player.SetHearts(maxHearts);
-                OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts);
+                OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts, false);
                 EventManager.Dispatch(onHeartsCountWasChanged);
                 EventManager.Dispatch(new OnWatchAdsCompleted(result));
             };
@@ -54,7 +84,7 @@ public class UIAdScreen : MonoBehaviour {
         } else {
             int maxHearts = GameSettings.MAX_HEARTS;
             Player.SetHearts(maxHearts);
-            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts);
+            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts, false);
             EventManager.Dispatch(onHeartsCountWasChanged);
             EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Failed));
         }
@@ -62,7 +92,7 @@ public class UIAdScreen : MonoBehaviour {
     }
 
     private void OnRemoveAdsButtonClick() {
-
+        EventManager.Dispatch(new OnRemoveAdsButtonClicked());
     }
 
 }

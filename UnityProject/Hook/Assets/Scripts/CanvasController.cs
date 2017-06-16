@@ -35,13 +35,15 @@ public class CanvasController : MonoBehaviour {
         this.nextStageButton.gameObject.SetActive(false);
         this.previousStageButton.gameObject.SetActive(false);
 
+        if (!Player.IsAdsEnabled()) {
+            return;
+        }
+
         int hearts = Player.GetHearts();
         if (hearts <= 0) {
             this.adsScreen.Show();
         }
     }
-
-
 
     private void OnNextStageButtonClicked() {
         if (this.isSwitchStageButtonBlocked) {
@@ -87,7 +89,7 @@ public class CanvasController : MonoBehaviour {
         this.fade.raycastTarget = true;
         this.isSwitchStageButtonBlocked = true;
 
-        this.previousStageButton.gameObject.SetActive(onStageLoaded.Stage != 0);
+        this.previousStageButton.gameObject.SetActive(onStageLoaded.Stage > 0);
         this.nextStageButton.gameObject.SetActive(onStageLoaded.Stage != Player.GetLastStage());
 
         if (onStageLoaded.Stage > 0) {
@@ -124,6 +126,9 @@ public class CanvasController : MonoBehaviour {
     }
 
     private void OnHeartsCountWasChanged(object sender, OnHeartsCountWasChanged onHeartsCountWasChanged) {
+        if (onHeartsCountWasChanged.IsSpeedRunModeOn) {
+            return;
+        }
         if (onHeartsCountWasChanged.HeartCount <= 0) {
             this.nextStageButton.gameObject.SetActive(false);
             this.previousStageButton.gameObject.SetActive(false);
@@ -142,6 +147,9 @@ public class CanvasController : MonoBehaviour {
     private void OnDestroy() {
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
+        EventManager.RemoveListener<OnStageLoaded>(this.OnStageLoaded);
+        EventManager.RemoveListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
+        EventManager.RemoveListener<OnStageSwitch>(this.OnStageSwitch);
     }
 
 }
