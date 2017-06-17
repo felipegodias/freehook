@@ -12,7 +12,16 @@ public class I18N {
                     {"watch", "watch"},
                     {"remove_ads", "Remove Ads"}
                 }
-            }
+            },
+            {
+                "pt", new Dictionary<string, string> {
+                    {"ads_screen_description", "Assistir propaganda por {0} corações?"},
+                    {"no_more_ads_screen_description", "Desculpe, não temos mais propagandas para mostrar, tente novamente mais tarde. :("},
+                    {"ok", "ok"},
+                    {"watch", "Assistir"},
+                    {"remove_ads", "Remove propagandas"}
+                }
+            },
         };
 
     public static string GetText(string key, params object[] args) {
