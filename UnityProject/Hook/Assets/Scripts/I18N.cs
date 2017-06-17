@@ -16,7 +16,7 @@ public class I18N {
             },
             {
                 SystemLanguage.Portuguese, new Dictionary<string, string> {
-                    {"ads_screen_description", "Assistir propaganda por {0} corações?"},
+                    {"ads_screen_description", "Assistir propaganda para ganhar {0} corações?"},
                     {"no_more_ads_screen_description", "Desculpe, não temos mais propagandas para mostrar, tente novamente mais tarde. :("},
                     {"ok", "ok"},
                     {"watch", "Assistir"},
@@ -25,8 +25,16 @@ public class I18N {
             },
         };
 
+    private static IDictionary<string, string> GetLanguageDictionary() {
+        /*SystemLanguage systemLanguage = Application.systemLanguage;
+        if (dictionary.ContainsKey(systemLanguage)) {
+            return dictionary[systemLanguage];
+        }*/
+        return dictionary[SystemLanguage.English];
+    }
+
     public static string GetText(string key, params object[] args) {
-        Dictionary<string, string> lang = dictionary[SystemLanguage.English];
+        IDictionary<string, string> lang = GetLanguageDictionary();
         if (!lang.ContainsKey(key)) {
             return null;
         }
