@@ -14,6 +14,8 @@ public class UIAdScreen : MonoBehaviour {
     private CanvasGroup canvasGroup;
     [SerializeField]
     private TextMeshProUGUI descriptionText;
+    [SerializeField]
+    private UINoMoreAdsToShowScreen noMoreAdsToShowScreen;
 
     public void Show() {
         this.canvasGroup.alpha = 0;
@@ -82,11 +84,7 @@ public class UIAdScreen : MonoBehaviour {
             };
             Advertisement.Show("rewardedVideo", showOptions);
         } else {
-            int maxHearts = GameSettings.MAX_HEARTS;
-            Player.SetHearts(maxHearts);
-            OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts, false);
-            EventManager.Dispatch(onHeartsCountWasChanged);
-            EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Failed));
+            this.noMoreAdsToShowScreen.Show();
         }
         this.Hide();
     }
