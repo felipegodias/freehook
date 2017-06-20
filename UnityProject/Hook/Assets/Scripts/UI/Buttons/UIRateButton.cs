@@ -1,4 +1,6 @@
-﻿public class UIRateButton : UIButton {
+﻿using UnityEngine;
+
+public class UIRateButton : UIButton {
 
     private void Awake() {
         int lastStage = Player.GetLastStage();
@@ -7,6 +9,8 @@
         }
     }
 
-    protected override void OnClick() {}
+    protected override void OnClick() {
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.robinhoodlab.freehook");
+    }
 
 }
