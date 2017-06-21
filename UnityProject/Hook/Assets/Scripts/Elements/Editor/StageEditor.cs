@@ -54,6 +54,44 @@ public class StageEditor : Editor {
                 }
             }
         }
+
+        bool isAutoLinkButtonClicked = GUILayout.Button("Link Switches");
+        if (isAutoLinkButtonClicked) {
+            Switch[] switches = this.target.GetComponentsInChildren<Switch>(true);
+            foreach (Switch swt in switches) {
+                SwitchEditor.LinkElements(swt);
+            }
+        }
+
+        bool isDoubleLinkButtonClicked = GUILayout.Button("Double Link Connectors");
+        if (isDoubleLinkButtonClicked) {
+            Connector[] connectors = this.target.GetComponentsInChildren<Connector>(true);
+            foreach (Connector connector in connectors) {
+                Debug.Log(connector);
+                foreach (GameElement ge in connector.GameElements) {
+                    if (!(ge is Connector)) {
+                        continue;
+                    }
+                    bool alreadyAdded = false;
+                    foreach (GameElement gameElement in ge.GameElements) {
+                        if (gameElement != connector) {
+                            continue;
+                        }
+                        alreadyAdded = true;
+                        break;
+                    }
+                    if (alreadyAdded) {
+                        continue;
+                    }
+                    SerializedObject serializedObject = new SerializedObject(ge);
+                    SerializedProperty geProperty = serializedObject.FindProperty("gameElements");
+                    geProperty.InsertArrayElementAtIndex(geProperty.arraySize);
+                    SerializedProperty element = geProperty.GetArrayElementAtIndex(geProperty.arraySize - 1);
+                    element.objectReferenceValue = connector;
+                    serializedObject.ApplyModifiedProperties();
+                }
+            }
+        }
     }
 
 }
