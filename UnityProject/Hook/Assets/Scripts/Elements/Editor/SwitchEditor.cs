@@ -63,6 +63,10 @@ public class SwitchEditor : Editor {
     }
 
     public static void AddSwitchToGameElement(Switch swt, GameElement gameElement) {
+        SpriteRenderer spriteRenderer = gameElement.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) {
+            spriteRenderer.enabled = false;
+        }
         bool alreadyAdded = false;
         foreach (GameElement ge in gameElement.GameElements) {
             if (ge == swt) {
@@ -79,6 +83,8 @@ public class SwitchEditor : Editor {
         SerializedProperty element = geProperty.GetArrayElementAtIndex(geProperty.arraySize - 1);
         element.objectReferenceValue = swt;
         serializedObject.ApplyModifiedProperties();
+        Editor connectorEditor = ConnectorEditor.CreateEditor(gameElement);
+        connectorEditor.OnInspectorGUI();
     }
 
 }

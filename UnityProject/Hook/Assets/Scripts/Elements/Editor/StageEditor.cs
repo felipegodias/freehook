@@ -89,6 +89,8 @@ public class StageEditor : Editor {
                     SerializedProperty element = geProperty.GetArrayElementAtIndex(geProperty.arraySize - 1);
                     element.objectReferenceValue = connector;
                     serializedObject.ApplyModifiedProperties();
+                    Editor connectorEditor = ConnectorEditor.CreateEditor(ge);
+                    connectorEditor.OnInspectorGUI();
                 }
             }
         }
