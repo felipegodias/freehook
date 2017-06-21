@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class ABCDSwitch : Switch {
+public class CurveSwitch : Switch {
 
     protected override bool IsElementInsideInput(GameElement element) {
         switch (this.SwitchState) {

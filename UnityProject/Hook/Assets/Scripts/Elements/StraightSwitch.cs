@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ABSwitch : Switch {
+public class StraightSwitch : Switch {
 
     protected override bool IsElementInsideInput(GameElement element) {
         if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
