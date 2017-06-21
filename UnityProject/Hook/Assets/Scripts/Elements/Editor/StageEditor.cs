@@ -67,7 +67,6 @@ public class StageEditor : Editor {
         if (isDoubleLinkButtonClicked) {
             Connector[] connectors = this.target.GetComponentsInChildren<Connector>(true);
             foreach (Connector connector in connectors) {
-                Debug.Log(connector);
                 foreach (GameElement ge in connector.GameElements) {
                     if (!(ge is Connector)) {
                         continue;
