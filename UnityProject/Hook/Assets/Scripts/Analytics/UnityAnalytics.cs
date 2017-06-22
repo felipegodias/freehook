@@ -17,7 +17,7 @@ public class UnityAnalytics : IAnalytics {
 
     private const string kOnStageFail = "hook.stage.fail";
 
-    private const string kOnSpeedRunEnd = "hook.speed_run.end";
+    private const string kOnSpeedRun25End = "hook.speed_run_25.end";
 
     private const string kOnRemoveAdsButtonClicked = "hook.remove_ads.button_click";
 
@@ -73,8 +73,8 @@ public class UnityAnalytics : IAnalytics {
 
     public void OnSpeedRunEnd(TimeSpan timeSpan) {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
-        eventArgs.Add(kTime, timeSpan);
-        Analytics.CustomEvent(kOnSpeedRunEnd, eventArgs);
+        eventArgs.Add(kTime, timeSpan.TotalSeconds);
+        Analytics.CustomEvent(kOnSpeedRun25End, eventArgs);
     }
 
     public void OnRemoveAdsButtonClicked() {
