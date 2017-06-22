@@ -10,6 +10,8 @@ using UnityEditor.Analytics;
 
 public class UnityAnalytics : IAnalytics {
 
+    private const string kOnFirstInteraction = "hook.first_interaction";
+
     private const string kOnWatchAdsCompleted = "hook.ads.completed";
 
     private const string kOnApplicationStart = "hook.aplication.start";
@@ -28,10 +30,18 @@ public class UnityAnalytics : IAnalytics {
 
     private const string kTime = "time";
 
+    private const string kType = "type";
+
     public UnityAnalytics() {
         Analytics.enabled = true;
         string deviceId = Player.GetDeviceId();
         Analytics.SetUserId(deviceId);
+    }
+
+    public void OnFirstInteraction(FirstInteraction firstInteraction) {
+        IDictionary<string, object> eventArgs = new Dictionary<string, object>();
+        eventArgs.Add(kType, firstInteraction.ToString().ToLower());
+        Analytics.CustomEvent(kOnFirstInteraction, eventArgs);
     }
 
     public void OnWatchAdsComplete(ShowResult result) {

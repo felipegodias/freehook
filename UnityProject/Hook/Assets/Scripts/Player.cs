@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player {
 
     private const string kDeviceId = "device_id";
+    private const string kFirstInteraction = "first_interaction";
     private const string kHeartCount = "heart_count";
     private const string kLastStage = "last_stage";
     private const string kLastPlayedStage = "last_played_stage";
@@ -20,6 +21,14 @@ public class Player {
         string deviceId = SystemInfo.deviceUniqueIdentifier;
         ObscuredPrefs.SetString(kDeviceId, deviceId);
         return deviceId;
+    }
+
+    public static bool HasFirstInteraction() {
+        return ObscuredPrefs.GetBool(kFirstInteraction, false);
+    }
+
+    public static void SetFirstInteraction(bool value) {
+        ObscuredPrefs.SetBool(kFirstInteraction, value);
     }
 
     public static int GetHearts() {

@@ -13,6 +13,7 @@ public class AnalyticsManager : MonoBehaviour {
 #else
         this.analytics = new IAnalytics[] {new UnityAnalytics()};
 #endif
+        EventManager.AddListener<OnFirstInteraction>(this.OnFirstInteraction);
         EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.AddListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
@@ -31,6 +32,12 @@ public class AnalyticsManager : MonoBehaviour {
                 analytics.FlushEvents();
             }
             yield return new WaitForSeconds(20);
+        }
+    }
+
+    private void OnFirstInteraction(object sender, OnFirstInteraction eventArgs) {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnFirstInteraction(eventArgs.FirstInteraction);
         }
     }
 
@@ -80,6 +87,8 @@ public class AnalyticsManager : MonoBehaviour {
     }
 
     private void OnDestroy() {
+        EventManager.RemoveListener<OnFirstInteraction>(this.OnFirstInteraction);
+        EventManager.RemoveListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.RemoveListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);

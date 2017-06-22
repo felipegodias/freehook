@@ -3,6 +3,8 @@ using UnityEngine.Advertisements;
 
 public interface IAnalytics {
 
+    void OnFirstInteraction(FirstInteraction firstInteraction);
+
     void OnWatchAdsComplete(ShowResult result);
 
     void OnApplicationStart();
