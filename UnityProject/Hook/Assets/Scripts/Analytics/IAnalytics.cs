@@ -3,6 +3,10 @@ using UnityEngine.Advertisements;
 
 public interface IAnalytics {
 
+    void OnFirstInteraction(FirstInteraction firstInteraction);
+
+    void OnWatchAdsStart();
+
     void OnWatchAdsComplete(ShowResult result);
 
     void OnApplicationStart();
@@ -14,6 +18,8 @@ public interface IAnalytics {
     void OnSpeedRunEnd(TimeSpan timeSpan);
 
     void OnRemoveAdsButtonClicked();
+
+    void OnShowAdsScreen();
 
     void FlushEvents();
     

@@ -37,18 +37,22 @@ public class SwitchEditor : Editor {
             float aDistance = Vector3.Distance(gameElement.transform.position, ap);
             if (aDistance < Mathf.Epsilon) {
                 a.objectReferenceValue = gameElement;
+                AddSwitchToGameElement(switchElement, gameElement);
             }
             float bDistance = Vector3.Distance(gameElement.transform.position, bp);
             if (bDistance < Mathf.Epsilon) {
                 b.objectReferenceValue = gameElement;
+                AddSwitchToGameElement(switchElement, gameElement);
             }
             float cDistance = Vector3.Distance(gameElement.transform.position, cp);
             if (cDistance < Mathf.Epsilon) {
                 c.objectReferenceValue = gameElement;
+                AddSwitchToGameElement(switchElement, gameElement);
             }
             float dDistance = Vector3.Distance(gameElement.transform.position, dp);
             if (dDistance < Mathf.Epsilon) {
                 d.objectReferenceValue = gameElement;
+                AddSwitchToGameElement(switchElement, gameElement);
             }
         }
         serializedObject.ApplyModifiedProperties();
@@ -56,6 +60,31 @@ public class SwitchEditor : Editor {
 
     public static void SetPullers(Switch switchElement) {
         
+    }
+
+    public static void AddSwitchToGameElement(Switch swt, GameElement gameElement) {
+        SpriteRenderer spriteRenderer = gameElement.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) {
+            spriteRenderer.enabled = false;
+        }
+        bool alreadyAdded = false;
+        foreach (GameElement ge in gameElement.GameElements) {
+            if (ge == swt) {
+                alreadyAdded = true;
+                break;
+            }
+        }
+        if (alreadyAdded) {
+            return;
+        }
+        SerializedObject serializedObject = new SerializedObject(gameElement);
+        SerializedProperty geProperty = serializedObject.FindProperty("gameElements");
+        geProperty.InsertArrayElementAtIndex(geProperty.arraySize);
+        SerializedProperty element = geProperty.GetArrayElementAtIndex(geProperty.arraySize - 1);
+        element.objectReferenceValue = swt;
+        serializedObject.ApplyModifiedProperties();
+        Editor connectorEditor = ConnectorEditor.CreateEditor(gameElement);
+        connectorEditor.OnInspectorGUI();
     }
 
 }

@@ -34,7 +34,11 @@ public class GameManager : MonoBehaviour {
         EventManager.AddListener<OnStageSwitch>(this.OnStageSwitch);
         EventManager.AddListener<OnSpeedRunStart>(this.OnSpeedRunStart);
         EventManager.AddListener<OnTriggerClick>(this.OnTriggerClick);
+        EventManager.AddListener<OnLightSwitch>(this.OnLightSwitch);
+        EventManager.AddListener<OnOpenLeaderboard>(this.OnOpenLeaderboard);
     }
+
+
 
     private void Start() {
         int hearts = Player.GetHearts();
@@ -156,10 +160,36 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnTriggerClick(object sender, OnTriggerClick eventArgs) {
-        if (this.isSpeedRunMode && this.speedRunStopWatch == null) {
-            this.speedRunStopWatch = new Stopwatch();
-            this.speedRunStopWatch.Start();
+        if (!Player.HasFirstInteraction()) {
+            Player.SetFirstInteraction(true);
+            OnFirstInteraction firstInteraction = new OnFirstInteraction(FirstInteraction.Play);
+            EventManager.Dispatch(firstInteraction);
         }
+
+        if (!this.isSpeedRunMode || this.speedRunStopWatch != null) {
+            return;
+        }
+
+        this.speedRunStopWatch = new Stopwatch();
+        this.speedRunStopWatch.Start();
+    }
+
+    private void OnOpenLeaderboard(object sender, OnOpenLeaderboard eventargs) {
+        if (Player.HasFirstInteraction()) {
+            return;
+        }
+        Player.SetFirstInteraction(true);
+        OnFirstInteraction firstInteraction = new OnFirstInteraction(FirstInteraction.OpenLeaderboard);
+        EventManager.Dispatch(firstInteraction);
+    }
+
+    private void OnLightSwitch(object sender, OnLightSwitch eventargs) {
+        if (Player.HasFirstInteraction()) {
+            return;
+        }
+        Player.SetFirstInteraction(true);
+        OnFirstInteraction firstInteraction = new OnFirstInteraction(FirstInteraction.SwitchLight);
+        EventManager.Dispatch(firstInteraction);
     }
 
     private void OnStageFail(object sender, OnStageFail onStageFail) {
@@ -214,6 +244,8 @@ public class GameManager : MonoBehaviour {
         EventManager.RemoveListener<OnStageSwitch>(this.OnStageSwitch);
         EventManager.RemoveListener<OnSpeedRunStart>(this.OnSpeedRunStart);
         EventManager.RemoveListener<OnTriggerClick>(this.OnTriggerClick);
+        EventManager.RemoveListener<OnLightSwitch>(this.OnLightSwitch);
+        EventManager.RemoveListener<OnOpenLeaderboard>(this.OnOpenLeaderboard);
     }
 
 }

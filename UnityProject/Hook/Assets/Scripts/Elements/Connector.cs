@@ -28,7 +28,7 @@ public class Connector : GameElement {
             }
 
             if (gameElement is Switch) {
-                line.size = Vector2.zero;
+                line.size = new Vector2(0.001f, 0.001f);
             } else {
                 Vector3 dir = (gameElement.transform.position - this.transform.position).normalized;
                 float distance = Vector3.Distance(gameElement.transform.position, this.transform.position);
@@ -41,6 +41,9 @@ public class Connector : GameElement {
     }
 
     protected override void LateUpdate() {
+        if (!Application.isPlaying) {
+            return;
+        }
         base.LateUpdate();
 
         List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
