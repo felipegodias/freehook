@@ -5,6 +5,8 @@ public interface IAnalytics {
 
     void OnFirstInteraction(FirstInteraction firstInteraction);
 
+    void OnWatchAdsStart();
+
     void OnWatchAdsComplete(ShowResult result);
 
     void OnApplicationStart();

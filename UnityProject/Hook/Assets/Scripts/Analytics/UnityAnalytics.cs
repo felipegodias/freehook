@@ -12,6 +12,8 @@ public class UnityAnalytics : IAnalytics {
 
     private const string kOnFirstInteraction = "hook.first_interaction";
 
+    private const string kOnWatchAdsStarted = "hook.ads.started";
+
     private const string kOnWatchAdsCompleted = "hook.ads.completed";
 
     private const string kOnApplicationStart = "hook.aplication.start";
@@ -42,6 +44,11 @@ public class UnityAnalytics : IAnalytics {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kType, firstInteraction.ToString().ToLower());
         Analytics.CustomEvent(kOnFirstInteraction, eventArgs);
+    }
+
+    public void OnWatchAdsStart() {
+        IDictionary<string, object> eventArgs = new Dictionary<string, object>();
+        Analytics.CustomEvent(kOnWatchAdsStarted, eventArgs);
     }
 
     public void OnWatchAdsComplete(ShowResult result) {

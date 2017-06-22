@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using MGS.EventManager;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -15,13 +16,13 @@ public class AnalyticsManager : MonoBehaviour {
 #endif
         EventManager.AddListener<OnFirstInteraction>(this.OnFirstInteraction);
         EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
+        EventManager.AddListener<OnWatchAdsStarted>(this.OnWatchAdsStarted);
         EventManager.AddListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
         EventManager.AddListener<OnSpeedRunEnd>(this.OnSpeedRunEnd);
         EventManager.AddListener<OnRemoveAdsButtonClicked>(this.OnRemoveAdsButtonClicked);
     }
-
     private void Start() {
         this.StartCoroutine(this.FlushEvents());
     }
@@ -38,6 +39,11 @@ public class AnalyticsManager : MonoBehaviour {
     private void OnFirstInteraction(object sender, OnFirstInteraction eventArgs) {
         foreach (IAnalytics analytics in this.analytics) {
             analytics.OnFirstInteraction(eventArgs.FirstInteraction);
+        }
+    }
+    private void OnWatchAdsStarted(object sender, OnWatchAdsStarted eventArgs) {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnWatchAdsStart();
         }
     }
 
@@ -88,6 +94,7 @@ public class AnalyticsManager : MonoBehaviour {
 
     private void OnDestroy() {
         EventManager.RemoveListener<OnFirstInteraction>(this.OnFirstInteraction);
+        EventManager.RemoveListener<OnWatchAdsStarted>(this.OnWatchAdsStarted);
         EventManager.RemoveListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.RemoveListener<OnApplicationStart>(this.OnApplicationStart);
         EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
