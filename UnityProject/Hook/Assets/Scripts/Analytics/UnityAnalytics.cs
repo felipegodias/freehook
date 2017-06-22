@@ -30,7 +30,8 @@ public class UnityAnalytics : IAnalytics {
 
     public UnityAnalytics() {
         Analytics.enabled = true;
-        Analytics.SetUserId(SystemInfo.deviceUniqueIdentifier);
+        string deviceId = Player.GetDeviceId();
+        Analytics.SetUserId(deviceId);
     }
 
     public void OnWatchAdsComplete(ShowResult result) {
