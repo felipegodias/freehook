@@ -22,7 +22,9 @@ public class AnalyticsManager : MonoBehaviour {
         EventManager.AddListener<OnStageFail>(this.OnStageFail);
         EventManager.AddListener<OnSpeedRunEnd>(this.OnSpeedRunEnd);
         EventManager.AddListener<OnRemoveAdsButtonClicked>(this.OnRemoveAdsButtonClicked);
+        EventManager.AddListener<OnShowAdsScreen>(this.OnShowAdsScreen);
     }
+
     private void Start() {
         this.StartCoroutine(this.FlushEvents());
     }
@@ -92,6 +94,12 @@ public class AnalyticsManager : MonoBehaviour {
         }
     }
 
+    private void OnShowAdsScreen(object sender, OnShowAdsScreen eventargs) {
+        foreach (IAnalytics analytics in this.analytics) {
+            analytics.OnShowAdsScreen();
+        }
+    }
+
     private void OnDestroy() {
         EventManager.RemoveListener<OnFirstInteraction>(this.OnFirstInteraction);
         EventManager.RemoveListener<OnWatchAdsStarted>(this.OnWatchAdsStarted);
@@ -101,6 +109,7 @@ public class AnalyticsManager : MonoBehaviour {
         EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
         EventManager.RemoveListener<OnSpeedRunEnd>(this.OnSpeedRunEnd);
         EventManager.RemoveListener<OnRemoveAdsButtonClicked>(this.OnRemoveAdsButtonClicked);
+        EventManager.RemoveListener<OnShowAdsScreen>(this.OnShowAdsScreen);
     }
 
 }

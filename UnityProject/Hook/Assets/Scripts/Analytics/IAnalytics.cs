@@ -19,6 +19,8 @@ public interface IAnalytics {
 
     void OnRemoveAdsButtonClicked();
 
+    void OnShowAdsScreen();
+
     void FlushEvents();
     
 

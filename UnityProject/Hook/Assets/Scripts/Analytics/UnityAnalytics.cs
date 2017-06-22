@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.Analytics;
-#if UNITY_EDITOR
-using UnityEditor.Analytics;
-
-#endif
 
 public class UnityAnalytics : IAnalytics {
 
@@ -25,6 +20,8 @@ public class UnityAnalytics : IAnalytics {
     private const string kOnSpeedRunEnd = "hook.speed_run.end";
 
     private const string kOnRemoveAdsButtonClicked = "hook.remove_ads.button_click";
+
+    private const string kOnShowAdsScreen = "hook.show_screen.ads";
 
     private const string kStage = "stage";
 
@@ -85,10 +82,13 @@ public class UnityAnalytics : IAnalytics {
         Analytics.CustomEvent(kOnRemoveAdsButtonClicked, eventArgs);
     }
 
+    public void OnShowAdsScreen() {
+        IDictionary<string, object> eventArgs = new Dictionary<string, object>();
+        Analytics.CustomEvent(kOnShowAdsScreen, eventArgs);
+    }
+
     public void FlushEvents() {
         Analytics.FlushEvents();
     }
-
-
 
 }

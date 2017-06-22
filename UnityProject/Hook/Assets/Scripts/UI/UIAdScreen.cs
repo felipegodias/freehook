@@ -18,6 +18,8 @@ public class UIAdScreen : MonoBehaviour {
     private UINoMoreAdsToShowScreen noMoreAdsToShowScreen;
 
     public void Show() {
+        OnShowAdsScreen onShowAdsScreen = new OnShowAdsScreen();
+        EventManager.Dispatch(onShowAdsScreen);
         this.canvasGroup.alpha = 0;
         this.canvasGroup.interactable = false;
         this.gameObject.SetActive(true);
@@ -38,8 +40,6 @@ public class UIAdScreen : MonoBehaviour {
         EventManager.AddListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
         EventManager.AddListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
     }
-
-
 
     private void OnDestroy() {
         EventManager.RemoveListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
