@@ -15,7 +15,7 @@ public class TSwitch : Switch {
     protected override bool IsElementInsideInput(GameElement element) {
         switch (this.SwitchState) {
             case SwitchState.A:
-                return this.A == element || element == this.B || element == this.D;
+                return this.A == element || element == this.B || element == this.C;
             case SwitchState.B:
                 return this.B == element || element == this.C || element == this.D;
             case SwitchState.C:
