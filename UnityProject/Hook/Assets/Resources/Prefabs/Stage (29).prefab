@@ -2504,6 +2504,7 @@ MonoBehaviour:
   - {fileID: 212871592161325768}
   - {fileID: 212077625039571662}
   spriteRenderer: {fileID: 212129112057478080}
+  isWifi: 0
 --- !u!114 &114294659577526986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2524,6 +2525,7 @@ MonoBehaviour:
   - {fileID: 212014206508152352}
   - {fileID: 212018650086292988}
   spriteRenderer: {fileID: 212281893052975632}
+  isWifi: 0
 --- !u!114 &114315656764147772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2594,6 +2596,7 @@ MonoBehaviour:
   - {fileID: 212198050433710092}
   - {fileID: 212562179517364240}
   spriteRenderer: {fileID: 212367964769652094}
+  isWifi: 0
 --- !u!114 &114445930887491568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2616,7 +2619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea122d953a90db43994021af363ab2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 1
+  stage: 29
   pullingList: []
 --- !u!114 &114539701828282534
 MonoBehaviour:
@@ -2647,6 +2650,7 @@ MonoBehaviour:
   lines:
   - {fileID: 212393306500796886}
   spriteRenderer: {fileID: 212046889868595856}
+  isWifi: 0
 --- !u!114 &114588469246456062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2669,6 +2673,7 @@ MonoBehaviour:
   - {fileID: 212864792914235034}
   - {fileID: 212455026361129860}
   spriteRenderer: {fileID: 212381849067473988}
+  isWifi: 0
 --- !u!114 &114608523275209280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2689,6 +2694,7 @@ MonoBehaviour:
   lines:
   - {fileID: 212666156566600646}
   spriteRenderer: {fileID: 212879613732859746}
+  isWifi: 0
 --- !u!114 &114711969622440394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2771,6 +2777,7 @@ MonoBehaviour:
   lines:
   - {fileID: 212743139774308744}
   spriteRenderer: {fileID: 212180483352615678}
+  isWifi: 0
 --- !u!114 &114941003169978550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2800,6 +2807,7 @@ MonoBehaviour:
   lines:
   - {fileID: 212657301004303924}
   spriteRenderer: {fileID: 212179215180410346}
+  isWifi: 0
 --- !u!114 &114969922604622250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2822,6 +2830,7 @@ MonoBehaviour:
   - {fileID: 212213493625767268}
   - {fileID: 212515072449210400}
   spriteRenderer: {fileID: 212871611009084032}
+  isWifi: 0
 --- !u!114 &114986431470666168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2842,6 +2851,7 @@ MonoBehaviour:
   lines:
   - {fileID: 212615611150735064}
   spriteRenderer: {fileID: 212574901723713730}
+  isWifi: 0
 --- !u!212 &212014206508152352
 SpriteRenderer:
   m_ObjectHideFlags: 1
