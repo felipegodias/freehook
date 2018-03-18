@@ -9,6 +9,8 @@ public class Connector : GameElement {
     private SpriteRenderer[] lines;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private bool isWifi;
 
     private void Update() {
         if (Application.isPlaying) {
@@ -29,6 +31,8 @@ public class Connector : GameElement {
 
             if (gameElement is Switch) {
                 line.size = new Vector2(0.001f, 0.001f);
+            } else if (isWifi && gameElement is Connector && (gameElement as Connector).isWifi) {
+                line.size = new Vector2(0.001f, 0.001f);
             } else {
                 Vector3 dir = (gameElement.transform.position - this.transform.position).normalized;
                 float distance = Vector3.Distance(gameElement.transform.position, this.transform.position);
@@ -36,7 +40,6 @@ public class Connector : GameElement {
                 line.transform.right = dir;
                 line.size = new Vector3(distance, 1);
             }
-            
         }
     }
 
@@ -49,6 +52,9 @@ public class Connector : GameElement {
         List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
         for (int i = 0; i < this.GameElements.Length; i++) {
             SpriteRenderer line = this.lines[i];
+            if (!line.enabled) {
+                continue;
+            }
             if (line.color == ColorUtils.LineColor && this.GameElements[i].IsHidden) {
                 renderersToFade.Add(line);
             }
@@ -85,6 +91,18 @@ public class Connector : GameElement {
         renderersToFade.Add(this.spriteRenderer);
         renderersToFade.AddRange(this.lines);
         this.HideElements(renderersToFade.ToArray());
+    }
+
+    private void OnDrawGizmos() {
+        if (!this.isWifi) {
+            return;
+        }
+        for (int i = 0; i < this.lines.Length; i++) {
+            GameElement gameElement = this.GameElements[i];
+            if (isWifi && gameElement is Connector && (gameElement as Connector).isWifi) {
+                Gizmos.DrawLine(this.transform.position, gameElement.transform.position);
+            }
+        }
     }
 
 }

@@ -58,4 +58,14 @@ public class Line : MonoBehaviour {
 #endif
     }
 
+    private void OnDestroy() {
+#if UNITY_EDITOR
+        if (this.renderer == null) {
+            return;
+        }
+        DestroyImmediate(this.renderer.gameObject);
+        this.renderer = null;
+#endif
+    }
+
 }

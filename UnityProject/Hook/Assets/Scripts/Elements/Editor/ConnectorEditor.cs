@@ -12,10 +12,12 @@ public class ConnectorEditor : Editor {
     private SerializedProperty pullers;
 
     private SerializedProperty lines;
+    private SerializedProperty isWifi;
 
     public override void OnInspectorGUI() {
         EditorGUILayout.PropertyField(this.gameElements, true);
         EditorGUILayout.PropertyField(this.pullers, true);
+        EditorGUILayout.PropertyField(this.isWifi, true);
 
         if (this.spriteRenderer.objectReferenceValue == null) {
             SpriteRenderer spriteRenderer = this.target.gameObject.AddComponent<SpriteRenderer>();
@@ -59,6 +61,7 @@ public class ConnectorEditor : Editor {
         this.gameElements = this.serializedObject.FindProperty("gameElements");
         this.pullers = this.serializedObject.FindProperty("pullers");
         this.lines = this.serializedObject.FindProperty("lines");
+        this.isWifi = this.serializedObject.FindProperty("isWifi");
     }
 
 }

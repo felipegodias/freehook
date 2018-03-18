@@ -14,6 +14,11 @@ public class AnalyticsManager : MonoBehaviour {
 #else
         this.analytics = new IAnalytics[] {new UnityAnalytics()};
 #endif
+
+        if (Debug.isDebugBuild) {
+            this.analytics = new IAnalytics[0];
+        }
+
         EventManager.AddListener<OnFirstInteraction>(this.OnFirstInteraction);
         EventManager.AddListener<OnWatchAdsCompleted>(this.OnWatchAdsCompleted);
         EventManager.AddListener<OnWatchAdsStarted>(this.OnWatchAdsStarted);

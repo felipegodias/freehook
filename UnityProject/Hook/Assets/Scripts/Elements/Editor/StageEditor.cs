@@ -17,7 +17,7 @@ public class StageEditor : Editor {
 
             ElementCollider[] elementColliders = this.target.GetComponentsInChildren<ElementCollider>(true);
             foreach (ElementCollider elementCollider in elementColliders) {
-                ElementColliderEditor.UpdateColliders(elementCollider);
+                ElementColliderEditor.UpdateColliders(elementCollider, target.StageNum == 38  ? 0.033f : 0.055f);
             }
 
         }

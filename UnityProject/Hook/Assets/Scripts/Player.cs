@@ -13,6 +13,7 @@ public class Player {
     private const string kLastSpeedRunTime = "last_speed_run_time";
     private const string kBestSpeedRunTime = "best_speed_run_time";
     private const string kIsAdsEnabled = "is_ads_enabled";
+    private const string kAdsCompletedCount = "ads_completed_count";
 
     public static string GetDeviceId() {
         if (ObscuredPrefs.HasKey(kDeviceId)) {
@@ -99,6 +100,14 @@ public class Player {
 
     public static void DisableAds() {
         ObscuredPrefs.SetBool(kIsAdsEnabled, false);
+    }
+
+    public static int GetAdsCompletedCount() {
+        return ObscuredPrefs.GetInt(kAdsCompletedCount, 0);
+    }
+
+    public static void SetAdsCompletedCount(int count) {
+        ObscuredPrefs.SetInt(kAdsCompletedCount, count);
     }
 
 }

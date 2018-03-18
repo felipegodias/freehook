@@ -147,7 +147,9 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         }
         GameElement[] gameElements = this.GetOutput(element);
         foreach (GameElement gameElement in gameElements) {
-            gameElement.Pull(this);
+            if (gameElement != null) {
+                gameElement.Pull(this);
+            }
         }
     }
 

@@ -11,6 +11,8 @@ public class UnityAnalytics : IAnalytics {
 
     private const string kOnWatchAdsCompleted = "hook.ads.completed";
 
+    private const string kOnWatchAdsCompletedCount = "hook.ads.completed.count";
+
     private const string kOnApplicationStart = "hook.aplication.start";
 
     private const string kOnStageComplete = "hook.stage.complete";
@@ -30,6 +32,8 @@ public class UnityAnalytics : IAnalytics {
     private const string kTime = "time";
 
     private const string kType = "type";
+
+    private const string kCount = "count";
 
     public UnityAnalytics() {
         Analytics.enabled = true;
@@ -52,6 +56,14 @@ public class UnityAnalytics : IAnalytics {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kResult, result.ToString().ToLower());
         Analytics.CustomEvent(kOnWatchAdsCompleted, eventArgs);
+
+        int watchAdsCount = Player.GetAdsCompletedCount();
+        watchAdsCount++;
+        Player.SetAdsCompletedCount(watchAdsCount);
+
+        eventArgs = new Dictionary<string, object>();
+        eventArgs.Add(kCount, watchAdsCount);
+        Analytics.CustomEvent(kOnWatchAdsCompletedCount, eventArgs);
     }
 
     public void OnApplicationStart() {

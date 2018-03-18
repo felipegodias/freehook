@@ -48,7 +48,7 @@ public class PullerEditor : Editor {
 
         mask.right = direction;
         mask.localPosition = direction * (distance / 2);
-        mask.localScale = new Vector3(distance, 1, 1);
+        mask.localScale = new Vector3(distance, mask.localScale.y, 1);
 
         SpriteMask spriteMask = mask.GetComponent<SpriteMask>();
         spriteMask.frontSortingLayerID = layerId;
