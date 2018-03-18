@@ -1,4 +1,7 @@
 ﻿using System;
+
+using DG.Tweening;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,13 +35,16 @@ public class UINoMoreAdsToShowScreen : MonoBehaviour {
     private void Animate(float alphaTo, Action callback) {
         float alphaFrom = this.canvasGroup.alpha;
         float alphaDif = alphaTo - alphaFrom;
-        LeanTween.value(this.gameObject, f => {
-            this.canvasGroup.alpha = alphaFrom + alphaDif * f;
-        }, 0, 1, 0.33f).setOnComplete(() => {
-            if (callback != null) {
+
+        TweenCallback onCompleteCallback = () =>
+        {
+            if (callback != null)
+            {
                 callback.Invoke();
             }
-        }).setEase(LeanTweenType.easeOutSine);
+        };
+
+        this.canvasGroup.DOFade(alphaTo, 0.33f).OnComplete(onCompleteCallback);
     }
 
     private void OnOkButtonClick() {

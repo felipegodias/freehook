@@ -1,4 +1,6 @@
-﻿using MGS.EventManager;
+﻿using DG.Tweening;
+
+using MGS.EventManager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -17,16 +19,20 @@ public class UIAdScreen : MonoBehaviour {
     [SerializeField]
     private UINoMoreAdsToShowScreen noMoreAdsToShowScreen;
 
+    private Tweener tweener;
+
     public void Show() {
         OnShowAdsScreen onShowAdsScreen = new OnShowAdsScreen();
         EventManager.Dispatch(onShowAdsScreen);
         this.canvasGroup.alpha = 0;
         this.canvasGroup.interactable = false;
         this.gameObject.SetActive(true);
-        LeanTween.value(this.gameObject, f => {
-            this.canvasGroup.alpha = f;
+
+        TweenCallback onCompleteCallback = () => {
             this.canvasGroup.interactable = true;
-        }, 0, 1, 0.33f).setDelay(1).setEase(LeanTweenType.easeOutSine);
+        };
+
+        this.tweener = this.canvasGroup.DOFade(1, 0.33f).SetDelay(1).OnComplete(onCompleteCallback);
     }
 
     public void Hide() {
@@ -56,14 +62,24 @@ public class UIAdScreen : MonoBehaviour {
         if (!this.gameObject.activeInHierarchy) {
             return;
         }
-        LeanTween.cancel(this.gameObject);
+
+        if (this.tweener != null) {
+            this.tweener.Kill();
+            this.tweener = null;
+        }
         this.Show();
     }
 
     private void OnProcessPurchaseStart(object sender, OnProcessPurchaseStart eventargs) {
-        LeanTween.cancel(this.gameObject);
+        if (this.tweener != null)
+        {
+            this.tweener.Kill();
+            this.tweener = null;
+        }
+
         this.canvasGroup.interactable = false;
-        LeanTween.alphaCanvas(this.canvasGroup, 0, 0.5f).setEaseOutSine();
+
+        this.tweener = this.canvasGroup.DOFade(0, 0.5f);
     }
 
     private void Start() {

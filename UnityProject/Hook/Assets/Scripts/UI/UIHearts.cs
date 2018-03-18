@@ -1,4 +1,6 @@
-﻿using MGS.EventManager;
+﻿using DG.Tweening;
+
+using MGS.EventManager;
 using UnityEngine;
 
 public class UIHearts : MonoBehaviour {
@@ -53,13 +55,14 @@ public class UIHearts : MonoBehaviour {
     private void OnRemoveAdsBought(object sender, OnRemoveAdsBought eventargs) {
         Vector3 from = this.canvasGroup.transform.localPosition;
         Vector3 to = from + Vector3.up * 25;
-        Vector3 dif = to - from;
-        LeanTween.value(this.gameObject, f => {
-            this.canvasGroup.alpha = 1 - f;
-            this.canvasGroup.transform.localPosition = from + dif * f;
-        }, 0, 1, 0.5f).setOnComplete(() => {
+
+        TweenCallback onCompleteCallback = () =>
+        {
             this.gameObject.SetActive(false);
-        }).setEaseOutSine();
+        };
+
+        this.canvasGroup.DOFade(0, 0.5f);
+        this.canvasGroup.transform.DOLocalMove(to, 0.5f).OnComplete(onCompleteCallback);
     }
 
     private void OnDestroy() {

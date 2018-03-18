@@ -1,5 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using DG.Tweening;
+using DG.Tweening.Core;
+
 using UnityEngine;
 
 public class GameElement : MonoBehaviour {
@@ -115,17 +119,26 @@ public class GameElement : MonoBehaviour {
         foreach (SpriteRenderer spriteRenderer in renderers) {
             spriteRenderer.sortingOrder = RenderUtils.GetDrawOrder();
         }
-        LeanTween.value(this.gameObject, f => {
+
+        DOGetter<float> getter = () => 0;
+
+        DOSetter<float> setter = f =>
+        {
             Color a = ColorUtils.LineColor;
             Color b = ColorUtils.BackgroundColor;
             Color c = ColorUtils.Lerp(a, b, f);
-            foreach (SpriteRenderer spriteRenderer in renderers) {
-                if (spriteRenderer == null) {
+            foreach (SpriteRenderer spriteRenderer in renderers)
+            {
+                if (spriteRenderer == null)
+                {
                     continue;
                 }
                 spriteRenderer.color = c;
             }
-        }, 0, 1, 0.33f).setEase(LeanTweenType.easeOutSine);
+        };
+
+        DOTween.To(getter, setter, 1, 0.33f);
+
     }
 
 }

@@ -1,4 +1,6 @@
-﻿using MGS.EventManager;
+﻿using DG.Tweening;
+
+using MGS.EventManager;
 using UnityEngine;
 
 public class UIMenu : MonoBehaviour {
@@ -12,10 +14,9 @@ public class UIMenu : MonoBehaviour {
 
     private void OnSpeedRunStart(object sender, OnSpeedRunStart eventArgs) {
         this.canvasGroup.interactable = false;
-        LeanTween.value(this.gameObject, f => {
-            this.canvasGroup.alpha = 1 - f;
-            this.canvasGroup.transform.localPosition = Vector3.down * 25 * f;
-        }, 0, 1, 0.5f).setEaseOutSine();
+
+        this.canvasGroup.DOFade(0, 0.5f);
+        this.canvasGroup.transform.DOLocalMove(Vector3.down * 25, 0.5f);
     }
 
     private void OnDestroy() {

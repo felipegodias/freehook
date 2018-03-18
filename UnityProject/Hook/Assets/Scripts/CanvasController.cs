@@ -1,4 +1,6 @@
-﻿using MGS.EventManager;
+﻿using DG.Tweening;
+
+using MGS.EventManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,10 +52,9 @@ public class CanvasController : MonoBehaviour {
             return;
         }
 
-        LeanTween.value(this.nextStageButton.gameObject, f => {
-            this.nextStageButton.transform.localScale = Vector3.one + (Vector3.one * f) * 0.1f;
-        }, 0, 1, 0.5f).setEase(LeanTweenType.punch); ;
-
+        Vector3 to = Vector3.one * 0.15f;
+        this.nextStageButton.transform.localScale = Vector3.one;
+        this.nextStageButton.transform.DOPunchScale(to, 0.5f, 6);
 
         EventManager.Dispatch(new OnStageSwitch(1));
     }
@@ -63,9 +64,9 @@ public class CanvasController : MonoBehaviour {
             return;
         }
 
-        LeanTween.value(this.previousStageButton.gameObject, f => {
-            this.previousStageButton.transform.localScale = Vector3.one + (Vector3.one * f) * 0.1f;
-        }, 0, 1, 0.5f).setEase(LeanTweenType.punch); ;
+        Vector3 to = Vector3.one * 0.15f;
+        this.previousStageButton.transform.localScale = Vector3.one;
+        this.previousStageButton.transform.DOPunchScale(to, 0.5f, 6);
 
         EventManager.Dispatch(new OnStageSwitch(-1));
     }
@@ -95,33 +96,35 @@ public class CanvasController : MonoBehaviour {
         if (onStageLoaded.Stage > 0) {
             int stage = onStageLoaded.Stage + 1;
             this.stageNumberText.text = stage.ToString();
-            LeanTween.value(this.gameObject, f => {
-                Color color = this.stageNumberText.color;
-                color.a = f;
-                this.stageNumberText.color = color;
-            }, 0, 1, 0.2f).setDelay(0).setEase(LeanTweenType.easeOutSine);
-            LeanTween.value(this.gameObject, f => {
-                Color color = this.stageNumberText.color;
-                color.a = 1 - f;
-                this.stageNumberText.color = color;
-            }, 0, 1, 0.2f).setDelay(1.3f).setEase(LeanTweenType.easeOutSine);
-            LeanTween.value(this.gameObject, f => {
-                Color color = this.fade.color;
-                color.a = 1 - f;
-                this.fade.color = color;
-            }, 0, 1, 0.25f).setDelay(1.5f).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
+
+            Color to = this.stageNumberText.color;
+            to.a = 1;
+            this.stageNumberText.DOColor(to, 0.2f);
+
+            to.a = 0;
+            this.stageNumberText.DOColor(to, 0.2f).SetDelay(1.3f);
+
+            to = fade.color;
+            to.a = 0;
+
+            TweenCallback onCompleteCallback = () =>
+            {
                 this.fade.raycastTarget = false;
                 this.isSwitchStageButtonBlocked = false;
-            });
+            };
+
+            fade.DOColor(to, 0.25f).SetDelay(1.5f).OnComplete(onCompleteCallback);
         } else {
-            LeanTween.value(this.gameObject, f => {
-                Color color = this.fade.color;
-                color.a = 1 - f;
-                this.fade.color = color;
-            }, 0, 1, 0.5f).setDelay(0.5f).setEase(LeanTweenType.easeOutSine).setOnComplete(() => {
+            Color to = fade.color;
+            to.a = 0;
+
+            TweenCallback onCompleteCallback = () =>
+            {
                 this.fade.raycastTarget = false;
                 this.isSwitchStageButtonBlocked = false;
-            });
+            };
+
+            fade.DOColor(to, 0.5f).SetDelay(0.5f).OnComplete(onCompleteCallback);
         }
     }
 
@@ -137,11 +140,10 @@ public class CanvasController : MonoBehaviour {
     }
 
     private void ShowFade() {
-        LeanTween.value(this.gameObject, f => {
-            Color color = this.fade.color;
-            color.a = f;
-            this.fade.color = color;
-        }, 0, 1, 0.25f).setDelay(0.25f).setEase(LeanTweenType.easeOutSine);
+        Color to = fade.color;
+        to.a = 1;
+
+        fade.DOColor(to, 0.25f).SetDelay(0.25f);
     }
 
     private void OnDestroy() {

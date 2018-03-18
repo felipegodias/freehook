@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public abstract class UIButton : MonoBehaviour, IPointerClickHandler {
 
-    public void OnPointerClick(PointerEventData eventData) {
-        LeanTween.value(this.gameObject, f => { this.transform.localScale = Vector3.one + Vector3.one * f * 0.1f; }, 0,
-            1, 0.5f).setEase(LeanTweenType.punch);
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        this.transform.transform.localScale = Vector3.one;
+        this.transform.DOPunchScale(Vector3.one * 0.15f, 0.5f, 6);
         this.OnClick();
     }
 

@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using DG.Tweening;
+
+using UnityEngine;
 
 public class Puller : GameElement {
 
@@ -12,6 +16,8 @@ public class Puller : GameElement {
 
     private bool isBreaked;
 
+    private LinkedList<Tweener> pullTweeners;
+
     public Transform Content {
         get { return this.content; }
     }
@@ -24,6 +30,7 @@ public class Puller : GameElement {
         this.content = this.transform.Find("content");
         this.puller = this.transform.Find("puller");
         this.pullerEnd = this.content.Find("puller_end");
+        this.pullTweeners = new LinkedList<Tweener>();
     }
 
     private void Start() {
@@ -36,22 +43,24 @@ public class Puller : GameElement {
         }
         this.isStartedToPull = true;
         float distance = Vector3.Distance(this.content.localPosition, -this.pullerEnd.localPosition);
-        Vector3 from = this.content.localPosition;
+
         Vector3 to = -this.pullerEnd.localPosition;
-        Vector3 dif = to - from;
         float time = distance / 5;
-        LeanTween.value(this.gameObject, f => {
-            this.content.localPosition = from + (dif * f);
-        }, 0, 1, time).setOnComplete(() => {
+
+        TweenCallback onCompleteCallback = () =>
+        {
             this.isHidden = true;
             Destroy(this.content.gameObject);
-        });
-        LeanTween.value(this.gameObject, f => {
-            this.puller.transform.localScale = new Vector3(1, 1 + f, 1);
-        }, 0, 1, 0.25f).setEase(LeanTweenType.easeOutSine);
-        LeanTween.value(this.gameObject, f => {
-            this.puller.transform.localScale = new Vector3(1, 1 + (1 * (1 - f)), 1);
-        }, 0, 1, 0.25f).setEase(LeanTweenType.easeOutSine).setDelay(time);
+        };
+
+        Tweener pull = this.content.DOLocalMove(to, time).OnComplete(onCompleteCallback);
+
+        Tweener scaleUp = this.puller.transform.DOScale(Vector3.one + Vector3.up, 0.25f);
+        Tweener scaleDown = this.puller.transform.DOScale(Vector3.one, 0.25f).SetDelay(time);
+
+        pullTweeners.AddLast(pull);
+        pullTweeners.AddLast(scaleUp);
+        pullTweeners.AddLast(scaleDown);
     }
 
     public void BreakPull() {
@@ -60,19 +69,25 @@ public class Puller : GameElement {
         }
 
         this.isBreaked = true;
-        LeanTween.cancel(this.gameObject);
+
+        foreach (Tweener pullTweener in pullTweeners)
+        {
+            pullTweener.Kill();
+        }
+        pullTweeners.Clear();
 
         if (this.isStartedToPull) {
             Vector3 from = this.content.localPosition;
             Vector3 to = -this.pullerEnd.localPosition;
             Vector3 dif = -(to - from).normalized * 0.125f;
-            LeanTween.value(this.gameObject, f => {
-                this.content.localPosition = from + dif * f;
-            }, 0, 1, 0.2f).setOnComplete(() => {
-                LeanTween.value(this.gameObject, f => {
-                    this.content.localPosition = from + dif * (1 - f);
-                }, 0, 1, 0.1f);
-            });
+            to = from + dif;
+
+            TweenCallback onCompleteCallback = () =>
+            {
+                this.content.DOLocalMove(from, 0.1f);
+            };
+
+            this.content.DOLocalMove(to, 0.2f).OnComplete(onCompleteCallback);
         }
 
         this.Stage.FailStage();
