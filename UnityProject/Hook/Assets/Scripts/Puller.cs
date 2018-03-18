@@ -53,7 +53,7 @@ public class Puller : GameElement {
             Destroy(this.content.gameObject);
         };
 
-        Tweener pull = this.content.DOLocalMove(to, time).OnComplete(onCompleteCallback);
+        Tweener pull = this.content.DOLocalMove(to, time).OnComplete(onCompleteCallback).SetEase(Ease.Linear);
 
         Tweener scaleUp = this.puller.transform.DOScale(Vector3.one + Vector3.up, 0.25f);
         Tweener scaleDown = this.puller.transform.DOScale(Vector3.one, 0.25f).SetDelay(time);
