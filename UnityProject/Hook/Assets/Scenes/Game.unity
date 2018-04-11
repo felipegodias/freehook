@@ -455,6 +455,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 6.7, y: 5}
+--- !u!1 &173620234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 173620236}
+  - component: {fileID: 173620235}
+  m_Layer: 0
+  m_Name: AchievementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &173620235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 173620234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7150ec01964322428508ccc03a69d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_achievementsObjs:
+  - {fileID: 11400000, guid: ded01f235df440b4499a2f4b36b47daf, type: 2}
+  - {fileID: 11400000, guid: de46b2d4a215c32499207bfe93987812, type: 2}
+  - {fileID: 11400000, guid: ca467e1c18f216e45b653bc6b322e33f, type: 2}
+  - {fileID: 11400000, guid: a72f05be7c4f26245968b96493bca26e, type: 2}
+  - {fileID: 11400000, guid: d14779b4eb1b4124991537eddec5afb4, type: 2}
+  - {fileID: 11400000, guid: adb79be36f038694dab89097c0d64b7d, type: 2}
+  - {fileID: 11400000, guid: 29aee36ad55940c49addaee9ca8169fc, type: 2}
+  - {fileID: 11400000, guid: 1f4a95378497ba54784fb25a5d7ecdf6, type: 2}
+  - {fileID: 11400000, guid: d2953c2d595144b4dae20fd51adb285c, type: 2}
+--- !u!4 &173620236
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 173620234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &261699379
 GameObject:
   m_ObjectHideFlags: 0

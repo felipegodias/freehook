@@ -12,7 +12,7 @@ public class AchievementEditor : Editor
 
     private int m_index;
     private Dictionary<string, string> m_achievements;
-    private List<string> m_achievementsList; 
+    private List<string> m_achievementsList;
 
     private void OnEnable()
     {
@@ -40,25 +40,30 @@ public class AchievementEditor : Editor
                 m_index = m_achievementsList.IndexOf(keyValuePair.Key);
             }
         }
-
     }
 
     public override void OnInspectorGUI()
     {
-        int index = EditorGUILayout.Popup("Achievement Id", m_index, m_achievementsList.ToArray());
-        if (m_index != index)
-        {
-            m_achievementKeyProperty.stringValue = m_achievements[m_achievementsList[index]];
-            m_index = index;
-        }
-
         SerializedProperty ii = serializedObject.GetIterator();
         while (true)
         {
-            if (ii.name != "Base" && ii.name != "m_Script" && ii.name != "m_achievement")
+            if (ii.name != "Base")
             {
-                EditorGUILayout.PropertyField(ii);
+                if (ii.name != "m_achievement")
+                {
+                    EditorGUILayout.PropertyField(ii);
+                }
+                else
+                {
+                    int index = EditorGUILayout.Popup(ii.displayName, m_index, m_achievementsList.ToArray());
+                    if (m_index != index)
+                    {
+                        m_achievementKeyProperty.stringValue = m_achievements[m_achievementsList[index]];
+                        m_index = index;
+                    }
+                }
             }
+
             bool hasNext = ii.NextVisible(true);
             if (!hasNext)
             {

@@ -19,12 +19,18 @@ public abstract class Achievement : ScriptableObject
 
     protected void CompleteAchievement()
     {
+        Debug.LogFormat("Trying to complete achievement {0}.", AchievementKey);
         IAchievement achievement = AchievementManager.Instance.GetAchievement(AchievementKey);
+        if (achievement == null)
+        {
+            return;
+        }
         if (achievement.completed)
         {
             return;
         }
 
+        //Debug.LogFormat("Trying to complete achievement {0}.", AchievementKey);
         Social.ReportProgress(AchievementKey, 100, OnAchievementReported);
     }
 
