@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MGS.EventManager;
+
+using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 public abstract class Achievement : ScriptableObject
@@ -25,6 +27,7 @@ public abstract class Achievement : ScriptableObject
         {
             return;
         }
+
         if (achievement.completed)
         {
             return;
@@ -37,6 +40,13 @@ public abstract class Achievement : ScriptableObject
     private void OnAchievementReported(bool success)
     {
         Debug.LogFormat("Achievement with id {0} was completed with the result {1}.", AchievementKey, success);
+        if (!success)
+        {
+            return;
+        }
+
+        OnAchievementUnlocked onAchievementUnlocked = new OnAchievementUnlocked(m_achievement);
+        EventManager.Dispatch(onAchievementUnlocked);
     }
 
 }
