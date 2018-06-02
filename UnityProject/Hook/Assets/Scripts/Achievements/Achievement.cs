@@ -45,7 +45,7 @@ public abstract class Achievement : ScriptableObject
             return;
         }
 
-        OnAchievementUnlocked onAchievementUnlocked = new OnAchievementUnlocked(m_achievement);
+        var onAchievementUnlocked = new OnAchievementUnlocked(m_achievement);
         EventManager.Dispatch(onAchievementUnlocked);
     }
 

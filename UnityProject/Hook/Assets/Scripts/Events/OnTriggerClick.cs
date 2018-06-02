@@ -1,4 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnTriggerClick : IEvent {
+public class OnTriggerClick : IEvent
+{
+
 }

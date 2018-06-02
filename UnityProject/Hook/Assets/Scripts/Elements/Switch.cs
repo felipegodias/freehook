@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.EventSystems;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
-using UnityEngine.EventSystems;
 
-public abstract class Switch : GameElement, IPointerClickHandler {
+public abstract class Switch : GameElement, IPointerClickHandler
+{
 
     [SerializeField]
     private SwitchState switchState;
@@ -24,106 +26,177 @@ public abstract class Switch : GameElement, IPointerClickHandler {
 
     [SerializeField]
     private Puller[] aPullers;
+
     [SerializeField]
     private Puller[] bPullers;
+
     [SerializeField]
     private Puller[] cPullers;
+
     [SerializeField]
     private Puller[] dPullers;
 
-
-    public SwitchState SwitchState {
-        get { return this.switchState; }
+    public SwitchState SwitchState
+    {
+        get
+        {
+            return switchState;
+        }
     }
 
-    public GameElement A {
-        get { return this.a; }
+    public GameElement A
+    {
+        get
+        {
+            return a;
+        }
     }
 
-    public GameElement B {
-        get { return this.b; }
+    public GameElement B
+    {
+        get
+        {
+            return b;
+        }
     }
 
-    public GameElement C {
-        get { return this.c; }
+    public GameElement C
+    {
+        get
+        {
+            return c;
+        }
     }
 
-    public GameElement D {
-        get { return this.d; }
+    public GameElement D
+    {
+        get
+        {
+            return d;
+        }
     }
 
-    public Puller[] APullers {
-        get { return this.aPullers; }
+    public Puller[] APullers
+    {
+        get
+        {
+            return aPullers;
+        }
     }
 
-    public Puller[] BPullers {
-        get { return this.bPullers; }
+    public Puller[] BPullers
+    {
+        get
+        {
+            return bPullers;
+        }
     }
 
-    public Puller[] CPullers {
-        get { return this.cPullers; }
+    public Puller[] CPullers
+    {
+        get
+        {
+            return cPullers;
+        }
     }
 
-    public Puller[] DPullers {
-        get { return this.dPullers; }
+    public Puller[] DPullers
+    {
+        get
+        {
+            return dPullers;
+        }
     }
 
-    public void LookForPullers() {
-        List<Puller> pullers = new List<Puller>();
-        if (this.A != null) {
-            foreach (GameElement e in this.A.GameElements) {
-                if (e == this) {
+    public void LookForPullers()
+    {
+        var pullers = new List<Puller>();
+        if (A != null)
+        {
+            foreach (GameElement e in A.GameElements)
+            {
+                if (e == this)
+                {
                     continue;
                 }
-                if (e is Puller) {
+
+                if (e is Puller)
+                {
                     pullers.AddIfNotContains(e as Puller);
-                } else {
+                }
+                else
+                {
                     pullers.AddRangeIfNotContains(e.GetPullers());
                 }
             }
         }
+
         aPullers = pullers.ToArray();
         pullers.Clear();
-        if (this.B != null) {
-            foreach (GameElement e in this.B.GameElements) {
-                if (e == this) {
+        if (B != null)
+        {
+            foreach (GameElement e in B.GameElements)
+            {
+                if (e == this)
+                {
                     continue;
                 }
-                if (e is Puller) {
+
+                if (e is Puller)
+                {
                     pullers.AddIfNotContains(e as Puller);
-                } else {
+                }
+                else
+                {
                     pullers.AddRangeIfNotContains(e.GetPullers());
                 }
             }
         }
+
         bPullers = pullers.ToArray();
         pullers.Clear();
-        if (this.C != null) {
-            foreach (GameElement e in this.C.GameElements) {
-                if (e == this) {
+        if (C != null)
+        {
+            foreach (GameElement e in C.GameElements)
+            {
+                if (e == this)
+                {
                     continue;
                 }
-                if (e is Puller) {
+
+                if (e is Puller)
+                {
                     pullers.AddIfNotContains(e as Puller);
-                } else {
+                }
+                else
+                {
                     pullers.AddRangeIfNotContains(e.GetPullers());
                 }
             }
         }
+
         cPullers = pullers.ToArray();
         pullers.Clear();
-        if (this.D != null) {
-            foreach (GameElement e in this.D.GameElements) {
-                if (e == this) {
+        if (D != null)
+        {
+            foreach (GameElement e in D.GameElements)
+            {
+                if (e == this)
+                {
                     continue;
                 }
-                if (e is Puller) {
+
+                if (e is Puller)
+                {
                     pullers.AddIfNotContains(e as Puller);
-                } else {
+                }
+                else
+                {
                     pullers.AddRangeIfNotContains(e.GetPullers());
                 }
             }
         }
+
         dPullers = pullers.ToArray();
         pullers.Clear();
         pullers.AddRangeIfNotContains(aPullers);
@@ -133,21 +206,29 @@ public abstract class Switch : GameElement, IPointerClickHandler {
         this.pullers = pullers.ToArray();
     }
 
-    public void OnPointerClick(PointerEventData eventData) {
-        this.switchState++;
-        if (this.switchState > SwitchState.D) {
-            this.switchState = SwitchState.A;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        switchState++;
+        if (switchState > SwitchState.D)
+        {
+            switchState = SwitchState.A;
         }
-        this.transform.rotation = Quaternion.Euler(0, 0, -90 * (int) this.switchState);
+
+        transform.rotation = Quaternion.Euler(0, 0, -90 * (int) switchState);
     }
 
-    public override void Pull(GameElement element) {
-        if (!this.IsElementInsideInput(element)) {
+    public override void Pull(GameElement element)
+    {
+        if (!IsElementInsideInput(element))
+        {
             return;
         }
-        GameElement[] gameElements = this.GetOutput(element);
-        foreach (GameElement gameElement in gameElements) {
-            if (gameElement != null) {
+
+        GameElement[] gameElements = GetOutput(element);
+        foreach (GameElement gameElement in gameElements)
+        {
+            if (gameElement != null)
+            {
                 gameElement.Pull(this);
             }
         }
@@ -159,19 +240,21 @@ public abstract class Switch : GameElement, IPointerClickHandler {
 
     public abstract Puller[] GetPullersFor(GameElement element);
 
-    private void OnValidate() {
-        this.transform.rotation = Quaternion.Euler(0, 0, -90 * (int) this.switchState);
+    private void OnValidate()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, -90 * (int) switchState);
     }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos() {
-        Vector3 a = this.transform.position + Vector3.left / 2;
+    private void OnDrawGizmos()
+    {
+        Vector3 a = transform.position + Vector3.left / 2;
         Handles.Label(a, "A", EditorStyles.centeredGreyMiniLabel);
-        Vector3 b = this.transform.position + Vector3.up / 2;
+        Vector3 b = transform.position + Vector3.up / 2;
         Handles.Label(b, "B", EditorStyles.centeredGreyMiniLabel);
-        Vector3 c = this.transform.position + Vector3.right / 2;
+        Vector3 c = transform.position + Vector3.right / 2;
         Handles.Label(c, "C", EditorStyles.centeredGreyMiniLabel);
-        Vector3 d = this.transform.position + Vector3.down / 2;
+        Vector3 d = transform.position + Vector3.down / 2;
         Handles.Label(d, "D", EditorStyles.centeredGreyMiniLabel);
     }
 #endif

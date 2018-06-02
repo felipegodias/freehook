@@ -1,5 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnWatchAdsStarted : IEvent {
+public class OnWatchAdsStarted : IEvent
+{
 
 }

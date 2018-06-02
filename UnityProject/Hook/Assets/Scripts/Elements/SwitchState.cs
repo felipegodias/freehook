@@ -1,4 +1,5 @@
-﻿public enum SwitchState {
+﻿public enum SwitchState
+{
 
     A,
 

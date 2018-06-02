@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using MGS.EventManager;
-using UnityEngine;
+﻿using MGS.EventManager;
 
-public class OnApplicationStart : IEvent {
+public class OnApplicationStart : IEvent
+{
 
 }

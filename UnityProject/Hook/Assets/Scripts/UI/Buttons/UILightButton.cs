@@ -1,11 +1,13 @@
 ﻿using MGS.EventManager;
 
-public class UILightButton : UIButton {
+public class UILightButton : UIButton
+{
 
-    protected override void OnClick() {
+    protected override void OnClick()
+    {
         bool isLightsOn = Player.IsLightSOn();
         Player.SetLightsOn(!isLightsOn);
-        OnLightSwitch onLightSwitch = new OnLightSwitch();
+        var onLightSwitch = new OnLightSwitch();
         EventManager.Dispatch(onLightSwitch);
     }
 

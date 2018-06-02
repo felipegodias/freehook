@@ -1,17 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using MGS.EventManager;
-using UnityEngine;
+﻿using MGS.EventManager;
 
-public class OnStageCompleted : IEvent {
+public class OnStageCompleted : IEvent
+{
 
-    private int stage;
+    private readonly int stage;
 
-    public OnStageCompleted(int stage) {
+    public OnStageCompleted(int stage)
+    {
         this.stage = stage;
     }
 
-    public int Stage {
-        get { return this.stage; }
+    public int Stage
+    {
+        get
+        {
+            return stage;
+        }
     }
+
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -7,39 +6,52 @@ using DG.Tweening.Core;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class Connector : GameElement {
+public class Connector : GameElement
+{
 
     [SerializeField]
     private SpriteRenderer[] lines;
+
     [SerializeField]
     private SpriteRenderer spriteRenderer;
+
     [SerializeField]
     private bool isWifi;
 
-    private void Update() {
-        if (Application.isPlaying) {
+    private void Update()
+    {
+        if (Application.isPlaying)
+        {
             return;
         }
 
-        if (this.lines == null) {
+        if (lines == null)
+        {
             return;
         }
 
-        for (int i = 0; i < this.lines.Length; i++) {
-            SpriteRenderer line = this.lines[i];
-            GameElement gameElement = this.GameElements[i];
+        for (int i = 0; i < lines.Length; i++)
+        {
+            SpriteRenderer line = lines[i];
+            GameElement gameElement = GameElements[i];
 
-            if (line == null || gameElement == null) {
+            if (line == null || gameElement == null)
+            {
                 continue;
             }
 
-            if (gameElement is Switch) {
+            if (gameElement is Switch)
+            {
                 line.size = new Vector2(0.001f, 0.001f);
-            } else if (isWifi && gameElement is Connector && (gameElement as Connector).isWifi) {
+            }
+            else if (isWifi && gameElement is Connector && (gameElement as Connector).isWifi)
+            {
                 line.size = new Vector2(0.001f, 0.001f);
-            } else {
-                Vector3 dir = (gameElement.transform.position - this.transform.position).normalized;
-                float distance = Vector3.Distance(gameElement.transform.position, this.transform.position);
+            }
+            else
+            {
+                Vector3 dir = (gameElement.transform.position - transform.position).normalized;
+                float distance = Vector3.Distance(gameElement.transform.position, transform.position);
                 dir.z = 0;
                 line.transform.right = dir;
                 line.size = new Vector3(distance, 1);
@@ -47,36 +59,49 @@ public class Connector : GameElement {
         }
     }
 
-    protected override void LateUpdate() {
-        if (!Application.isPlaying) {
+    protected override void LateUpdate()
+    {
+        if (!Application.isPlaying)
+        {
             return;
         }
+
         base.LateUpdate();
 
-        List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
-        for (int i = 0; i < this.GameElements.Length; i++) {
-            SpriteRenderer line = this.lines[i];
-            if (!line.enabled) {
+        var renderersToFade = new List<SpriteRenderer>();
+        for (int i = 0; i < GameElements.Length; i++)
+        {
+            SpriteRenderer line = lines[i];
+            if (!line.enabled)
+            {
                 continue;
             }
-            if (line.color == ColorUtils.LineColor && this.GameElements[i].IsHidden) {
+
+            if (line.color == ColorUtils.LineColor && GameElements[i].IsHidden)
+            {
                 renderersToFade.Add(line);
             }
         }
-        if (renderersToFade.Count > 0) {
-            this.HideElements(renderersToFade.ToArray());
+
+        if (renderersToFade.Count > 0)
+        {
+            HideElements(renderersToFade.ToArray());
         }
     }
 
-    private void HideElements(SpriteRenderer[] renderers) {
-        List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
-        foreach (SpriteRenderer line in renderers) {
-            if (line.color == ColorUtils.LineColor) {
+    private void HideElements(SpriteRenderer[] renderers)
+    {
+        var renderersToFade = new List<SpriteRenderer>();
+        foreach (SpriteRenderer line in renderers)
+        {
+            if (line.color == ColorUtils.LineColor)
+            {
                 renderersToFade.Add(line);
             }
         }
 
-        foreach (SpriteRenderer spriteRenderer in renderersToFade) {
+        foreach (SpriteRenderer spriteRenderer in renderersToFade)
+        {
             spriteRenderer.sortingOrder = RenderUtils.GetDrawOrder();
         }
 
@@ -96,21 +121,27 @@ public class Connector : GameElement {
         DOTween.To(getter, setter, 1, 0.33f);
     }
 
-    public override void Hide() {
-        List<SpriteRenderer> renderersToFade = new List<SpriteRenderer>();
-        renderersToFade.Add(this.spriteRenderer);
-        renderersToFade.AddRange(this.lines);
-        this.HideElements(renderersToFade.ToArray());
+    public override void Hide()
+    {
+        var renderersToFade = new List<SpriteRenderer>();
+        renderersToFade.Add(spriteRenderer);
+        renderersToFade.AddRange(lines);
+        HideElements(renderersToFade.ToArray());
     }
 
-    private void OnDrawGizmos() {
-        if (!this.isWifi) {
+    private void OnDrawGizmos()
+    {
+        if (!isWifi)
+        {
             return;
         }
-        for (int i = 0; i < this.lines.Length; i++) {
-            GameElement gameElement = this.GameElements[i];
-            if (isWifi && gameElement is Connector && (gameElement as Connector).isWifi) {
-                Gizmos.DrawLine(this.transform.position, gameElement.transform.position);
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            GameElement gameElement = GameElements[i];
+            if (isWifi && gameElement is Connector && (gameElement as Connector).isWifi)
+            {
+                Gizmos.DrawLine(transform.position, gameElement.transform.position);
             }
         }
     }

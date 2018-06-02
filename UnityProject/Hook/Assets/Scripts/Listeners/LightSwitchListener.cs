@@ -1,22 +1,28 @@
 ﻿using MGS.EventManager;
+
 using UnityEngine;
 
-public abstract class LightSwitchListener : MonoBehaviour {
+public abstract class LightSwitchListener : MonoBehaviour
+{
 
-    protected virtual void Awake() {
-        EventManager.AddListener<OnLightSwitch>(this.OnLightSwitch);
+    protected virtual void Awake()
+    {
+        EventManager.AddListener<OnLightSwitch>(OnLightSwitch);
     }
 
-    private void Start() {
-        this.UpdateColors();
+    private void Start()
+    {
+        UpdateColors();
     }
 
-    private void OnDestroy() {
-        EventManager.RemoveListener<OnLightSwitch>(this.OnLightSwitch);
+    private void OnDestroy()
+    {
+        EventManager.RemoveListener<OnLightSwitch>(OnLightSwitch);
     }
 
-    private void OnLightSwitch(object sender, OnLightSwitch eventargs) {
-        this.UpdateColors();
+    private void OnLightSwitch(object sender, OnLightSwitch eventargs)
+    {
+        UpdateColors();
     }
 
     protected abstract void UpdateColors();

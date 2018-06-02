@@ -1,63 +1,115 @@
-﻿using UnityEngine;
+﻿public class StraightSwitch : Switch
+{
 
-public class StraightSwitch : Switch {
-
-    protected override bool IsElementInsideInput(GameElement element) {
-        if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
-            return this.A == element || this.C == element;
+    protected override bool IsElementInsideInput(GameElement element)
+    {
+        if (SwitchState == SwitchState.A || SwitchState == SwitchState.C)
+        {
+            return A == element || C == element;
         }
-        return this.B == element || this.D == element;
+
+        return B == element || D == element;
     }
 
-    protected override GameElement[] GetOutput(GameElement element) {
-        if (this.SwitchState == SwitchState.A || this.SwitchState == SwitchState.C) {
-            if (element == this.A) {
-                return new[] { this.C };
+    protected override GameElement[] GetOutput(GameElement element)
+    {
+        if (SwitchState == SwitchState.A || SwitchState == SwitchState.C)
+        {
+            if (element == A)
+            {
+                return new[]
+                {
+                    C
+                };
             }
-            if (element == this.C) {
-                return new[] { this.A };
+
+            if (element == C)
+            {
+                return new[]
+                {
+                    A
+                };
             }
-        }
-        if (element == this.B) {
-            return new[] { this.D };
         }
 
-        if (element == this.D) {
-            return new[] { this.B };
+        if (element == B)
+        {
+            return new[]
+            {
+                D
+            };
+        }
+
+        if (element == D)
+        {
+            return new[]
+            {
+                B
+            };
         }
 
         return new GameElement[0];
     }
 
-    public override GameElement[] GetAllOutputsFor(GameElement element) {
-        if (element == this.A) {
-            return new[] { this.C };
+    public override GameElement[] GetAllOutputsFor(GameElement element)
+    {
+        if (element == A)
+        {
+            return new[]
+            {
+                C
+            };
         }
-        if (element == this.B) {
-            return new[] { this.D };
+
+        if (element == B)
+        {
+            return new[]
+            {
+                D
+            };
         }
-        if (element == this.C) {
-            return new[] { this.A };
+
+        if (element == C)
+        {
+            return new[]
+            {
+                A
+            };
         }
-        if (element == this.D) {
-            return new[] { this.B };
+
+        if (element == D)
+        {
+            return new[]
+            {
+                B
+            };
         }
+
         return new GameElement[0];
     }
 
-    public override Puller[] GetPullersFor(GameElement element) {
-        if (element == this.A) {
-            return this.CPullers;
+    public override Puller[] GetPullersFor(GameElement element)
+    {
+        if (element == A)
+        {
+            return CPullers;
         }
-        if (element == this.B) {
-            return this.DPullers;
+
+        if (element == B)
+        {
+            return DPullers;
         }
-        if (element == this.C) {
-            return this.APullers;
+
+        if (element == C)
+        {
+            return APullers;
         }
-        if (element == this.D) {
-            return this.BPullers;
+
+        if (element == D)
+        {
+            return BPullers;
         }
+
         return new Puller[0];
     }
 

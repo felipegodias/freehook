@@ -1,18 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using MGS.EventManager;
-using UnityEngine;
+﻿using MGS.EventManager;
 
-public class OnStageSwitch : IEvent {
+public class OnStageSwitch : IEvent
+{
 
     private readonly int increment;
 
-    public OnStageSwitch(int increment) {
+    public OnStageSwitch(int increment)
+    {
         this.increment = increment;
     }
 
-    public int Increment {
-        get { return this.increment; }
+    public int Increment
+    {
+        get
+        {
+            return increment;
+        }
     }
 
 }

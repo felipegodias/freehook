@@ -10,108 +10,211 @@
 
 using System.Collections.Generic;
 
-public class TSwitch : Switch {
+public class TSwitch : Switch
+{
 
-    protected override bool IsElementInsideInput(GameElement element) {
-        switch (this.SwitchState) {
+    protected override bool IsElementInsideInput(GameElement element)
+    {
+        switch (SwitchState)
+        {
             case SwitchState.A:
-                return this.A == element || element == this.B || element == this.C;
+                return A == element || element == B || element == C;
             case SwitchState.B:
-                return this.B == element || element == this.C || element == this.D;
+                return B == element || element == C || element == D;
             case SwitchState.C:
-                return this.A == element || element == this.C || element == this.D;
+                return A == element || element == C || element == D;
             case SwitchState.D:
-                return this.A == element || element == this.B || element == this.D;
+                return A == element || element == B || element == D;
         }
+
         return false;
     }
 
-    protected override GameElement[] GetOutput(GameElement element) {
-        if (element == this.A) {
-            switch (this.SwitchState) {
+    protected override GameElement[] GetOutput(GameElement element)
+    {
+        if (element == A)
+        {
+            switch (SwitchState)
+            {
                 case SwitchState.A:
-                    return new[] { this.B, this.C };
+                    return new[]
+                    {
+                        B,
+                        C
+                    };
                 case SwitchState.C:
-                    return new[] { this.C, this.D };
+                    return new[]
+                    {
+                        C,
+                        D
+                    };
                 case SwitchState.D:
-                    return new[] { this.B, this.D };
-            }
-        } else if (element == this.B) {
-            switch (this.SwitchState) {
-                case SwitchState.A:
-                    return new[] { this.A, this.C };
-                case SwitchState.B:
-                    return new[] { this.C, this.D };
-                case SwitchState.D:
-                    return new[] { this.A, this.D };
-            }
-        } else if (element == this.C) {
-            switch (this.SwitchState) {
-                case SwitchState.A:
-                    return new[] { this.A, this.B };
-                case SwitchState.B:
-                    return new[] { this.B, this.D };
-                case SwitchState.C:
-                    return new[] { this.A, this.D };
-            }
-        } else if (element == this.D) {
-            switch (this.SwitchState) {
-                case SwitchState.B:
-                    return new[] { this.B, this.C };
-                case SwitchState.C:
-                    return new[] { this.A, this.C };
-                case SwitchState.D:
-                    return new[] { this.A, this.B };
+                    return new[]
+                    {
+                        B,
+                        D
+                    };
             }
         }
+        else if (element == B)
+        {
+            switch (SwitchState)
+            {
+                case SwitchState.A:
+                    return new[]
+                    {
+                        A,
+                        C
+                    };
+                case SwitchState.B:
+                    return new[]
+                    {
+                        C,
+                        D
+                    };
+                case SwitchState.D:
+                    return new[]
+                    {
+                        A,
+                        D
+                    };
+            }
+        }
+        else if (element == C)
+        {
+            switch (SwitchState)
+            {
+                case SwitchState.A:
+                    return new[]
+                    {
+                        A,
+                        B
+                    };
+                case SwitchState.B:
+                    return new[]
+                    {
+                        B,
+                        D
+                    };
+                case SwitchState.C:
+                    return new[]
+                    {
+                        A,
+                        D
+                    };
+            }
+        }
+        else if (element == D)
+        {
+            switch (SwitchState)
+            {
+                case SwitchState.B:
+                    return new[]
+                    {
+                        B,
+                        C
+                    };
+                case SwitchState.C:
+                    return new[]
+                    {
+                        A,
+                        C
+                    };
+                case SwitchState.D:
+                    return new[]
+                    {
+                        A,
+                        B
+                    };
+            }
+        }
+
         return new GameElement[0];
     }
 
-    public override GameElement[] GetAllOutputsFor(GameElement element) {
-        if (element == this.A) {
-            return new[] { this.B, this.C, this.D };
+    public override GameElement[] GetAllOutputsFor(GameElement element)
+    {
+        if (element == A)
+        {
+            return new[]
+            {
+                B,
+                C,
+                D
+            };
         }
-        if (element == this.B) {
-            return new[] { this.A, this.C, this.D };
+
+        if (element == B)
+        {
+            return new[]
+            {
+                A,
+                C,
+                D
+            };
         }
-        if (element == this.C) {
-            return new[] { this.A, this.B, this.D };
+
+        if (element == C)
+        {
+            return new[]
+            {
+                A,
+                B,
+                D
+            };
         }
-        if (element == this.D) {
-            return new[] { this.A, this.B, this.C };
+
+        if (element == D)
+        {
+            return new[]
+            {
+                A,
+                B,
+                C
+            };
         }
+
         return new GameElement[0];
     }
 
-    public override Puller[] GetPullersFor(GameElement element) {
-        if (element == this.A) {
-            List<Puller> pullers = new List<Puller>();
-            pullers.AddRange(this.BPullers);
-            pullers.AddRange(this.CPullers);
-            pullers.AddRange(this.DPullers);
+    public override Puller[] GetPullersFor(GameElement element)
+    {
+        if (element == A)
+        {
+            var pullers = new List<Puller>();
+            pullers.AddRange(BPullers);
+            pullers.AddRange(CPullers);
+            pullers.AddRange(DPullers);
             return pullers.ToArray();
         }
-        if (element == this.B) {
-            List<Puller> pullers = new List<Puller>();
-            pullers.AddRange(this.APullers);
-            pullers.AddRange(this.CPullers);
-            pullers.AddRange(this.DPullers);
+
+        if (element == B)
+        {
+            var pullers = new List<Puller>();
+            pullers.AddRange(APullers);
+            pullers.AddRange(CPullers);
+            pullers.AddRange(DPullers);
             return pullers.ToArray();
         }
-        if (element == this.C) {
-            List<Puller> pullers = new List<Puller>();
-            pullers.AddRange(this.APullers);
-            pullers.AddRange(this.BPullers);
-            pullers.AddRange(this.DPullers);
+
+        if (element == C)
+        {
+            var pullers = new List<Puller>();
+            pullers.AddRange(APullers);
+            pullers.AddRange(BPullers);
+            pullers.AddRange(DPullers);
             return pullers.ToArray();
         }
-        if (element == this.D) {
-            List<Puller> pullers = new List<Puller>();
-            pullers.AddRange(this.APullers);
-            pullers.AddRange(this.BPullers);
-            pullers.AddRange(this.CPullers);
+
+        if (element == D)
+        {
+            var pullers = new List<Puller>();
+            pullers.AddRange(APullers);
+            pullers.AddRange(BPullers);
+            pullers.AddRange(CPullers);
             return pullers.ToArray();
         }
+
         return new Puller[0];
     }
 

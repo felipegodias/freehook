@@ -1,5 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnShowAdsScreen : IEvent {
+public class OnShowAdsScreen : IEvent
+{
 
 }

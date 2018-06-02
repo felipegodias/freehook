@@ -1,15 +1,19 @@
 ﻿using MGS.EventManager;
 
-public class UISpeedRunButton : UIButton {
+public class UISpeedRunButton : UIButton
+{
 
-    private void Awake() {
+    private void Awake()
+    {
         int lastStage = Player.GetLastStage();
-        if (lastStage < 24) {
-            this.gameObject.SetActive(false);
+        if (lastStage < 24)
+        {
+            gameObject.SetActive(false);
         }
     }
 
-    protected override void OnClick() {
+    protected override void OnClick()
+    {
         EventManager.Dispatch(new OnSpeedRunStart());
     }
 

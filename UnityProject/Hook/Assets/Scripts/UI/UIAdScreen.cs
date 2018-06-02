@@ -1,113 +1,139 @@
 ﻿using DG.Tweening;
 
 using MGS.EventManager;
+
 using TMPro;
+
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
-public class UIAdScreen : MonoBehaviour {
+public class UIAdScreen : MonoBehaviour
+{
 
     [SerializeField]
     private Button watchAdsButton;
+
     [SerializeField]
     private Button removeAdsButton;
+
     [SerializeField]
     private CanvasGroup canvasGroup;
+
     [SerializeField]
     private TextMeshProUGUI descriptionText;
+
     [SerializeField]
     private UINoMoreAdsToShowScreen noMoreAdsToShowScreen;
 
     private Tweener tweener;
 
-    public void Show() {
-        OnShowAdsScreen onShowAdsScreen = new OnShowAdsScreen();
+    public void Show()
+    {
+        var onShowAdsScreen = new OnShowAdsScreen();
         EventManager.Dispatch(onShowAdsScreen);
-        this.canvasGroup.alpha = 0;
-        this.canvasGroup.interactable = false;
-        this.gameObject.SetActive(true);
+        canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        gameObject.SetActive(true);
 
-        TweenCallback onCompleteCallback = () => {
-            this.canvasGroup.interactable = true;
+        TweenCallback onCompleteCallback = () =>
+        {
+            canvasGroup.interactable = true;
         };
 
-        this.tweener = this.canvasGroup.DOFade(1, 0.33f).SetDelay(1).OnComplete(onCompleteCallback);
+        tweener = canvasGroup.DOFade(1, 0.33f).SetDelay(1).OnComplete(onCompleteCallback);
     }
 
-    public void Hide() {
-        this.gameObject.SetActive(false);
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
-    private void Awake() {
-        this.watchAdsButton.onClick.AddListener(this.OnWatchAdsButtonClick);
-        this.removeAdsButton.onClick.AddListener(this.OnRemoveAdsButtonClick);
-        EventManager.AddListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
-        EventManager.AddListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
-        EventManager.AddListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
+    private void Awake()
+    {
+        watchAdsButton.onClick.AddListener(OnWatchAdsButtonClick);
+        removeAdsButton.onClick.AddListener(OnRemoveAdsButtonClick);
+        EventManager.AddListener<OnRemoveAdsBought>(OnRemoveAdsBought);
+        EventManager.AddListener<OnProcessPurchaseStart>(OnProcessPurchaseStart);
+        EventManager.AddListener<OnProcessPurchaseFinish>(OnProcessPurchaseFinish);
     }
 
-    private void OnDestroy() {
-        EventManager.RemoveListener<OnRemoveAdsBought>(this.OnRemoveAdsBought);
-        EventManager.RemoveListener<OnProcessPurchaseStart>(this.OnProcessPurchaseStart);
-        EventManager.RemoveListener<OnProcessPurchaseFinish>(this.OnProcessPurchaseFinish);
+    private void OnDestroy()
+    {
+        EventManager.RemoveListener<OnRemoveAdsBought>(OnRemoveAdsBought);
+        EventManager.RemoveListener<OnProcessPurchaseStart>(OnProcessPurchaseStart);
+        EventManager.RemoveListener<OnProcessPurchaseFinish>(OnProcessPurchaseFinish);
     }
 
-    private void OnRemoveAdsBought(object sender, OnRemoveAdsBought eventargs) {
-        this.Hide();
+    private void OnRemoveAdsBought(object sender, OnRemoveAdsBought eventargs)
+    {
+        Hide();
         EventManager.Dispatch(new OnWatchAdsCompleted(ShowResult.Skipped));
     }
 
-    private void OnProcessPurchaseFinish(object sender, OnProcessPurchaseFinish eventargs) {
-        if (!this.gameObject.activeInHierarchy) {
+    private void OnProcessPurchaseFinish(object sender, OnProcessPurchaseFinish eventargs)
+    {
+        if (!gameObject.activeInHierarchy)
+        {
             return;
         }
 
-        if (this.tweener != null) {
-            this.tweener.Kill();
-            this.tweener = null;
-        }
-        this.Show();
-    }
-
-    private void OnProcessPurchaseStart(object sender, OnProcessPurchaseStart eventargs) {
-        if (this.tweener != null)
+        if (tweener != null)
         {
-            this.tweener.Kill();
-            this.tweener = null;
+            tweener.Kill();
+            tweener = null;
         }
 
-        this.canvasGroup.interactable = false;
-
-        this.tweener = this.canvasGroup.DOFade(0, 0.5f);
+        Show();
     }
 
-    private void Start() {
+    private void OnProcessPurchaseStart(object sender, OnProcessPurchaseStart eventargs)
+    {
+        if (tweener != null)
+        {
+            tweener.Kill();
+            tweener = null;
+        }
+
+        canvasGroup.interactable = false;
+
+        tweener = canvasGroup.DOFade(0, 0.5f);
+    }
+
+    private void Start()
+    {
         int maxHearts = GameSettings.MAX_HEARTS;
         string description = I18N.GetText("ads_screen_description", maxHearts);
-        this.descriptionText.text = description;
+        descriptionText.text = description;
     }
 
-    private void OnWatchAdsButtonClick() {
-        if (Advertisement.IsReady("rewardedVideo")) {
-            ShowOptions showOptions = new ShowOptions();
-            showOptions.resultCallback = result => {
+    private void OnWatchAdsButtonClick()
+    {
+        if (Advertisement.IsReady("rewardedVideo"))
+        {
+            var showOptions = new ShowOptions();
+            showOptions.resultCallback = result =>
+            {
                 int maxHearts = GameSettings.MAX_HEARTS;
                 Player.SetHearts(maxHearts);
-                OnHeartsCountWasChanged onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts, false);
+                var onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts, false);
                 EventManager.Dispatch(onHeartsCountWasChanged);
                 EventManager.Dispatch(new OnWatchAdsCompleted(result));
             };
-            OnWatchAdsStarted onWatchAdsStarted = new OnWatchAdsStarted();
+            var onWatchAdsStarted = new OnWatchAdsStarted();
             EventManager.Dispatch(onWatchAdsStarted);
             Advertisement.Show("rewardedVideo", showOptions);
-        } else {
-            this.noMoreAdsToShowScreen.Show();
         }
-        this.Hide();
+        else
+        {
+            noMoreAdsToShowScreen.Show();
+        }
+
+        Hide();
     }
 
-    private void OnRemoveAdsButtonClick() {
+    private void OnRemoveAdsButtonClick()
+    {
         EventManager.Dispatch(new OnRemoveAdsButtonClicked());
     }
 

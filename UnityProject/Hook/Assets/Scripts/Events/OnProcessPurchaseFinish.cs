@@ -1,4 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnProcessPurchaseFinish : IEvent {
+public class OnProcessPurchaseFinish : IEvent
+{
+
 }

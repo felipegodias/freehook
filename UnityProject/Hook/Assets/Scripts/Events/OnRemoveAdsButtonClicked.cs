@@ -1,5 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnRemoveAdsButtonClicked : IEvent {
+public class OnRemoveAdsButtonClicked : IEvent
+{
 
 }

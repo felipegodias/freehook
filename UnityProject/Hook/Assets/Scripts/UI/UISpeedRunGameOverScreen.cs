@@ -1,8 +1,11 @@
 ﻿using System;
+
 using TMPro;
+
 using UnityEngine;
 
-public class UISpeedRunGameOverScreen : MonoBehaviour {
+public class UISpeedRunGameOverScreen : MonoBehaviour
+{
 
     [SerializeField]
     private TextMeshProUGUI timeValueText;
@@ -10,11 +13,12 @@ public class UISpeedRunGameOverScreen : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI bestTimeValueText;
 
-    private void Awake() {
+    private void Awake()
+    {
         TimeSpan lastSpeedRunTimeSpan = Player.GetLastSpeedRunTime();
         TimeSpan bestSpeedRunTimeSpan = Player.GetBestSpeedRunTime();
-        this.timeValueText.text = lastSpeedRunTimeSpan.ToChronometerString();
-        this.bestTimeValueText.text = bestSpeedRunTimeSpan.ToChronometerString();
+        timeValueText.text = lastSpeedRunTimeSpan.ToChronometerString();
+        bestTimeValueText.text = bestSpeedRunTimeSpan.ToChronometerString();
     }
 
 }

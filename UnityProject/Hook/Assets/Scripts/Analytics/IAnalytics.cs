@@ -1,7 +1,9 @@
 ﻿using System;
+
 using UnityEngine.Advertisements;
 
-public interface IAnalytics {
+public interface IAnalytics
+{
 
     void OnFirstInteraction(FirstInteraction firstInteraction);
 
@@ -22,6 +24,5 @@ public interface IAnalytics {
     void OnShowAdsScreen();
 
     void FlushEvents();
-    
 
 }

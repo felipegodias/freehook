@@ -1,5 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnOpenLeaderboard : IEvent {
+public class OnOpenLeaderboard : IEvent
+{
 
 }

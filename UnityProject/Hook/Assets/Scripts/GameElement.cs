@@ -1,122 +1,169 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using DG.Tweening;
 using DG.Tweening.Core;
 
 using UnityEngine;
 
-public class GameElement : MonoBehaviour {
+public class GameElement : MonoBehaviour
+{
 
-    
     [SerializeField]
     private GameElement[] gameElements;
+
     [SerializeField]
     protected Puller[] pullers;
 
     private Stage stage;
     protected bool isHidden;
 
-    public GameElement[] GameElements {
-        get { return this.gameElements; }
+    public GameElement[] GameElements
+    {
+        get
+        {
+            return gameElements;
+        }
     }
 
-    public bool IsHidden {
-        get { return this.isHidden; }
+    public bool IsHidden
+    {
+        get
+        {
+            return isHidden;
+        }
     }
 
-    public Stage Stage {
-        get {
-            if (this.stage != null) {
-                return this.stage;
+    public Stage Stage
+    {
+        get
+        {
+            if (stage != null)
+            {
+                return stage;
             }
-            this.stage = this.GetComponentInParent<Stage>();
-            return this.stage;
+
+            stage = GetComponentInParent<Stage>();
+            return stage;
         }
     }
 
-    protected virtual void LateUpdate() {
-        if (!Application.isPlaying) {
+    protected virtual void LateUpdate()
+    {
+        if (!Application.isPlaying)
+        {
             return;
         }
-        if (this.isHidden || this.pullers.Length == 0) {
+
+        if (isHidden || pullers.Length == 0)
+        {
             return;
         }
-        foreach (Puller puller in this.pullers) {
-            if (!puller.IsClear) {
+
+        foreach (Puller puller in pullers)
+        {
+            if (!puller.IsClear)
+            {
                 return;
             }
         }
-        this.isHidden = true;
-        this.Hide();
+
+        isHidden = true;
+        Hide();
     }
 
-    public void SetPullers() {
-        this.pullers = this.GetPullers();
+    public void SetPullers()
+    {
+        pullers = GetPullers();
     }
 
-    public Puller[] GetPullers() {
-        List<GameElement> closeList = new List<GameElement>();
-        List<Puller> pullers = new List<Puller>();
+    public Puller[] GetPullers()
+    {
+        var closeList = new List<GameElement>();
+        var pullers = new List<Puller>();
         closeList.Add(this);
-        Queue<GameElement> elementsToInterate = new Queue<GameElement>();
-        foreach (GameElement gameElement in this.GameElements) {
-            if (gameElement is Puller) {
+        var elementsToInterate = new Queue<GameElement>();
+        foreach (GameElement gameElement in GameElements)
+        {
+            if (gameElement is Puller)
+            {
                 pullers.Add(gameElement as Puller);
                 closeList.Add(gameElement);
             }
-            if (gameElement is Switch) {
-                Switch swt = gameElement as Switch;
+
+            if (gameElement is Switch)
+            {
+                var swt = gameElement as Switch;
                 Puller[] p = swt.GetPullersFor(this);
                 pullers.AddRange(p);
-            } else {
+            }
+            else
+            {
                 elementsToInterate.Enqueue(gameElement);
             }
         }
-        while (elementsToInterate.Count > 0) {
+
+        while (elementsToInterate.Count > 0)
+        {
             GameElement gameElement = elementsToInterate.Dequeue();
             closeList.Add(gameElement);
-            foreach (GameElement ge in gameElement.GameElements) {
-                if (closeList.Contains(ge)) {
+            foreach (GameElement ge in gameElement.GameElements)
+            {
+                if (closeList.Contains(ge))
+                {
                     continue;
                 }
-                if (ge is Puller) {
+
+                if (ge is Puller)
+                {
                     pullers.Add(ge as Puller);
                     closeList.Add(ge);
                 }
-                if (ge is Switch) {
-                    Switch swt = ge as Switch;
+
+                if (ge is Switch)
+                {
+                    var swt = ge as Switch;
                     Puller[] p = swt.GetPullersFor(gameElement);
                     pullers.AddRange(p);
-                } else {
+                }
+                else
+                {
                     elementsToInterate.Enqueue(ge);
                 }
             }
         }
 
         // Removes duplicated elements.
-        List<Puller> result = new List<Puller>();
-        foreach (Puller puller in pullers) {
-            if (!result.Contains(puller)) {
+        var result = new List<Puller>();
+        foreach (Puller puller in pullers)
+        {
+            if (!result.Contains(puller))
+            {
                 result.Add(puller);
             }
         }
+
         return result.ToArray();
     }
 
-    public virtual void Pull(GameElement element) {
-        if (!this.Stage.CanPull(this)) {
+    public virtual void Pull(GameElement element)
+    {
+        if (!Stage.CanPull(this))
+        {
             return;
         }
-        this.Stage.AddToPullingList(this);
-        foreach (GameElement gameElement in this.gameElements) {
+
+        Stage.AddToPullingList(this);
+        foreach (GameElement gameElement in gameElements)
+        {
             gameElement.Pull(this);
         }
     }
 
-    public virtual void Hide() {
-        SpriteRenderer[] renderers = this.GetComponentsInChildren<SpriteRenderer>(true);
-        foreach (SpriteRenderer spriteRenderer in renderers) {
+    public virtual void Hide()
+    {
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (SpriteRenderer spriteRenderer in renderers)
+        {
             spriteRenderer.sortingOrder = RenderUtils.GetDrawOrder();
         }
 
@@ -133,12 +180,12 @@ public class GameElement : MonoBehaviour {
                 {
                     continue;
                 }
+
                 spriteRenderer.color = c;
             }
         };
 
         DOTween.To(getter, setter, 1, 0.33f);
-
     }
 
 }

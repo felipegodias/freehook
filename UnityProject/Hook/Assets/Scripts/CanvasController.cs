@@ -1,10 +1,12 @@
 ﻿using DG.Tweening;
 
 using MGS.EventManager;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasController : MonoBehaviour {
+public class CanvasController : MonoBehaviour
+{
 
     [SerializeField]
     private Image fade;
@@ -17,141 +19,163 @@ public class CanvasController : MonoBehaviour {
 
     [SerializeField]
     private Button nextStageButton;
+
     [SerializeField]
     private Button previousStageButton;
 
     private bool isSwitchStageButtonBlocked;
 
-    private void Awake() {
-        EventManager.AddListener<OnStageCompleted>(this.OnStageCompleted);
-        EventManager.AddListener<OnStageFail>(this.OnStageFail);
-        EventManager.AddListener<OnStageLoaded>(this.OnStageLoaded);
-        EventManager.AddListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
-        EventManager.AddListener<OnStageSwitch>(this.OnStageSwitch);
+    private void Awake()
+    {
+        EventManager.AddListener<OnStageCompleted>(OnStageCompleted);
+        EventManager.AddListener<OnStageFail>(OnStageFail);
+        EventManager.AddListener<OnStageLoaded>(OnStageLoaded);
+        EventManager.AddListener<OnHeartsCountWasChanged>(OnHeartsCountWasChanged);
+        EventManager.AddListener<OnStageSwitch>(OnStageSwitch);
 
-        this.nextStageButton.onClick.AddListener(this.OnNextStageButtonClicked);
-        this.previousStageButton.onClick.AddListener(this.OnPreviousStageButtonClicked);
+        nextStageButton.onClick.AddListener(OnNextStageButtonClicked);
+        previousStageButton.onClick.AddListener(OnPreviousStageButtonClicked);
     }
 
-    private void Start() {
-        this.nextStageButton.gameObject.SetActive(false);
-        this.previousStageButton.gameObject.SetActive(false);
+    private void Start()
+    {
+        nextStageButton.gameObject.SetActive(false);
+        previousStageButton.gameObject.SetActive(false);
 
-        if (!Player.IsAdsEnabled()) {
+        if (!Player.IsAdsEnabled())
+        {
             return;
         }
 
         int hearts = Player.GetHearts();
-        if (hearts <= 0) {
-            this.adsScreen.Show();
+        if (hearts <= 0)
+        {
+            adsScreen.Show();
         }
     }
 
-    private void OnNextStageButtonClicked() {
-        if (this.isSwitchStageButtonBlocked) {
+    private void OnNextStageButtonClicked()
+    {
+        if (isSwitchStageButtonBlocked)
+        {
             return;
         }
 
         Vector3 to = Vector3.one * 0.15f;
-        this.nextStageButton.transform.localScale = Vector3.one;
-        this.nextStageButton.transform.DOPunchScale(to, 0.5f, 6);
+        nextStageButton.transform.localScale = Vector3.one;
+        nextStageButton.transform.DOPunchScale(to, 0.5f, 6);
 
         EventManager.Dispatch(new OnStageSwitch(1));
     }
 
-    private void OnPreviousStageButtonClicked() {
-        if (this.isSwitchStageButtonBlocked) {
+    private void OnPreviousStageButtonClicked()
+    {
+        if (isSwitchStageButtonBlocked)
+        {
             return;
         }
 
         Vector3 to = Vector3.one * 0.15f;
-        this.previousStageButton.transform.localScale = Vector3.one;
-        this.previousStageButton.transform.DOPunchScale(to, 0.5f, 6);
+        previousStageButton.transform.localScale = Vector3.one;
+        previousStageButton.transform.DOPunchScale(to, 0.5f, 6);
 
         EventManager.Dispatch(new OnStageSwitch(-1));
     }
 
-    private void OnStageSwitch(object sender, OnStageSwitch eventargs) {
-        Color color = this.fade.color;
+    private void OnStageSwitch(object sender, OnStageSwitch eventargs)
+    {
+        Color color = fade.color;
         color.a = 1;
-        this.fade.color = color;
-        this.fade.raycastTarget = true;
+        fade.color = color;
+        fade.raycastTarget = true;
     }
 
-    private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted) {
-        this.ShowFade();
+    private void OnStageCompleted(object sender, OnStageCompleted onStageCompleted)
+    {
+        ShowFade();
     }
 
-    private void OnStageFail(object sender, OnStageFail onStageFail) {
-        this.ShowFade();
+    private void OnStageFail(object sender, OnStageFail onStageFail)
+    {
+        ShowFade();
     }
 
-    private void OnStageLoaded(object sender, OnStageLoaded onStageLoaded) {
-        this.fade.raycastTarget = true;
-        this.isSwitchStageButtonBlocked = true;
+    private void OnStageLoaded(object sender, OnStageLoaded onStageLoaded)
+    {
+        fade.raycastTarget = true;
+        isSwitchStageButtonBlocked = true;
 
-        this.previousStageButton.gameObject.SetActive(onStageLoaded.Stage > 0);
-        this.nextStageButton.gameObject.SetActive(onStageLoaded.Stage != Player.GetLastStage());
+        previousStageButton.gameObject.SetActive(onStageLoaded.Stage > 0);
+        nextStageButton.gameObject.SetActive(onStageLoaded.Stage != Player.GetLastStage());
 
-        if (onStageLoaded.Stage > 0) {
+        if (onStageLoaded.Stage > 0)
+        {
             int stage = onStageLoaded.Stage + 1;
-            this.stageNumberText.text = stage.ToString();
+            stageNumberText.text = stage.ToString();
 
-            Color to = this.stageNumberText.color;
+            Color to = stageNumberText.color;
             to.a = 1;
-            this.stageNumberText.DOColor(to, 0.2f);
+            stageNumberText.DOColor(to, 0.2f);
 
             to.a = 0;
-            this.stageNumberText.DOColor(to, 0.2f).SetDelay(1.3f);
+            stageNumberText.DOColor(to, 0.2f).SetDelay(1.3f);
 
             to = fade.color;
             to.a = 0;
 
             TweenCallback onCompleteCallback = () =>
             {
-                this.fade.raycastTarget = false;
-                this.isSwitchStageButtonBlocked = false;
+                fade.raycastTarget = false;
+                isSwitchStageButtonBlocked = false;
             };
 
             fade.DOColor(to, 0.25f).SetDelay(1.5f).OnComplete(onCompleteCallback);
-        } else {
+        }
+        else
+        {
             Color to = fade.color;
             to.a = 0;
 
             TweenCallback onCompleteCallback = () =>
             {
-                this.fade.raycastTarget = false;
-                this.isSwitchStageButtonBlocked = false;
+                fade.raycastTarget = false;
+                isSwitchStageButtonBlocked = false;
             };
 
             fade.DOColor(to, 0.5f).SetDelay(0.5f).OnComplete(onCompleteCallback);
         }
     }
 
-    private void OnHeartsCountWasChanged(object sender, OnHeartsCountWasChanged onHeartsCountWasChanged) {
-        if (onHeartsCountWasChanged.IsSpeedRunModeOn) {
+    private void OnHeartsCountWasChanged(object sender, OnHeartsCountWasChanged onHeartsCountWasChanged)
+    {
+        if (onHeartsCountWasChanged.IsSpeedRunModeOn)
+        {
             return;
         }
-        if (onHeartsCountWasChanged.HeartCount <= 0) {
-            this.nextStageButton.gameObject.SetActive(false);
-            this.previousStageButton.gameObject.SetActive(false);
-            this.adsScreen.Show();
+
+        if (onHeartsCountWasChanged.HeartCount <= 0)
+        {
+            nextStageButton.gameObject.SetActive(false);
+            previousStageButton.gameObject.SetActive(false);
+            adsScreen.Show();
         }
     }
 
-    private void ShowFade() {
+    private void ShowFade()
+    {
         Color to = fade.color;
         to.a = 1;
 
         fade.DOColor(to, 0.25f).SetDelay(0.25f);
     }
 
-    private void OnDestroy() {
-        EventManager.RemoveListener<OnStageCompleted>(this.OnStageCompleted);
-        EventManager.RemoveListener<OnStageFail>(this.OnStageFail);
-        EventManager.RemoveListener<OnStageLoaded>(this.OnStageLoaded);
-        EventManager.RemoveListener<OnHeartsCountWasChanged>(this.OnHeartsCountWasChanged);
-        EventManager.RemoveListener<OnStageSwitch>(this.OnStageSwitch);
+    private void OnDestroy()
+    {
+        EventManager.RemoveListener<OnStageCompleted>(OnStageCompleted);
+        EventManager.RemoveListener<OnStageFail>(OnStageFail);
+        EventManager.RemoveListener<OnStageLoaded>(OnStageLoaded);
+        EventManager.RemoveListener<OnHeartsCountWasChanged>(OnHeartsCountWasChanged);
+        EventManager.RemoveListener<OnStageSwitch>(OnStageSwitch);
     }
 
 }

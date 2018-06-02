@@ -5,35 +5,48 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UINoMoreAdsToShowScreen : MonoBehaviour {
+public class UINoMoreAdsToShowScreen : MonoBehaviour
+{
 
     [SerializeField]
     private Button button;
+
     [SerializeField]
     private CanvasGroup canvasGroup;
+
     [SerializeField]
     private UIAdScreen uiAdScreen;
 
-    private void Awake() {
-        this.button.onClick.AddListener(this.OnOkButtonClick);
+    private void Awake()
+    {
+        button.onClick.AddListener(OnOkButtonClick);
     }
 
-    public void Show() {
-        this.gameObject.SetActive(true);
-        this.Animate(1, () => {
-            this.canvasGroup.interactable = true;
-        });
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        Animate(
+                1,
+                () =>
+                {
+                    canvasGroup.interactable = true;
+                });
     }
 
-    public void Hide() {
-        this.canvasGroup.interactable = false;
-        this.Animate(0, () => {
-            this.gameObject.SetActive(false);
-        });
+    public void Hide()
+    {
+        canvasGroup.interactable = false;
+        Animate(
+                0,
+                () =>
+                {
+                    gameObject.SetActive(false);
+                });
     }
 
-    private void Animate(float alphaTo, Action callback) {
-        float alphaFrom = this.canvasGroup.alpha;
+    private void Animate(float alphaTo, Action callback)
+    {
+        float alphaFrom = canvasGroup.alpha;
         float alphaDif = alphaTo - alphaFrom;
 
         TweenCallback onCompleteCallback = () =>
@@ -44,12 +57,13 @@ public class UINoMoreAdsToShowScreen : MonoBehaviour {
             }
         };
 
-        this.canvasGroup.DOFade(alphaTo, 0.33f).OnComplete(onCompleteCallback);
+        canvasGroup.DOFade(alphaTo, 0.33f).OnComplete(onCompleteCallback);
     }
 
-    private void OnOkButtonClick() {
-        this.Hide();
-        this.uiAdScreen.Show();
+    private void OnOkButtonClick()
+    {
+        Hide();
+        uiAdScreen.Show();
     }
 
 }

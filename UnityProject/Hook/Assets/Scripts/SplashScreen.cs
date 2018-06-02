@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SplashScreen : MonoBehaviour {
+public class SplashScreen : MonoBehaviour
+{
 
-    private void Start() {
+    private void Start()
+    {
         SceneManager.LoadScene("Game");
     }
 

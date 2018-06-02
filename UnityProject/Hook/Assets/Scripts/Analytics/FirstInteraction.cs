@@ -1,7 +1,8 @@
-﻿public enum FirstInteraction {
+﻿public enum FirstInteraction
+{
 
     Play,
     OpenLeaderboard,
-    SwitchLight,
+    SwitchLight
 
 }

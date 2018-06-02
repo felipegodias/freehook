@@ -1,12 +1,15 @@
-﻿public class RenderUtils {
+﻿public class RenderUtils
+{
 
     private static short drawOrder = short.MinValue;
 
-    public static short GetDrawOrder() {
+    public static short GetDrawOrder()
+    {
         return drawOrder++;
     }
 
-    public static void ClearDrawOrder() {
+    public static void ClearDrawOrder()
+    {
         drawOrder = short.MinValue;
     }
 

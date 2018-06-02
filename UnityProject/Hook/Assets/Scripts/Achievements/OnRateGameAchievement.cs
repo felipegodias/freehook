@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Achievements/Rate Game")]
 public class OnRateGameAchievement : Achievement

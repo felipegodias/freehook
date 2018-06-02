@@ -1,10 +1,13 @@
 ﻿#if UNITY_EDITOR
+using UnityEngine;
+
 using UnityEditor;
 #endif
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class Line : MonoBehaviour {
+public class Line : MonoBehaviour
+{
 
     [SerializeField]
     private Transform to;
@@ -15,56 +18,68 @@ public class Line : MonoBehaviour {
     [SerializeField]
     private bool bold;
 
-    private void OnValidate() {
+    private void OnValidate()
+    {
 #if UNITY_EDITOR
-        if (this.to == null) {
+        if (to == null)
+        {
             return;
         }
 
-        if (this.renderer == null) {
-            GameObject rendererGo = new GameObject("line_renderer");
-            this.renderer = rendererGo.AddComponent<SpriteRenderer>();
-            this.renderer.transform.SetParent(this.transform);
-            this.renderer.transform.localPosition = Vector3.zero;
-            this.renderer.transform.localScale = Vector3.one;
-            this.renderer.drawMode = SpriteDrawMode.Tiled;
+        if (renderer == null)
+        {
+            var rendererGo = new GameObject("line_renderer");
+            renderer = rendererGo.AddComponent<SpriteRenderer>();
+            renderer.transform.SetParent(transform);
+            renderer.transform.localPosition = Vector3.zero;
+            renderer.transform.localScale = Vector3.one;
+            renderer.drawMode = SpriteDrawMode.Tiled;
             Color color = Color.white;
             ColorUtility.TryParseHtmlString("#585451FF", out color);
-            this.renderer.color = color;
+            renderer.color = color;
         }
 
         Sprite sprite = null;
-        if (this.bold) {
+        if (bold)
+        {
             sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/bold_line.png");
-        } else {
+        }
+        else
+        {
             sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/line.png");
         }
-        this.renderer.sprite = sprite;
+
+        renderer.sprite = sprite;
 #endif
     }
 
-    
-    private void Update() {
+    private void Update()
+    {
 #if UNITY_EDITOR
-        if (this.to == null || this.renderer == null) {
+        if (to == null || renderer == null)
+        {
             return;
         }
-        Vector3 dir = (this.to.position - this.transform.position).normalized;
-        float distance = Vector3.Distance(this.to.position, this.transform.position);
+
+        Vector3 dir = (to.position - transform.position).normalized;
+        float distance = Vector3.Distance(to.position, transform.position);
         dir.z = 0;
-        this.renderer.transform.right = dir;
-        this.renderer.size = new Vector3(distance, 1);
-        
+        renderer.transform.right = dir;
+        renderer.size = new Vector3(distance, 1);
+
 #endif
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
 #if UNITY_EDITOR
-        if (this.renderer == null) {
+        if (renderer == null)
+        {
             return;
         }
-        DestroyImmediate(this.renderer.gameObject);
-        this.renderer = null;
+
+        DestroyImmediate(renderer.gameObject);
+        renderer = null;
 #endif
     }
 

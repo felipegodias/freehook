@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using UnityEngine.Advertisements;
 using UnityEngine.Analytics;
 
-public class UnityAnalytics : IAnalytics {
+public class UnityAnalytics : IAnalytics
+{
 
     private const string kOnFirstInteraction = "hook.first_interaction";
 
@@ -35,24 +37,28 @@ public class UnityAnalytics : IAnalytics {
 
     private const string kCount = "count";
 
-    public UnityAnalytics() {
+    public UnityAnalytics()
+    {
         Analytics.enabled = true;
         string deviceId = Player.GetDeviceId();
         Analytics.SetUserId(deviceId);
     }
 
-    public void OnFirstInteraction(FirstInteraction firstInteraction) {
+    public void OnFirstInteraction(FirstInteraction firstInteraction)
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kType, firstInteraction.ToString().ToLower());
         Analytics.CustomEvent(kOnFirstInteraction, eventArgs);
     }
 
-    public void OnWatchAdsStart() {
+    public void OnWatchAdsStart()
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         Analytics.CustomEvent(kOnWatchAdsStarted, eventArgs);
     }
 
-    public void OnWatchAdsComplete(ShowResult result) {
+    public void OnWatchAdsComplete(ShowResult result)
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kResult, result.ToString().ToLower());
         Analytics.CustomEvent(kOnWatchAdsCompleted, eventArgs);
@@ -66,40 +72,47 @@ public class UnityAnalytics : IAnalytics {
         Analytics.CustomEvent(kOnWatchAdsCompletedCount, eventArgs);
     }
 
-    public void OnApplicationStart() {
+    public void OnApplicationStart()
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         Analytics.CustomEvent(kOnApplicationStart, eventArgs);
     }
 
-    public void OnStageCompleted(int stage) {
+    public void OnStageCompleted(int stage)
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kStage, stage);
         Analytics.CustomEvent(kOnStageComplete, eventArgs);
     }
 
-    public void OnStageFail(int stage) {
+    public void OnStageFail(int stage)
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kStage, stage);
         Analytics.CustomEvent(kOnStageFail, eventArgs);
     }
 
-    public void OnSpeedRunEnd(TimeSpan timeSpan) {
+    public void OnSpeedRunEnd(TimeSpan timeSpan)
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         eventArgs.Add(kTime, timeSpan.TotalSeconds);
         Analytics.CustomEvent(kOnSpeedRun25End, eventArgs);
     }
 
-    public void OnRemoveAdsButtonClicked() {
+    public void OnRemoveAdsButtonClicked()
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         Analytics.CustomEvent(kOnRemoveAdsButtonClicked, eventArgs);
     }
 
-    public void OnShowAdsScreen() {
+    public void OnShowAdsScreen()
+    {
         IDictionary<string, object> eventArgs = new Dictionary<string, object>();
         Analytics.CustomEvent(kOnShowAdsScreen, eventArgs);
     }
 
-    public void FlushEvents() {
+    public void FlushEvents()
+    {
         Analytics.FlushEvents();
     }
 

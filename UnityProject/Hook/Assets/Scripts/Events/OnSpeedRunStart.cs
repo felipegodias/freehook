@@ -1,4 +1,6 @@
 ﻿using MGS.EventManager;
 
-public class OnSpeedRunStart : IEvent {
+public class OnSpeedRunStart : IEvent
+{
+
 }
