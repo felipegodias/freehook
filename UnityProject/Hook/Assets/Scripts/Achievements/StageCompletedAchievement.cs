@@ -16,7 +16,6 @@ public class StageCompletedAchievement : Achievement
 
     private void OnStageCompleted(object sender, OnStageCompleted eventArgs)
     {
-        Debug.LogError(eventArgs.Stage);
         if (eventArgs.Stage < m_value)
 
         {
