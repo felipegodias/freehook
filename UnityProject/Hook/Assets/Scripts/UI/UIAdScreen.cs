@@ -26,6 +26,9 @@ public class UIAdScreen : MonoBehaviour
     [SerializeField]
     private UINoMoreAdsToShowScreen noMoreAdsToShowScreen;
 
+    [SerializeField]
+    private AudioSource m_Audio;
+
     private Tweener tweener;
 
     public void Show()
@@ -119,8 +122,10 @@ public class UIAdScreen : MonoBehaviour
                 var onHeartsCountWasChanged = new OnHeartsCountWasChanged(maxHearts, false);
                 EventManager.Dispatch(onHeartsCountWasChanged);
                 EventManager.Dispatch(new OnWatchAdsCompleted(result));
+                m_Audio.volume = 1;
             };
             var onWatchAdsStarted = new OnWatchAdsStarted();
+            m_Audio.volume = 0;
             EventManager.Dispatch(onWatchAdsStarted);
             Advertisement.Show("rewardedVideo", showOptions);
         }

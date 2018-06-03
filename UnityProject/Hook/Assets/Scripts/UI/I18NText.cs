@@ -8,11 +8,11 @@ public class I18NText : MonoBehaviour
     [SerializeField]
     private string key;
 
-    private TextMeshProUGUI text;
+    private TMP_Text text;
 
     private void Awake()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        text = GetComponent<TMP_Text>();
     }
 
     private void Start()
