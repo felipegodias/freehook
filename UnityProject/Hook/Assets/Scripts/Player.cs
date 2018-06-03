@@ -17,6 +17,7 @@ public class Player
     private const string kBestSpeedRunTime = "best_speed_run_time";
     private const string kIsAdsEnabled = "is_ads_enabled";
     private const string kAdsCompletedCount = "ads_completed_count";
+    private const string k_StageTutorialKey = "tutorial_{0}";
 
     public static string GetDeviceId()
     {
@@ -137,6 +138,19 @@ public class Player
     public static void SetAdsCompletedCount(int count)
     {
         ObscuredPrefs.SetInt(kAdsCompletedCount, count);
+    }
+
+    public static bool IsTutorialDone(int stageNum)
+    {
+        string key = string.Format(k_StageTutorialKey, stageNum);
+        bool isTutorialDone = ObscuredPrefs.GetBool(key, false);
+        return isTutorialDone;
+    }
+
+    public static void SetTutorialAsDone(int stageNum)
+    {
+        string key = string.Format(k_StageTutorialKey, stageNum);
+        ObscuredPrefs.SetBool(key, true);
     }
 
 }

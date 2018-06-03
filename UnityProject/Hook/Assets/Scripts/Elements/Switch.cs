@@ -208,6 +208,12 @@ public abstract class Switch : GameElement, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        bool canClick = TutorialStep.HandleClickOn(gameObject);
+        if (!canClick)
+        {
+            return;
+        }
+
         switchState++;
         if (switchState > SwitchState.D)
         {

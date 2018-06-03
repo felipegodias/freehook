@@ -10,6 +10,12 @@ public class Trigger : GameElement, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        bool canClick = TutorialStep.HandleClickOn(gameObject);
+        if (!canClick)
+        {
+            return;
+        }
+
         Stage.ClearPullingList();
         EventManager.Dispatch(new OnTriggerClick());
 
