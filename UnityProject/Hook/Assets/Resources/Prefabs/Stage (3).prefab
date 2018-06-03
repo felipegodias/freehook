@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 222937016212533290}
   - component: {fileID: 114928379406998772}
   - component: {fileID: 114926866771145800}
+  - component: {fileID: 114525515354237756}
   m_Layer: 0
   m_Name: Messsage
   m_TagString: Untagged
@@ -3697,6 +3698,18 @@ MonoBehaviour:
   - {fileID: 114832978824185974}
   pullers:
   - {fileID: 114401670364203844}
+--- !u!114 &114525515354237756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1011635109040316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5657689e90494dd4fa553294c5811921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: tutorial_3
 --- !u!114 &114540145022171924
 MonoBehaviour:
   m_ObjectHideFlags: 1

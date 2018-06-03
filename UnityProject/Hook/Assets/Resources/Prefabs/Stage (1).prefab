@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 222281334294687354}
   - component: {fileID: 114486418197110254}
   - component: {fileID: 114044170023083350}
-  - component: {fileID: 114604937702473724}
+  - component: {fileID: 114351311296000968}
   m_Layer: 0
   m_Name: Messsage
   m_TagString: Untagged
@@ -2512,6 +2512,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useMainColor: 0
+--- !u!114 &114351311296000968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1714649870140278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5657689e90494dd4fa553294c5811921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: tutorial_1
 --- !u!114 &114361977430530228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2599,7 +2611,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Tap on the circles to pull the lines.
+  m_text: Click on the circles to pull the lines.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 73d04d551f26b7d4f927309a6fd0df5e, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 3299306712a1d66489837b3ad7479750, type: 2}
@@ -2666,7 +2678,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 114486418197110254}
-    characterCount: 37
+    characterCount: 39
     spriteCount: 0
     spaceCount: 7
     wordCount: 8
@@ -2724,18 +2736,6 @@ MonoBehaviour:
   - {fileID: 212281838256923714}
   spriteRenderer: {fileID: 212729906429676396}
   isWifi: 0
---- !u!114 &114604937702473724
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1714649870140278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5527b47dbb45e46bd5b852ed9b5ea7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useMainColor: 1
 --- !u!114 &114647675045060516
 MonoBehaviour:
   m_ObjectHideFlags: 1

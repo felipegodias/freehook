@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 222339959927398184}
   - component: {fileID: 114586968770630684}
   - component: {fileID: 114551812471019922}
-  - component: {fileID: 114660875234918708}
+  - component: {fileID: 114374140953359224}
   m_Layer: 0
   m_Name: Messsage
   m_TagString: Untagged
@@ -5575,6 +5575,18 @@ MonoBehaviour:
   - {fileID: 212014028636500514}
   spriteRenderer: {fileID: 212933157091573716}
   isWifi: 0
+--- !u!114 &114374140953359224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177836448372596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5657689e90494dd4fa553294c5811921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: tutorial_17
 --- !u!114 &114378581815616428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6132,18 +6144,6 @@ MonoBehaviour:
   m_meshFilter: {fileID: 33165349525436360}
   m_boxCollider: {fileID: 0}
   m_TextComponent: {fileID: 114427260457252962}
---- !u!114 &114660875234918708
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1177836448372596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5527b47dbb45e46bd5b852ed9b5ea7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useMainColor: 1
 --- !u!114 &114704242544790750
 MonoBehaviour:
   m_ObjectHideFlags: 1

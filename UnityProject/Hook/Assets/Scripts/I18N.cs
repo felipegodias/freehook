@@ -26,6 +26,15 @@ public class I18N
                     },
                     {
                         "remove_ads", "Remove Ads"
+                    },
+                    {
+                        "tutorial_1", "Click on the circles to pull the lines."
+                    },
+                    {
+                        "tutorial_3", "Be careful with hooks! Don't let the lines touch each other."
+                    },
+                    {
+                        "tutorial_17", "Put the switches in the correct position before click on the circle."
                     }
                 }
             },
@@ -47,6 +56,15 @@ public class I18N
                     },
                     {
                         "remove_ads", "Remover propagandas"
+                    },
+                    {
+                        "tutorial_1", "Clique nos círculos para puxar as linhas."
+                    },
+                    {
+                        "tutorial_3", "Cuidado com os gachos! Não deixe as linhas se tocarem."
+                    },
+                    {
+                        "tutorial_17", "Coloque os interruptores na posição correta antes de clicar nos circulos."
                     }
                 }
             },
@@ -68,6 +86,15 @@ public class I18N
                     },
                     {
                         "remove_ads", "Eliminar anuncios"
+                    },
+                    {
+                        "tutorial_1", "Haga clic en los círculos para tirar de las líneas."
+                    },
+                    {
+                        "tutorial_3", "¡Ten cuidado con los ganchos! No dejes que las líneas se toquen entre sí."
+                    },
+                    {
+                        "tutorial_17", "Coloque los interruptores en la posición correcta antes de hacer clic en el círculo."
                     }
                 }
             },
@@ -89,6 +116,15 @@ public class I18N
                     },
                     {
                         "remove_ads", "Rimuovere annunci"
+                    },
+                    {
+                        "tutorial_1", "Clicca sui cerchi per tirare le linee."
+                    },
+                    {
+                        "tutorial_3", "Stai attento con i ganci! Non lasciare che le linee si tocchino."
+                    },
+                    {
+                        "tutorial_17", "Mettere gli interruttori nella posizione corretta prima di fare clic sul cerchio."
                     }
                 }
             },
@@ -110,6 +146,15 @@ public class I18N
                     },
                     {
                         "remove_ads", "Retirer annonces"
+                    },
+                    {
+                        "tutorial_1", "Cliquez sur les cercles pour tirer les lignes."
+                    },
+                    {
+                        "tutorial_3", "Soyez prudent avec les crochets! Ne laissez pas les lignes se toucher."
+                    },
+                    {
+                        "tutorial_17", "Mettez les commutateurs dans la bonne position avant de cliquer sur le cercle."
                     }
                 }
             }
