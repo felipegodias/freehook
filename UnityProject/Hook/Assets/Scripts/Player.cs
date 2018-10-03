@@ -8,6 +8,7 @@ public class Player
 {
 
     private const string kDeviceId = "device_id";
+    private const string kPrivacyPolicy = "agree_privacy_policy";
     private const string kFirstInteraction = "first_interaction";
     private const string kHeartCount = "heart_count";
     private const string kLastStage = "last_stage";
@@ -29,6 +30,16 @@ public class Player
         string deviceId = SystemInfo.deviceUniqueIdentifier;
         ObscuredPrefs.SetString(kDeviceId, deviceId);
         return deviceId;
+    }
+
+    public static bool HasAgreePrivacyPolicy()
+    {
+        return ObscuredPrefs.GetBool(kPrivacyPolicy, false);
+    }
+
+    public static void SetAgreePrivacyPolicy()
+    {
+        ObscuredPrefs.SetBool(kPrivacyPolicy, true);
     }
 
     public static bool HasFirstInteraction()

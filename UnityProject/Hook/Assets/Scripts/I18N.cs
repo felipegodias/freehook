@@ -35,6 +35,12 @@ public class I18N
                     },
                     {
                         "tutorial_17", "Put the switches in the correct position before click on the circle."
+                    },
+                    {
+                        "privacy_policy","To continue, you must agree to our <u>privacy policy<u>."
+                    },
+                    { 
+                        "agree","I agree."
                     }
                 }
             },

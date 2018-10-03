@@ -12,6 +12,9 @@ using Debug = UnityEngine.Debug;
 public class GameManager : MonoBehaviour
 {
 
+    [SerializeField]
+    private UIPrivacyPolicyScreen m_privacyPolicyScreen;
+
     private Stage currentStage;
 
     private string stageToLoad;
@@ -48,6 +51,18 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start()
+    {
+        if (Player.HasAgreePrivacyPolicy())
+        {
+            OldStart();
+        }
+        else
+        {
+            m_privacyPolicyScreen.Show(OldStart);
+        }
+    }
+
+    private void OldStart()
     {
         int hearts = Player.GetHearts();
         if (hearts > 0)
