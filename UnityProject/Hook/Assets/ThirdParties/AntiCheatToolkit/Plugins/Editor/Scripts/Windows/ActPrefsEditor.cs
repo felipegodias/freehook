@@ -613,7 +613,7 @@ namespace CodeStage.AntiCheat.EditorCode.Windows
 
 		private string[] ReadKeysWin()
 		{
-			RegistryKey registryLocation = Registry.CurrentUser.CreateSubKey("Software\\" + PlayerSettings.companyName + "\\" + PlayerSettings.productName);
+			RegistryKey registryLocation = Registry.CurrentUser.CreateSubKey("Software\\Unity\\UnityEditor\\" + PlayerSettings.companyName + "\\" + PlayerSettings.productName);
 			if (registryLocation == null)
 			{
 				return new string[0];
